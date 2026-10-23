@@ -1,0 +1,4928 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12344d">
+  <title>Digitales Säure-Base-Labor</title>
+  <style>
+:root {
+  color-scheme: light;
+  --ink: #163044;
+  --muted: #5d7180;
+  --navy: #12344d;
+  --navy-2: #1d4f6d;
+  --teal: #0f7c80;
+  --teal-dark: #075d61;
+  --amber: #f0a51a;
+  --red: #b83d42;
+  --paper: #ffffff;
+  --surface: #f4f8fa;
+  --line: #cfdae0;
+  --shadow: 0 16px 44px rgba(18, 52, 77, 0.13);
+  --focus: #ffbf47;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% -10%, rgba(45, 158, 166, 0.18), transparent 34rem),
+    linear-gradient(180deg, #edf5f7 0, #f8fafb 27rem, #eef3f5 100%);
+  line-height: 1.45;
+}
+
+button,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+select {
+  min-height: 46px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.table-wrap:focus-visible {
+  outline: 4px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 10px;
+  left: 10px;
+  padding: 0.7rem 1rem;
+  color: white;
+  background: var(--navy);
+  border-radius: 0.5rem;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  width: min(1480px, calc(100% - 2rem));
+  margin: 1.2rem auto 0;
+  padding: 2rem clamp(1.25rem, 3vw, 3rem);
+  color: white;
+  background:
+    linear-gradient(115deg, rgba(18, 52, 77, 0.97), rgba(15, 124, 128, 0.92)),
+    repeating-linear-gradient(60deg, transparent 0 20px, rgba(255,255,255,.04) 20px 21px);
+  border-radius: 1.4rem;
+  box-shadow: var(--shadow);
+}
+
+.hero h1,
+.hero p {
+  margin-top: 0;
+}
+
+.hero h1 {
+  margin-bottom: 0.55rem;
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.hero .intro {
+  max-width: 74ch;
+  margin-bottom: 0;
+  color: #e8f4f5;
+  font-size: clamp(1rem, 2vw, 1.18rem);
+}
+
+.eyebrow {
+  margin-bottom: 0.35rem;
+  color: #bde5e5;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 0 0 min(290px, 32vw);
+  gap: 0.65rem;
+}
+
+.tool-button {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 0.75rem;
+  text-align: left;
+  font-weight: 700;
+}
+
+.tool-button span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  padding-inline: 0.25rem;
+  color: var(--navy);
+  background: white;
+  border-radius: 0.55rem;
+  font-size: 0.82rem;
+}
+
+.tool-button[aria-pressed="true"] {
+  color: var(--navy);
+  background: #dff7ef;
+  border-color: #dff7ef;
+}
+
+.model-note {
+  width: min(1480px, calc(100% - 2rem));
+  margin: 1rem auto;
+  padding: 0.85rem 1rem;
+  color: #5b4510;
+  background: #fff4cc;
+  border: 1px solid #e6c969;
+  border-left: 6px solid var(--amber);
+  border-radius: 0.8rem;
+}
+
+.workspace {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.selection-panel,
+.lab-panel,
+.evaluation-panel,
+.protocol-section,
+.teacher-notes {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(178, 197, 207, 0.76);
+  border-radius: 1.15rem;
+  box-shadow: 0 9px 28px rgba(18, 52, 77, 0.08);
+}
+
+.selection-panel,
+.lab-panel,
+.evaluation-panel {
+  padding: 1.1rem;
+}
+
+.lab-shell {
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.lab-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.scale-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex: 0 0 auto;
+  min-height: 48px;
+  padding: 0.65rem 0.9rem;
+  color: white;
+  background: var(--teal);
+  border: 2px solid var(--teal);
+  border-radius: 0.72rem;
+  font-weight: 850;
+}
+
+.scale-button span {
+  font-size: 1.25rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-bottom: 1.1rem;
+}
+
+.section-heading.compact {
+  margin-bottom: 0.8rem;
+}
+
+.section-heading h2,
+.section-heading p {
+  margin: 0;
+}
+
+.section-heading h2 {
+  font-size: 1.32rem;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.section-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: white;
+  background: var(--teal);
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend,
+.observation-card label {
+  margin-bottom: 0.58rem;
+  font-size: 0.96rem;
+  font-weight: 850;
+}
+
+.choice-grid {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.solution-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.indicator-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.indicator-group {
+  margin-top: 0;
+}
+
+.choice-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.35rem 1fr;
+  min-width: 0;
+  gap: 0.65rem;
+  align-items: center;
+  min-height: 68px;
+  padding: 0.65rem;
+  color: var(--ink);
+  background: #f8fbfc;
+  border: 2px solid #d8e3e8;
+  border-radius: 0.8rem;
+  text-align: left;
+}
+
+.choice-card:hover:not(:disabled) {
+  border-color: #86aebb;
+  transform: translateY(-1px);
+}
+
+.choice-card[aria-pressed="true"] {
+  background: #e1f4f3;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(15, 124, 128, 0.12);
+}
+
+.choice-card small {
+  display: block;
+  margin-top: 0.2rem;
+  color: #58717d;
+  font-size: 0.72rem;
+  line-height: 1.3;
+}
+
+.indicator-icon {
+  background: linear-gradient(180deg, white 0 23%, var(--indicator-color, #713b94) 23% 100%);
+  color: #173544;
+}
+
+.choice-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.8rem;
+  color: var(--navy);
+  background: linear-gradient(180deg, white 0 23%, #cde7ee 23% 100%);
+  border: 2px solid currentColor;
+  border-radius: 0.3rem 0.3rem 0.55rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.choice-icon::before {
+  content: "";
+  position: absolute;
+  top: -0.43rem;
+  width: 1.35rem;
+  height: 0.45rem;
+  background: currentColor;
+  border-radius: 0.18rem 0.18rem 0 0;
+}
+
+.indicator-card .choice-icon {
+  background: linear-gradient(180deg, white 0 28%, var(--indicator-color) 28% 100%);
+}
+
+.choice-copy {
+  min-width: 0;
+}
+
+.choice-copy strong,
+.choice-copy small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.choice-copy strong {
+  line-height: 1.18;
+}
+
+.choice-copy small {
+  margin-top: 0.2rem;
+  color: var(--muted);
+  line-height: 1.2;
+}
+
+.selection-dock {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #eef5f7;
+  border: 1px solid #cbdbe1;
+  border-radius: 1rem;
+}
+
+.selection-dock fieldset {
+  min-width: 0;
+  padding: 0.85rem;
+  background: white;
+  border: 1px solid #d5e1e6;
+  border-radius: 0.85rem;
+}
+
+.selection-dock legend {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: 0.15rem;
+}
+
+.selection-dock legend span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  color: white;
+  background: var(--teal);
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.selection-hint {
+  margin: -0.15rem 0 0.7rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.primary-button,
+.accent-button,
+.evaluate-button,
+.secondary-button,
+.danger-button {
+  border-radius: 0.72rem;
+  padding: 0.72rem 0.9rem;
+  font-weight: 800;
+  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.primary-button,
+.evaluate-button {
+  color: white;
+  background: var(--navy);
+  border: 2px solid var(--navy);
+}
+
+.accent-button {
+  color: white;
+  background: var(--teal);
+  border: 2px solid var(--teal);
+}
+
+.secondary-button {
+  color: var(--navy);
+  background: white;
+  border: 2px solid #aac0cb;
+}
+
+.danger-button {
+  color: #8e2830;
+  background: #fff5f5;
+  border: 2px solid #dfb1b4;
+}
+
+.primary-button:hover:not(:disabled),
+.accent-button:hover:not(:disabled),
+.evaluate-button:hover:not(:disabled),
+.secondary-button:hover:not(:disabled),
+.danger-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 13px rgba(18, 52, 77, 0.13);
+}
+
+.button-icon {
+  margin-right: 0.35rem;
+}
+
+.observation-card {
+  padding: 0.9rem;
+  background: #f3f7f9;
+  border: 1px solid #d5e1e6;
+  border-radius: 0.85rem;
+}
+
+.observation-card textarea {
+  width: 100%;
+  color: var(--ink);
+  background: white;
+  border: 2px solid #bfd0d8;
+  border-radius: 0.65rem;
+}
+
+.observation-card label {
+  display: block;
+}
+
+.observation-card textarea {
+  min-height: 84px;
+  padding: 0.65rem;
+  resize: vertical;
+}
+
+.lab-stage {
+  position: relative;
+  isolation: isolate;
+  min-height: 610px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(50, 90, 108, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(50, 90, 108, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, #edf8fa 0 70%, #dce8eb 70% 71%, #b7c7cc 71% 100%);
+  background-size: 26px 26px, 26px 26px, auto;
+  border: 1px solid #c5d7de;
+  border-radius: 1rem;
+}
+
+.wall-label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: -1;
+  padding: 0.35rem 0.55rem;
+  color: #617a86;
+  background: rgba(255,255,255,.74);
+  border: 1px solid #c7d8de;
+  border-radius: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.bench {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  height: 29%;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.17), transparent 32%),
+    linear-gradient(180deg, #a9bcc2, #778f98);
+  border-top: 5px solid #5e7680;
+}
+
+.tube-station {
+  position: absolute;
+  bottom: 5.9rem;
+  left: 50%;
+  width: 13rem;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.tube-label {
+  position: absolute;
+  bottom: -3.9rem;
+  left: 50%;
+  width: 18rem;
+  padding: 0.34rem 0.45rem;
+  color: var(--navy);
+  background: #fff;
+  border: 1px solid #b8cbd3;
+  border-radius: 0.45rem;
+  transform: translateX(-50%);
+  font-size: 0.78rem;
+  font-weight: 850;
+  box-shadow: 0 5px 10px rgba(18,52,77,.09);
+}
+
+.tube {
+  position: relative;
+  width: 8.5rem;
+  height: 23rem;
+  margin: auto;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(255,255,255,.78), rgba(216,241,247,.26) 45%, rgba(255,255,255,.5));
+  border: 5px solid rgba(51, 91, 105, 0.62);
+  border-top: 8px solid rgba(51, 91, 105, 0.78);
+  border-radius: 0.5rem 0.5rem 4.25rem 4.25rem;
+  box-shadow: inset 0 0 14px rgba(255,255,255,.75), 0 13px 22px rgba(18,52,77,.18);
+}
+
+.tube::before {
+  content: "";
+  position: absolute;
+  top: -0.55rem;
+  left: -0.85rem;
+  width: 9.55rem;
+  height: 0.8rem;
+  background: rgba(255,255,255,.6);
+  border: 4px solid rgba(51, 91, 105, 0.68);
+  border-radius: 50%;
+}
+
+.tube-liquid,
+.mixing-layer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  transition: height 420ms ease, background-color 900ms ease, box-shadow 900ms ease;
+}
+
+.tube-liquid {
+  background: rgba(188, 230, 243, 0.62);
+  border-radius: 0 0 3.75rem 3.75rem;
+}
+
+.tube-liquid::before {
+  content: "";
+  position: absolute;
+  top: -0.26rem;
+  left: 0;
+  width: 100%;
+  height: 0.5rem;
+  background: inherit;
+  border-radius: 50%;
+  filter: brightness(1.08);
+}
+
+.mixing-layer {
+  opacity: 0;
+  border-radius: 0 0 3.75rem 3.75rem;
+}
+
+.mixing-layer.is-mixing {
+  animation: mixLiquid 1.35s ease-in-out;
+}
+
+.tube-shine {
+  position: absolute;
+  z-index: 4;
+  top: 1.15rem;
+  bottom: 3.5rem;
+  left: 1rem;
+  width: 0.58rem;
+  background: rgba(255,255,255,.54);
+  border-radius: 50%;
+}
+
+.tube-shadow {
+  width: 10.5rem;
+  height: 1.25rem;
+  margin: 0.5rem auto 0;
+  background: rgba(18,52,77,.2);
+  border-radius: 50%;
+  filter: blur(4px);
+}
+
+.stand-post {
+  position: absolute;
+  right: 17%;
+  bottom: 5.7rem;
+  width: 0.65rem;
+  height: 27rem;
+  background: linear-gradient(90deg, #465a63, #b8c4c9 45%, #526871);
+  border-radius: 0.3rem;
+}
+
+.stand-clamp {
+  position: absolute;
+  right: 17%;
+  bottom: 23rem;
+  width: 30%;
+  height: 0.65rem;
+  background: #536a74;
+  border-radius: 0.3rem;
+}
+
+.stand-foot {
+  position: absolute;
+  right: 6%;
+  bottom: 5.15rem;
+  width: 30%;
+  height: 0.8rem;
+  background: #526871;
+  border-radius: 50%;
+}
+
+.dropper {
+  --start-x: -140px;
+  position: absolute;
+  z-index: 10;
+  top: -0.6rem;
+  left: calc(50% - 1.4rem);
+  width: 2.8rem;
+  opacity: 0;
+  transform: translate(var(--start-x), -45px) rotate(-9deg);
+  transform-origin: 50% 0;
+  pointer-events: none;
+}
+
+.indicator-dropper {
+  --start-x: 140px;
+}
+
+.dropper.is-active {
+  animation: dropperSequence 2.2s ease-in-out forwards;
+}
+
+.dropper-cap {
+  width: 1.8rem;
+  height: 1rem;
+  margin: auto;
+  background: #293f4e;
+  border-radius: 0.45rem 0.45rem 0.16rem 0.16rem;
+}
+
+.dropper-bulb {
+  width: 2.8rem;
+  height: 3.3rem;
+  background: linear-gradient(90deg, #284658, #6e8794 50%, #264351);
+  border-radius: 1.2rem 1.2rem 0.45rem 0.45rem;
+  transition: transform 120ms ease;
+}
+
+.dropper.is-squeezing .dropper-bulb {
+  transform: scaleX(0.84) scaleY(0.96);
+}
+
+.dropper-neck {
+  width: 0.65rem;
+  height: 3.8rem;
+  margin: auto;
+  background: linear-gradient(90deg, rgba(215,240,245,.82), rgba(255,255,255,.95), rgba(170,214,224,.86));
+  border: 1px solid #7d9faa;
+}
+
+.dropper-tip {
+  width: 0;
+  height: 0;
+  margin: auto;
+  border-right: 0.33rem solid transparent;
+  border-left: 0.33rem solid transparent;
+  border-top: 1.6rem solid #6f929e;
+}
+
+.dropper span {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  width: 7.5rem;
+  padding: 0.24rem 0.4rem;
+  color: white;
+  background: var(--navy);
+  border-radius: 0.35rem;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 0.69rem;
+  font-weight: 850;
+}
+
+.falling-drop {
+  position: absolute;
+  z-index: 9;
+  --fall-mid: 12.3rem;
+  --fall-end: 12.8rem;
+  top: 8.2rem;
+  left: 50%;
+  width: 1rem;
+  height: 1.25rem;
+  background: #a5dcf0;
+  border-radius: 50% 50% 52% 48% / 58% 58% 42% 42%;
+  box-shadow: inset 0.2rem 0.1rem 0 rgba(255,255,255,.5), 0 2px 5px rgba(18,52,77,.2);
+  transform: translateX(-50%) rotate(45deg);
+  animation: dropFall 650ms cubic-bezier(.3,.08,.7,.98) forwards;
+}
+
+.falling-drop.indicator-drop {
+  background: var(--drop-color, #8e44ad);
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.status-box {
+  margin-top: 0;
+  padding: 0.72rem 0.85rem;
+  color: #214354;
+  background: #edf6f8;
+  border-left: 5px solid #6ba7b4;
+  border-radius: 0.55rem;
+  font-weight: 700;
+}
+
+.status-box.warning {
+  color: #6d4200;
+  background: #fff4d6;
+  border-left-color: #d79217;
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.mini-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-bottom: 0.8rem;
+}
+
+.mini-heading h2,
+.mini-heading p {
+  margin: 0;
+}
+
+.mini-heading h2 {
+  font-size: 1.15rem;
+}
+
+.mini-heading p {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.table-delete {
+  min-height: 44px;
+  padding: 0.5rem 0.7rem;
+  color: #7d2020;
+  background: #fff4f3;
+  border: 1px solid #e7b6b2;
+  border-radius: 0.45rem;
+  font-weight: 800;
+}
+
+.status-box.success {
+  color: #165a46;
+  background: #e5f6ef;
+  border-left-color: #2f9a75;
+}
+
+.status-box.warning {
+  color: #6a4b0d;
+  background: #fff5d8;
+  border-left-color: var(--amber);
+}
+
+.evaluation-panel {
+  position: static;
+  padding: 0.9rem;
+  background: #f7fafb;
+  border: 1px solid #d5e1e6;
+  border-radius: 0.85rem;
+  box-shadow: none;
+}
+
+.evaluate-button,
+.wide {
+  width: 100%;
+}
+
+.result-placeholder {
+  display: grid;
+  min-height: 150px;
+  margin-top: 0.75rem;
+  place-items: center;
+  padding: 1.25rem;
+  color: var(--muted);
+  background:
+    linear-gradient(135deg, rgba(15,124,128,.06), rgba(18,52,77,.03)),
+    repeating-linear-gradient(45deg, transparent 0 12px, rgba(18,52,77,.035) 12px 13px);
+  border: 2px dashed #bfd0d8;
+  border-radius: 0.85rem;
+  text-align: center;
+}
+
+.result-card {
+  margin-top: 0.75rem;
+  padding: 0.9rem;
+  background: #f7fafb;
+  border: 1px solid #d3dfe4;
+  border-radius: 0.85rem;
+}
+
+.result-topline {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.result-swatch {
+  flex: 0 0 4.2rem;
+  width: 4.2rem;
+  height: 4.2rem;
+  background: #e8f5f8;
+  border: 3px solid rgba(18,52,77,.42);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 5px rgba(255,255,255,.38);
+}
+
+.result-kicker {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.result-topline h3 {
+  margin: 0.1rem 0 0;
+  font-size: 1.45rem;
+}
+
+.result-data {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin: 0.9rem 0;
+}
+
+.result-data div {
+  padding: 0.55rem;
+  background: white;
+  border: 1px solid #d7e2e7;
+  border-radius: 0.55rem;
+}
+
+.result-data dt {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.result-data dd {
+  margin: 0.16rem 0 0;
+  font-weight: 850;
+}
+
+.result-explanation {
+  margin: 0.8rem 0;
+  font-size: 0.9rem;
+}
+
+.protocol-section,
+.teacher-notes {
+  width: min(1480px, calc(100% - 2rem));
+  margin: 1rem auto;
+}
+
+.protocol-section {
+  padding: 1.25rem;
+}
+
+.protocol-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 0.8rem;
+}
+
+.protocol-header h2,
+.protocol-header p {
+  margin-top: 0;
+}
+
+.protocol-header h2 {
+  margin-bottom: 0.25rem;
+}
+
+.protocol-header > div > p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.protocol-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid #cfdae0;
+  border-radius: 0.75rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 980px;
+}
+
+th,
+td {
+  padding: 0.62rem 0.7rem;
+  border-bottom: 1px solid #d7e1e6;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: white;
+  background: var(--navy);
+  font-size: 0.78rem;
+}
+
+tbody tr:nth-child(even) {
+  background: #f3f7f9;
+}
+
+.row-delete {
+  min-height: 34px;
+  padding: 0.32rem 0.48rem;
+  color: #8e2830;
+  background: white;
+  border: 1px solid #d9a8ac;
+  border-radius: 0.42rem;
+  font-weight: 750;
+}
+
+.empty-protocol {
+  margin: 0;
+  padding: 1.3rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.teacher-notes {
+  overflow: hidden;
+}
+
+.teacher-notes summary {
+  padding: 1rem 1.2rem;
+  color: white;
+  background: var(--navy);
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.teacher-note-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1.2rem;
+}
+
+.teacher-note-grid h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+.teacher-note-grid ul {
+  padding-left: 1.25rem;
+}
+
+.teacher-note-grid a {
+  color: #075d87;
+}
+
+.scale-dialog {
+  width: min(920px, calc(100% - 2rem));
+  max-height: calc(100vh - 2rem);
+  padding: 0;
+  color: var(--ink);
+  background: white;
+  border: 0;
+  border-radius: 1.1rem;
+  box-shadow: 0 24px 70px rgba(12, 37, 52, 0.34);
+}
+
+.scale-dialog::backdrop {
+  background: rgba(10, 29, 40, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.scale-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem 1.3rem 0.9rem;
+  color: white;
+  background: linear-gradient(110deg, var(--navy), var(--teal));
+}
+
+.scale-dialog-header h2,
+.scale-dialog-header p {
+  margin-top: 0;
+}
+
+.scale-dialog-header h2 {
+  margin-bottom: 0;
+}
+
+.dialog-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2.7rem;
+  width: 2.7rem;
+  min-height: 2.7rem;
+  padding: 0;
+  color: white;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.48);
+  border-radius: 50%;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.scale-intro,
+.scale-footnote {
+  margin: 0;
+  padding: 1rem 1.3rem;
+}
+
+.scale-intro {
+  padding-bottom: 0.65rem;
+}
+
+.scale-footnote {
+  color: var(--muted);
+  background: #f3f7f9;
+  border-top: 1px solid #d5e1e6;
+  font-size: 0.84rem;
+}
+
+.scale-table-wrap {
+  margin: 0 1.3rem 1.2rem;
+  overflow-x: auto;
+  border: 1px solid #cfdae0;
+  border-radius: 0.75rem;
+}
+
+.color-scale-table {
+  min-width: 720px;
+}
+
+.color-scale-table th,
+.color-scale-table td {
+  vertical-align: middle;
+}
+
+.color-scale-table tbody th {
+  color: var(--ink);
+  background: #eef5f7;
+}
+
+.color-band {
+  display: block;
+  width: 100%;
+  height: 1.55rem;
+  margin-bottom: 0.28rem;
+  background: var(--swatch);
+  border: 1px solid rgba(18,52,77,.38);
+  border-radius: 0.35rem;
+}
+
+.color-band.colorless {
+  background:
+    linear-gradient(45deg, #e7eef1 25%, transparent 25% 75%, #e7eef1 75%),
+    linear-gradient(45deg, #e7eef1 25%, white 25% 75%, #e7eef1 75%);
+  background-position: 0 0, 6px 6px;
+  background-size: 12px 12px;
+}
+
+/* Gemeinsame Moduswahl */
+.mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  padding: 0.35rem;
+  background: rgba(7, 42, 59, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 0.9rem;
+}
+
+.mode-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.68rem 0.72rem;
+  color: #eaf7f7;
+  background: transparent;
+  border: 0;
+  border-radius: 0.66rem;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+.mode-button span {
+  font-size: 1.15rem;
+}
+
+.mode-button[aria-pressed="true"] {
+  color: var(--navy);
+  background: #ffffff;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
+}
+
+.eyebrow.dark {
+  color: var(--teal-dark);
+}
+
+/* Leitfähigkeitslabor */
+.conductivity-note {
+  color: #124154;
+  background: #e9f7f8;
+  border-color: #9fcfd2;
+  border-left-color: var(--teal);
+}
+
+.conductivity-workspace {
+  width: min(1280px, calc(100% - 2rem));
+}
+
+.conductivity-shell {
+  overflow: hidden;
+}
+
+.conductivity-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.conductivity-toolbar h2,
+.conductivity-toolbar p {
+  margin: 0;
+}
+
+.conductivity-toolbar h2 {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.compare-button {
+  margin-top: 0.15rem;
+}
+
+.conductivity-stage {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(255,255,255,.72), rgba(236,245,247,.91)),
+    repeating-linear-gradient(0deg, transparent 0 39px, rgba(18,52,77,.055) 39px 40px),
+    repeating-linear-gradient(90deg, transparent 0 39px, rgba(18,52,77,.055) 39px 40px);
+  border: 1px solid #b8cbd3;
+  border-radius: 1.15rem;
+  box-shadow: inset 0 0 36px rgba(18, 52, 77, 0.07);
+  transition: transform 280ms ease, opacity 280ms ease;
+}
+
+.conductivity-stage.is-zooming {
+  opacity: 0.45;
+  transform: scale(1.035);
+}
+
+.conductivity-wall-label {
+  position: absolute;
+  z-index: 2;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.35rem 0.65rem;
+  color: #476271;
+  background: rgba(255,255,255,.76);
+  border: 1px solid rgba(110,139,153,.36);
+  border-radius: 0.48rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.circuit-apparatus {
+  position: absolute;
+  inset: 0;
+}
+
+.circuit-wires {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.wire {
+  fill: none;
+  stroke: #263947;
+  stroke-linecap: round;
+  stroke-width: 7;
+}
+
+.conductivity-stage.is-measured .wire {
+  stroke: #1d5b70;
+}
+
+.power-source {
+  position: absolute;
+  z-index: 4;
+  top: 8.7rem;
+  left: 4.5%;
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+  width: 12.5rem;
+  min-height: 5.3rem;
+  padding: 0.65rem;
+  color: white;
+  background: linear-gradient(145deg, #2f4552, #142b3a);
+  border: 4px solid #718995;
+  border-radius: 0.8rem;
+  box-shadow: 0 12px 22px rgba(18,52,77,.2);
+}
+
+.power-label {
+  text-align: center;
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.power-terminal {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  color: white;
+  border-radius: 50%;
+  font-weight: 950;
+}
+
+.power-terminal.plus { background: #bd3c45; }
+.power-terminal.minus { background: #2873a5; }
+
+.conductivity-lamp {
+  position: absolute;
+  z-index: 5;
+  top: 6.6rem;
+  right: 7%;
+  width: 7.3rem;
+  height: 9.4rem;
+}
+
+.lamp-glow,
+.lamp-bulb,
+.lamp-base {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.lamp-glow {
+  top: -1.2rem;
+  width: 8.8rem;
+  height: 8.8rem;
+  opacity: calc(var(--lamp-level, 0) * .9);
+  background: radial-gradient(circle, rgba(255,222,92,.94) 0 24%, rgba(255,211,70,.45) 25% 51%, transparent 72%);
+  border-radius: 50%;
+  filter: blur(2px);
+  transition: opacity 700ms ease;
+}
+
+.lamp-bulb {
+  top: 0;
+  width: 5.6rem;
+  height: 6.4rem;
+  background: linear-gradient(150deg, rgba(255,255,255,.94), rgba(218,231,235,.7));
+  border: 4px solid #60737d;
+  border-radius: 52% 52% 44% 44%;
+  box-shadow: inset 0 0 1.5rem rgba(255,215,75, calc(var(--lamp-level, 0) * .95));
+  transition: box-shadow 700ms ease, background 700ms ease;
+}
+
+.lamp-bulb::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 1.05rem;
+  width: 2.5rem;
+  height: 1.7rem;
+  border: 3px solid #6c5c32;
+  border-top: 0;
+  border-radius: 0 0 50% 50%;
+  transform: translateX(-50%);
+}
+
+.lamp-base {
+  top: 5.7rem;
+  width: 3.7rem;
+  height: 2.5rem;
+  background: repeating-linear-gradient(0deg, #506570 0 5px, #91a1a8 5px 8px);
+  border: 3px solid #4d616b;
+  border-radius: 0.3rem 0.3rem 0.7rem 0.7rem;
+}
+
+.conductivity-meter {
+  position: absolute;
+  z-index: 5;
+  top: 2.3rem;
+  left: 50%;
+  width: 17.5rem;
+  padding: 0.8rem 1rem 0.9rem;
+  color: #19394b;
+  background: linear-gradient(160deg, #eef3f4, #bdccd2);
+  border: 5px solid #415864;
+  border-radius: 1.15rem;
+  box-shadow: 0 14px 26px rgba(18,52,77,.2), inset 0 0 0 2px #f9ffff;
+  transform: translateX(-50%);
+}
+
+.meter-title {
+  display: block;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.meter-scale {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.15rem 0 -0.1rem;
+  color: #56707e;
+  font-size: 0.64rem;
+  font-weight: 750;
+}
+
+.meter-face {
+  position: relative;
+  height: 5.7rem;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 105%, #ffffff 0 63%, #d8e2e5 64% 67%, #7a8d96 68% 70%, transparent 71%);
+  border-radius: 7rem 7rem 0.65rem 0.65rem;
+}
+
+.meter-mark {
+  position: absolute;
+  bottom: 0.45rem;
+  left: 50%;
+  width: 2px;
+  height: 4.4rem;
+  background: linear-gradient(#536875 0 10px, transparent 10px);
+  transform-origin: 50% calc(100% - .1rem);
+}
+
+.meter-mark.mark-1 { transform: translateX(-50%) rotate(-56deg); }
+.meter-mark.mark-2 { transform: translateX(-50%) rotate(-20deg); }
+.meter-mark.mark-3 { transform: translateX(-50%) rotate(20deg); }
+.meter-mark.mark-4 { transform: translateX(-50%) rotate(56deg); }
+
+.meter-needle {
+  position: absolute;
+  z-index: 2;
+  bottom: 0.7rem;
+  left: 50%;
+  width: 0.25rem;
+  height: 4.5rem;
+  background: #c3323c;
+  border-radius: 1rem;
+  transform: translateX(-50%) rotate(var(--needle-angle, -58deg));
+  transform-origin: 50% calc(100% - .1rem);
+  transition: transform 900ms cubic-bezier(.2,.75,.25,1);
+}
+
+.meter-hub {
+  position: absolute;
+  z-index: 3;
+  bottom: 0.28rem;
+  left: 50%;
+  width: 1.15rem;
+  height: 1.15rem;
+  background: #344c58;
+  border: 3px solid #dbe6e9;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.meter-bars {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.24rem;
+  margin-top: 0.55rem;
+}
+
+.meter-bars span {
+  height: 0.52rem;
+  background: #82939b;
+  border-radius: 0.18rem;
+  transition: background 220ms ease, box-shadow 220ms ease;
+}
+
+.meter-bars span.is-active {
+  background: #1f9e83;
+  box-shadow: 0 0 0.45rem rgba(31,158,131,.55);
+}
+
+.meter-bars span.is-active:nth-child(n+6) {
+  background: #e49a24;
+  box-shadow: 0 0 0.45rem rgba(228,154,36,.55);
+}
+
+.electrode-rig {
+  position: absolute;
+  z-index: 6;
+  top: 15.2rem;
+  left: 50%;
+  width: 13rem;
+  height: 17rem;
+  transform: translate(-50%, -4.4rem);
+  transition: transform 800ms cubic-bezier(.2,.75,.25,1);
+}
+
+.electrode-rig.is-lowered {
+  transform: translate(-50%, 1rem);
+}
+
+.electrode-crossbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1.1rem;
+  background: linear-gradient(#516a76, #233c49);
+  border: 3px solid #203946;
+  border-radius: 0.35rem;
+}
+
+.electrode {
+  position: absolute;
+  top: 0.75rem;
+  width: 1.3rem;
+  height: 15.5rem;
+  background: linear-gradient(90deg, #172733, #5d6d73 45%, #1a2b34);
+  border: 2px solid #10232d;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: inset 0 0 0.35rem rgba(255,255,255,.22);
+}
+
+.electrode-left { left: 2.3rem; }
+.electrode-right { right: 2.3rem; }
+
+.electrode span {
+  position: absolute;
+  top: 1.1rem;
+  left: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: #c2d1d6;
+  border: 2px solid #243c48;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.conductivity-beaker-wrap {
+  position: absolute;
+  z-index: 4;
+  bottom: 2.7rem;
+  left: 50%;
+  width: 20rem;
+  transform: translateX(-50%);
+}
+
+.beaker-label {
+  width: max-content;
+  max-width: 21rem;
+  margin: 0 auto 0.55rem;
+  padding: 0.44rem 0.8rem;
+  color: #17394a;
+  background: rgba(255,255,255,.94);
+  border: 1px solid #adc3cc;
+  border-radius: 0.55rem;
+  box-shadow: 0 5px 14px rgba(18,52,77,.12);
+  font-size: 0.88rem;
+  font-weight: 850;
+  text-align: center;
+}
+
+.conductivity-beaker {
+  position: relative;
+  width: 16rem;
+  height: 17.5rem;
+  margin: 0 auto;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(255,255,255,.62), rgba(205,232,239,.22) 52%, rgba(255,255,255,.7));
+  border: 0.42rem solid rgba(84,119,134,.72);
+  border-top: 0.72rem solid rgba(69,104,120,.8);
+  border-radius: 0.45rem 0.45rem 2.1rem 2.1rem;
+  box-shadow: inset 0 0 1.9rem rgba(73,139,165,.11), 0 15px 24px rgba(18,52,77,.12);
+}
+
+.conductivity-beaker::before {
+  content: "";
+  position: absolute;
+  z-index: 8;
+  top: -0.65rem;
+  left: 50%;
+  width: 17.2rem;
+  height: 1.15rem;
+  border: 0.35rem solid rgba(69,104,120,.82);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.conductivity-liquid {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 0;
+  overflow: hidden;
+  background: var(--liquid-color, rgba(157,214,229,.6));
+  border-radius: 0 0 1.6rem 1.6rem;
+  transition: height 900ms cubic-bezier(.2,.8,.25,1), background 320ms ease;
+}
+
+.conductivity-liquid.is-filled {
+  height: 58%;
+}
+
+.liquid-wave {
+  position: absolute;
+  top: -0.65rem;
+  left: -8%;
+  width: 116%;
+  height: 1.3rem;
+  background: rgba(215,244,249,.76);
+  border: 2px solid rgba(79,153,178,.45);
+  border-radius: 50%;
+  animation: liquidWave 3.2s ease-in-out infinite;
+}
+
+.beaker-shine {
+  position: absolute;
+  z-index: 7;
+  top: 1.3rem;
+  left: 1.1rem;
+  width: 1.1rem;
+  height: 12.5rem;
+  background: linear-gradient(rgba(255,255,255,.86), rgba(255,255,255,.08));
+  border-radius: 2rem;
+  transform: skewX(-4deg);
+}
+
+.beaker-shadow {
+  width: 18rem;
+  height: 1.4rem;
+  margin: -0.4rem auto 0;
+  background: radial-gradient(ellipse, rgba(18,52,77,.28), transparent 68%);
+}
+
+.ion-motion {
+  position: absolute;
+  width: 0.8rem;
+  height: 0.8rem;
+  opacity: 0;
+  border: 2px solid rgba(18,87,111,.8);
+  border-radius: 50%;
+  transition: opacity 250ms ease;
+}
+
+.conductivity-stage.ions-active .ion-motion {
+  opacity: 0.72;
+  animation: ionDrift 1.6s ease-in-out infinite alternate;
+}
+
+.conductivity-stage.ions-active .ion-motion-two,
+.conductivity-stage.ions-active .ion-motion-four {
+  animation-name: ionDriftOpposite;
+}
+
+.ion-motion::after {
+  content: attr(data-charge);
+  color: #12344d;
+  font-size: 0.7rem;
+  font-weight: 950;
+}
+
+.ion-motion-one { left: 19%; top: 34%; }
+.ion-motion-two { left: 39%; top: 64%; animation-delay: -.45s !important; }
+.ion-motion-three { left: 65%; top: 42%; animation-delay: -.8s !important; }
+.ion-motion-four { left: 78%; top: 70%; animation-delay: -1.15s !important; }
+
+.conductivity-readout {
+  position: absolute;
+  z-index: 9;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  min-width: 13rem;
+  padding: 0.65rem 0.85rem;
+  color: #173a4d;
+  background: rgba(255,255,255,.94);
+  border: 1px solid #b9ccd4;
+  border-radius: 0.72rem;
+  box-shadow: 0 8px 20px rgba(18,52,77,.12);
+}
+
+.readout-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.conductivity-readout strong {
+  font-size: 1.05rem;
+}
+
+.conductivity-control-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.conductivity-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 54px;
+}
+
+.conductivity-choice-group {
+  margin: 0;
+  padding: 1rem;
+  background: #f4f8fa;
+  border: 1px solid #cad8de;
+  border-radius: 0.95rem;
+}
+
+.conductivity-choice-group legend {
+  padding: 0 0.45rem;
+  color: #224659;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.conductivity-solution-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.conductivity-solution-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.65rem 1fr;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 5.1rem;
+  padding: 0.72rem;
+  color: var(--ink);
+  background: #ffffff;
+  border: 2px solid #b8cbd3;
+  border-radius: 0.8rem;
+  text-align: left;
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.conductivity-solution-card:hover:not(:disabled) {
+  border-color: var(--teal);
+  box-shadow: 0 7px 17px rgba(18,52,77,.12);
+  transform: translateY(-2px);
+}
+
+.conductivity-solution-card[aria-pressed="true"] {
+  background: #e9f8f6;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(15,124,128,.13);
+}
+
+.solution-flask-icon {
+  position: relative;
+  display: grid;
+  place-items: end center;
+  width: 2.5rem;
+  height: 3.1rem;
+  padding-bottom: 0.35rem;
+  color: #173b4d;
+  background: linear-gradient(to top, var(--card-liquid, #b9e1eb) 0 46%, rgba(255,255,255,.6) 47%);
+  border: 3px solid #5f7a87;
+  border-radius: 0.25rem 0.25rem 1rem 1rem;
+  font-size: 0.66rem;
+  font-weight: 950;
+}
+
+.solution-flask-icon::before {
+  content: "";
+  position: absolute;
+  top: -0.42rem;
+  width: 1.2rem;
+  height: 0.52rem;
+  background: #edf7f9;
+  border: 3px solid #5f7a87;
+  border-bottom: 0;
+  border-radius: 0.2rem 0.2rem 0 0;
+}
+
+.conductivity-solution-card strong,
+.conductivity-solution-card small {
+  display: block;
+}
+
+.conductivity-solution-card strong {
+  font-size: 0.88rem;
+  line-height: 1.22;
+}
+
+.conductivity-solution-card small {
+  margin-top: 0.28rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.card-badge {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 0.3rem;
+  padding: 0.12rem 0.45rem;
+  color: #365363;
+  background: #edf3f5;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.card-badge.acid { color: #852f35; background: #fde6e6; }
+.card-badge.lye { color: #174e86; background: #e1effd; }
+
+.tested-mark {
+  position: absolute;
+  top: 0.38rem;
+  right: 0.38rem;
+  display: grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: white;
+  background: var(--teal);
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 950;
+}
+
+/* Teilchenansicht */
+.particle-dialog {
+  width: min(1180px, calc(100% - 1.4rem));
+  max-height: 94vh;
+  padding: 0;
+  overflow: auto;
+  color: var(--ink);
+  background: #f5fafb;
+  border: 1px solid #b9ccd4;
+  border-radius: 1.2rem;
+  box-shadow: 0 26px 80px rgba(4,25,38,.34);
+}
+
+.particle-dialog::backdrop {
+  background: rgba(8, 29, 42, 0.74);
+  backdrop-filter: blur(4px);
+}
+
+.particle-dialog-header {
+  position: sticky;
+  z-index: 30;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid #cfdae0;
+}
+
+.particle-dialog-header h2,
+.particle-dialog-header p {
+  margin: 0;
+}
+
+.particle-dialog-header .dialog-close {
+  color: var(--navy);
+  background: #eef4f6;
+  border-color: #9db4be;
+}
+
+.single-particle-view,
+.comparison-particle-view {
+  padding: 1rem 1.2rem;
+}
+
+.particle-view-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.particle-view-title h3,
+.comparison-card h3 {
+  margin: 0.35rem 0 0;
+  font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+}
+
+.solution-badge,
+.conductivity-pill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.26rem 0.62rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
+.solution-badge {
+  color: #365363;
+  background: #e8eff2;
+}
+
+.solution-badge.acid { color: #852f35; background: #fde6e6; }
+.solution-badge.lye { color: #174e86; background: #e1effd; }
+.conductivity-pill { color: #0c5c5f; background: #dff6f2; }
+
+.particle-canvas {
+  position: relative;
+  height: min(48vh, 430px);
+  min-height: 330px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(125,216,231,.2), transparent 30%),
+    radial-gradient(circle at 82% 74%, rgba(78,148,188,.19), transparent 36%),
+    radial-gradient(circle, rgba(255,255,255,.12) 1px, transparent 1.5px),
+    linear-gradient(145deg, #12364b, #0b2335 70%);
+  background-size: auto, auto, 22px 22px, auto;
+  border: 4px solid #466575;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 3rem rgba(0,0,0,.24);
+}
+
+.particle-canvas.compact {
+  height: 340px;
+  min-height: 280px;
+}
+
+.particle {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: var(--particle-size, 2.45rem);
+  height: var(--particle-size, 2.45rem);
+  color: #102e40;
+  font-size: 0.9rem;
+  font-weight: 1000;
+  line-height: 1;
+  filter: drop-shadow(0 4px 5px rgba(0,0,0,.24));
+  animation: particleDrift var(--duration, 7s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+.particle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--particle-color, #e8f5f7);
+  border: 3px solid rgba(255,255,255,.75);
+  border-radius: var(--particle-radius, 50%);
+  box-shadow: inset -5px -7px 10px rgba(15,45,60,.22), inset 4px 4px 7px rgba(255,255,255,.55);
+}
+
+.particle > span {
+  position: relative;
+  z-index: 2;
+}
+
+.particle.water {
+  --particle-size: 2.1rem;
+  --particle-color: #73c7dc;
+}
+
+.particle.water::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -0.42rem;
+  bottom: -0.18rem;
+  width: 0.92rem;
+  height: 0.92rem;
+  background: #dff8fc;
+  border: 2px solid rgba(255,255,255,.82);
+  border-radius: 50%;
+  box-shadow: -1.65rem 0.05rem 0 -0.05rem #dff8fc;
+}
+
+.particle.neutral-molecule,
+.particle.acid-molecule,
+.particle.ammonia-molecule {
+  --particle-radius: 32% 68% 42% 58%;
+  transform: rotate(12deg);
+}
+
+.particle.neutral-molecule { --particle-color: #e9bd6d; }
+.particle.acid-molecule { --particle-color: #d496c8; }
+.particle.ammonia-molecule { --particle-color: #b8a0dc; }
+.particle.sodium { --particle-color: #71b7ee; }
+.particle.chloride { --particle-color: #9bd475; }
+.particle.oxonium { --particle-color: #f08b83; }
+.particle.hydrogen-sulfate { --particle-color: #f3bd62; }
+.particle.sulfate { --particle-color: #e5d657; }
+.particle.acetate { --particle-color: #c798d9; }
+.particle.hydroxide { --particle-color: #6fd1c5; }
+.particle.ammonium { --particle-color: #b197da; }
+
+.particle-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.72rem;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.34rem 0.58rem;
+  color: #294858;
+  background: white;
+  border: 1px solid #c9d8de;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.legend-symbol {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #173344;
+  background: var(--legend-color, #d8e8ed);
+  border: 2px solid rgba(74,104,119,.55);
+  border-radius: 50%;
+  font-size: 0.68rem;
+  font-weight: 1000;
+}
+
+.comparison-selectors {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+.comparison-selectors label {
+  color: #294858;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.comparison-selectors select {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.6rem 0.7rem;
+  color: var(--ink);
+  background: white;
+  border: 2px solid #9db4be;
+  border-radius: 0.65rem;
+}
+
+.swap-button {
+  min-width: 3rem;
+  padding: 0.45rem;
+  color: white;
+  background: var(--teal);
+  border: 2px solid var(--teal);
+  border-radius: 0.65rem;
+  font-size: 1.25rem;
+  font-weight: 950;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.comparison-card {
+  min-width: 0;
+  padding: 0.85rem;
+  background: white;
+  border: 1px solid #c5d5dc;
+  border-radius: 0.95rem;
+}
+
+.comparison-card header {
+  min-height: 4.4rem;
+  margin-bottom: 0.65rem;
+}
+
+.particle-legend.compact .legend-item {
+  font-size: 0.7rem;
+}
+
+.particle-dialog-actions {
+  position: sticky;
+  z-index: 30;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  padding: 0.9rem 1.2rem;
+  background: rgba(255,255,255,.96);
+  border-top: 1px solid #cfdae0;
+}
+
+body.particles-paused .particle,
+body.particles-paused .liquid-wave {
+  animation-play-state: paused !important;
+}
+
+@keyframes liquidWave {
+  0%, 100% { transform: translateX(-1.5%) rotate(-1deg); }
+  50% { transform: translateX(1.5%) rotate(1deg); }
+}
+
+@keyframes ionDrift {
+  0% { transform: translate(-0.7rem, -0.3rem); }
+  100% { transform: translate(0.8rem, 0.45rem); }
+}
+
+@keyframes ionDriftOpposite {
+  0% { transform: translate(0.7rem, 0.3rem); }
+  100% { transform: translate(-0.8rem, -0.45rem); }
+}
+
+@keyframes particleDrift {
+  0% { translate: 0 0; rotate: -4deg; }
+  45% { translate: var(--drift-x, 9px) var(--drift-y, -8px); rotate: 5deg; }
+  100% { translate: calc(var(--drift-x, 9px) * -0.7) calc(var(--drift-y, -8px) * -0.8); rotate: -2deg; }
+}
+
+footer {
+  padding: 1.4rem;
+  color: #667b86;
+  text-align: center;
+  font-size: 0.82rem;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@keyframes dropperSequence {
+  0% { opacity: 0; transform: translate(var(--start-x), -45px) rotate(-9deg); }
+  18% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  80% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(var(--start-x), -45px) rotate(9deg); }
+}
+
+@keyframes dropFall {
+  0% { opacity: 1; transform: translate(-50%, 0) rotate(45deg) scale(0.75); }
+  82% { opacity: 1; transform: translate(-50%, var(--fall-mid)) rotate(45deg) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, var(--fall-end)) rotate(45deg) scale(1.35, 0.45); }
+}
+
+@keyframes mixLiquid {
+  0% { opacity: 0; transform: translateY(-8%); }
+  20% { opacity: 0.85; transform: translateY(0) scaleX(0.9); }
+  55% { opacity: 0.4; transform: scaleX(1.08) rotate(2deg); }
+  100% { opacity: 0; transform: scaleX(1); }
+}
+
+@media (max-width: 1180px) {
+  .result-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem 1rem;
+  }
+
+  .result-topline,
+  .result-data,
+  .result-explanation,
+  .result-card .wide {
+    grid-column: auto;
+  }
+
+  .result-data {
+    margin: 0;
+  }
+
+  .result-card .wide {
+    align-self: end;
+  }
+
+  .conductivity-solution-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1050px) {
+  .selection-dock,
+  .analysis-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .conductivity-control-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .conductivity-control-row .conductivity-action:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 820px) {
+  .hero {
+    flex-direction: column;
+    padding: 1.4rem;
+  }
+
+  .hero-tools {
+    flex-basis: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .result-card {
+    display: block;
+  }
+
+  .protocol-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .protocol-actions {
+    justify-content: flex-start;
+  }
+
+  .teacher-note-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-heading-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .scale-button {
+    align-self: flex-start;
+  }
+
+  .conductivity-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .conductivity-stage {
+    min-height: 650px;
+  }
+
+  .conductivity-meter {
+    top: 2.8rem;
+    width: 15.5rem;
+  }
+
+  .power-source {
+    top: 10rem;
+    left: 1.5rem;
+    width: 10.5rem;
+  }
+
+  .conductivity-lamp {
+    top: 8.1rem;
+    right: 2.5rem;
+    transform: scale(.88);
+  }
+
+  .electrode-rig {
+    top: 17.8rem;
+  }
+
+  .conductivity-solution-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-card header {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero,
+  .model-note,
+  .workspace,
+  .protocol-section,
+  .teacher-notes {
+    width: min(100% - 0.8rem, 1480px);
+  }
+
+  .hero-tools,
+  .solution-grid,
+  .indicator-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-switch {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+
+  .lab-stage {
+    min-height: 520px;
+  }
+
+  .tube-station {
+    bottom: 5.3rem;
+    width: 10rem;
+  }
+
+  .tube {
+    width: 7rem;
+    height: 19rem;
+    border-radius: 0.5rem 0.5rem 3.5rem 3.5rem;
+  }
+
+  .tube::before {
+    width: 8rem;
+  }
+
+  .tube-label {
+    width: 14rem;
+  }
+
+  .falling-drop {
+    --fall-mid: 10.2rem;
+    --fall-end: 10.8rem;
+  }
+
+  .stand {
+    display: none;
+  }
+
+  .status-row {
+    grid-template-columns: 1fr;
+  }
+
+  .result-data {
+    grid-template-columns: 1fr;
+  }
+
+  .conductivity-workspace {
+    width: min(100% - 0.8rem, 1280px);
+  }
+
+  .conductivity-stage {
+    min-height: 620px;
+  }
+
+  .conductivity-wall-label {
+    font-size: 0.6rem;
+  }
+
+  .conductivity-meter {
+    top: 3.1rem;
+    width: 13rem;
+  }
+
+  .meter-face {
+    height: 4.7rem;
+  }
+
+  .meter-needle {
+    height: 3.75rem;
+  }
+
+  .power-source {
+    top: 10.8rem;
+    left: 0.8rem;
+    grid-template-columns: 1fr 1fr;
+    width: 5.7rem;
+    min-height: 3.5rem;
+  }
+
+  .power-label {
+    display: none;
+  }
+
+  .conductivity-lamp {
+    top: 9rem;
+    right: 0.4rem;
+    transform: scale(.68);
+  }
+
+  .electrode-rig {
+    top: 18rem;
+    width: 11rem;
+  }
+
+  .conductivity-beaker-wrap {
+    bottom: 4.8rem;
+    width: 17rem;
+  }
+
+  .conductivity-beaker {
+    width: 13rem;
+    height: 16.5rem;
+  }
+
+  .conductivity-beaker::before {
+    width: 14rem;
+  }
+
+  .conductivity-readout {
+    right: 50%;
+    bottom: 0.75rem;
+    justify-content: center;
+    min-width: 13rem;
+    transform: translateX(50%);
+  }
+
+  .conductivity-control-row,
+  .conductivity-solution-grid,
+  .comparison-selectors {
+    grid-template-columns: 1fr;
+  }
+
+  .conductivity-control-row .conductivity-action:first-child {
+    grid-column: auto;
+  }
+
+  .swap-button {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .particle-view-title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .particle-dialog-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .particle-canvas,
+  .particle-canvas.compact {
+    height: 360px;
+    min-height: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 10mm;
+  }
+
+  body {
+    background: white;
+  }
+
+  .hero,
+  .model-note,
+  .workspace,
+  .protocol-actions,
+  .teacher-notes,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .protocol-section {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .table-wrap {
+    overflow: visible;
+    border: 0;
+  }
+
+  table {
+    min-width: 0;
+    font-size: 8pt;
+  }
+
+  th,
+  td {
+    overflow-wrap: anywhere;
+  }
+
+  th {
+    color: black;
+    background: #ddd !important;
+  }
+}
+
+</style>
+  <style>
+/* Existing laboratory style is retained; these rules apply to the new station. */
+.mode-switch { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.hero { flex-wrap:wrap; }
+.hero-tools { flex-basis: 490px; }
+.titration-workspace { max-width: 1320px; }
+.titration-topline { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.1rem; }
+.titration-topline h2, .titration-topline p { margin:0; }
+.titration-topline h2 { font-size:1.5rem; }
+.tit-model-badge { border:1px solid #c7d9df; background:#f3f8fa; padding:.45rem .7rem; border-radius:30px; color:#526d7b; font-size:.76rem; white-space:nowrap; }
+.titration-layout { display:grid; grid-template-columns:280px minmax(0,1fr); gap:1.1rem; }
+.titration-settings { display:grid; align-content:start; gap:1rem; }
+.titration-settings fieldset { min-width:0; margin:0; padding:.85rem 1rem 1rem; border:1px solid #cbdce2; border-radius:.85rem; background:#f6f9fa; }
+.titration-settings legend { padding:0 .35rem; font-weight:800; font-size:.95rem; }
+.titration-settings label { display:block; margin:.15rem 0 .3rem; color:#56707f; font-size:.76rem; font-weight:650; }
+.titration-settings select { width:100%; padding:.55rem .5rem; color:var(--ink); background:white; border:1px solid #9fb9c5; border-radius:.5rem; margin-bottom:.5rem; font-size:.9rem; }
+.titration-settings select:last-child { margin-bottom:0; }
+.tit-sample-label { display:flex; flex-direction:column; gap:.1rem; margin:.25rem 0 .85rem; padding:.55rem .7rem; border-left:3px solid #d9a84c; background:#fff8e9; border-radius:0 .4rem .4rem 0; }
+.tit-sample-label span { color:#7b5d25; font-size:.76rem; }
+.tit-sample-label strong { font-size:.83rem; font-weight:650; }
+.tit-reset-buttons { display:grid; gap:.55rem; }
+.tit-reset-buttons button { font-size:.82rem; min-height:42px; }
+.titration-bench { min-width:0; }
+.titration-apparatus { position:relative; aspect-ratio:660/590; overflow:hidden; border:1px solid #cbdce2; border-radius:1rem; background:radial-gradient(ellipse at 50% 38%, #fff 0%, #f0f5f4 63%, #e0e9e9 100%); }
+.titration-drawing { display:block; width:100%; height:100%; }
+.tit-readouts { position:absolute; top:1.1rem; right:1.1rem; display:grid; gap:.55rem; width:clamp(120px,24%,175px); }
+.tit-reading { padding:.65rem .75rem; background:rgba(255,255,255,.94); border:1px solid #c8dbe2; border-radius:.65rem; }
+.tit-reading > span { display:block; color:#56717f; font-size:.72rem; margin-bottom:.1rem; }
+.tit-reading strong { color:#153d50; font-size:1.35rem; font-variant-numeric:tabular-nums; font-weight:650; }
+.tit-reading small { font-size:.75rem; font-weight:500; }
+.tit-main-reading { background:#153d50; border-color:#153d50; }
+.tit-main-reading > span { color:#bad7e2; }
+.tit-main-reading strong { color:#fff; font-size:1.7rem; }
+.tit-readouts button { min-height:40px; padding:.5rem; font-size:.74rem; }
+.tit-flask-caption { position:absolute; left:1.15rem; bottom:4.5rem; width:23%; color:#56717f; font-size:.76rem; }
+.tit-valve-controls { display:grid; grid-template-columns:1fr 1.2fr 1fr; gap:.6rem; align-items:end; margin-top:1rem; }
+.tit-valve-controls button { font-size:.85rem; padding:.65rem .6rem; min-height:50px; }
+.tit-valve-controls label { font-size:.72rem; font-weight:650; color:#56717f; }
+.tit-valve-controls select { display:block; width:100%; margin-top:.25rem; height:50px; border:1px solid #a4bdc9; border-radius:.6rem; padding:.5rem; background:white; color:var(--ink); font-size:.8rem; }
+#titToggle[aria-pressed="true"] { background:#a84832; border-color:#a84832; }
+.tit-status { margin:.8rem 0 0; color:#45616f; font-size:.82rem; min-height:1.4em; }
+#titValve { cursor:pointer; outline:none; }
+#titValve:hover > rect, #titValve:focus-visible > rect { fill:#f0a51a; fill-opacity:.18; stroke:#dc9e27; stroke-width:2; }
+#titValve[aria-disabled="true"] { opacity:.55; cursor:not-allowed; }
+#titValveHandle { transform-origin:0 0; }
+#titValveHandle { transition:transform .16s ease; }
+.tit-stir-controls { display:grid; grid-template-columns:1fr auto 1.1fr; gap:1rem; align-items:center; padding:.85rem 1rem; margin-top:.7rem; border:1px solid #cfdddf; border-radius:.7rem; background:#f3f7f6; }
+.tit-stir-controls strong { display:block; color:#284d56; font-size:.84rem; }
+.tit-stir-controls span { display:block; color:#657e84; font-size:.71rem; margin-top:.15rem; }
+.tit-stir-controls button { min-height:38px; padding:.5rem .7rem; font-size:.76rem; }
+.tit-stir-controls label { display:block; font-size:.7rem; color:#58737a; }
+.tit-stir-controls output { float:right; margin-left:.3rem; color:#244e56; font-weight:650; }
+.tit-stir-controls input { display:block; accent-color:#297e80; width:100%; margin:.65rem 0 .1rem; cursor:pointer; }
+#titStirKnob { cursor:pointer; outline:none; }
+#titStirKnob:hover > circle:first-child, #titStirKnob:focus-visible > circle:first-child { stroke:#348f91; stroke-width:1.5; }
+#titKnobMarker { transition:transform .2s ease; transform-origin:0 0; }
+#titDrops, #titPlumes, #titRipples { pointer-events:none; }
+#titMagnifier, #titMagnifierLink { pointer-events:none; }
+@media (max-width:1050px) {
+  .titration-layout { grid-template-columns:235px minmax(0,1fr); }
+  .tit-readouts { right:.6rem; top:.6rem; width:26%; gap:.35rem; }
+  .tit-reading { padding:.45rem .5rem; }
+  .tit-reading > span { font-size:.64rem; }
+  .tit-reading strong { font-size:1.1rem; }
+  .tit-main-reading strong { font-size:1.3rem; }
+  .tit-valve-controls { grid-template-columns:1fr 1fr; }
+  .tit-valve-controls label { grid-column:1/-1; grid-row:2; }
+  .tit-flask-caption { font-size:.65rem; bottom:3rem; left:.65rem; }
+}
+@media (max-width:820px) {
+  .hero-tools { flex-basis:auto; width:100%; }
+}
+@media (max-width:760px) {
+  .titration-layout { grid-template-columns:1fr; }
+  .titration-settings { grid-template-columns:1fr 1fr; gap:.7rem; }
+  .titration-settings fieldset { padding:.65rem .7rem .8rem; }
+  .tit-reset-buttons { align-content:center; }
+  .titration-bench { grid-row:1; }
+  .titration-topline { flex-wrap:wrap; }
+  .tit-model-badge { font-size:.68rem; }
+  .mode-switch { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .mode-button { font-size:.75rem; padding:.5rem; }
+  .hero-tools { flex-basis:auto; width:100%; }
+}
+@media (max-width:540px) {
+  .tit-stir-controls { grid-template-columns:1fr auto; gap:.7rem; }
+  .tit-stir-controls label { grid-column:1/-1; }
+}
+@media (max-width:440px) {
+  .titration-topline h2 { font-size:1.2rem; }
+  .titration-settings { grid-template-columns:1fr; }
+  .titration-apparatus { aspect-ratio:auto; }
+  .titration-drawing { height:auto; aspect-ratio:410/590; }
+  .tit-readouts { position:static; width:auto; margin:.6rem; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.3rem; }
+  .tit-reading { padding:.3rem .4rem; }
+  .tit-reading > span { font-size:.58rem; }
+  .tit-reading strong, .tit-main-reading strong { font-size:1rem; }
+  .tit-reading small { font-size:.62rem; }
+  .tit-readouts button { grid-column:1/-1; font-size:.76rem; min-height:40px; padding:.3rem; }
+  .tit-flask-caption { display:block; position:static; width:auto; margin:.4rem .7rem .7rem; font-size:.7rem; }
+}
+@media (prefers-reduced-motion:reduce) { #titValveHandle, #titKnobMarker { transition:none; } }
+/* Leave the right side of the burette free for the moving magnifier. */
+.titration-apparatus { aspect-ratio:auto; }
+.titration-drawing { height:auto; aspect-ratio:660/590; }
+.tit-readouts { position:static; width:auto; margin:.7rem; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.5rem; }
+.tit-readouts button { grid-column:1/-1; }
+.tit-flask-caption { display:block; position:static; width:auto; margin:.5rem .8rem .8rem; font-size:.75rem; }
+@media (max-width:440px) { .titration-drawing { aspect-ratio:410/590; } }
+
+</style>
+  <style>
+/* A shared glass, metal and motion treatment for the two original stations. */
+.selection-dock .choice-grid { grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr)); }
+.choice-card { grid-template-columns:2.35rem minmax(0,1fr); }
+.choice-card .choice-copy strong { color:#16374a; font-size:.9rem; line-height:1.35; }
+.choice-card:disabled { opacity:1; color:#16374a; background:#f1f5f6; }
+.choice-card[aria-pressed="true"]:disabled { background:#e1f4f3; }
+.lab-stage, .conductivity-stage { min-height:0; background:radial-gradient(ellipse at 50% 35%,#fff,#edf3f2 72%,#dfe9e8); border:1px solid #cbdcde; box-shadow:none; }
+.lab-real-drawing { display:block; width:100%; height:clamp(430px,46vw,600px); }
+.real-tube-label,.real-beaker-label { padding:.65rem 1rem; text-align:center; color:#42636c; font-size:.86rem; font-weight:650; background:#e8efed; border-top:1px solid #d1dfdc; }
+.real-beaker-label { background:transparent; border:0; padding:.1rem 1rem .5rem; }
+.conductivity-readout { position:static; justify-content:center; min-width:0; width:max-content; max-width:calc(100% - 1.5rem); margin:.1rem auto .85rem; transform:none; box-shadow:none; }
+.real-pipette { pointer-events:none; }
+.pipette-bulb { transform-box:fill-box; transform-origin:center; transition:transform .1s ease; }
+.real-pipette.is-squeezing .pipette-bulb { transform:scale(.86,.97); }
+.real-meter-bars rect { fill:#99aaa1; transition:fill .35s ease; }
+.real-meter-bars rect.is-active { fill:#499a7d; }
+.real-meter-bars rect.is-active:nth-child(n+6) { fill:#c59945; }
+#indDrops,#indRipples,#mixingLayer,#condPour,#condRipples { pointer-events:none; }
+.particle { animation:none; will-change:transform; }
+.particle::before { border-width:1.5px; background:radial-gradient(circle at 28% 24%,#ffffffa6 0%,transparent 42%),var(--particle-color,#e8f5f7); box-shadow:inset -4px -5px 7px #0f2d3c44,inset 2px 2px 5px #ffffff60; }
+.particle.molecular-particle { width:2.65rem; height:2.65rem; color:#edf5f7; }
+.particle.molecular-particle::before,.particle.molecular-particle::after { content:none; }
+.molecular-symbol { display:block; width:100%; height:100%; overflow:visible; }
+.legend-symbol.molecular-legend-symbol { width:2.65rem; height:2.45rem; flex:none; border:0; border-radius:0; background:transparent; color:#294858; }
+.molecule-key { margin:0; padding:.6rem 1.2rem 0; color:#496471; font-size:.8rem; }
+.particle-canvas { background:radial-gradient(ellipse at 40% 25%,#244b5a,#102e3b 75%); border:1px solid #426775; }
+@media(max-width:520px) { .lab-real-drawing { height:auto; } #indicatorDrawing { aspect-ratio:400/540; } #conductivityDrawing { aspect-ratio:440/600; } }
+@media(prefers-reduced-motion:reduce) { .pipette-bulb,.real-meter-bars rect { transition:none; } }
+.comparison-selectors { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.comparison-reference { min-width:0; color:#294858; font-size:.78rem; font-weight:900; }
+.comparison-reference strong { display:block; margin-top:.25rem; min-height:46px; padding:.7rem; border:2px solid #c4d5d9; border-radius:.65rem; background:#eaf2f2; overflow-wrap:anywhere; }
+#colorScaleButton { flex:none; max-width:100%; }
+#colorScaleButton:disabled { opacity:1; color:#647b85; background:#eef3f5; border-color:#ccd9df; }
+.ph-scale-content { padding:1rem 1.3rem 1.2rem; }
+.ph-scale-note { margin:0 0 1rem; color:#58717d; font-size:.8rem; line-height:1.5; }
+.ph-scale-row { padding:.8rem .9rem; margin-bottom:.7rem; border:1px solid #d4e1e5; border-radius:.7rem; background:#f8fbfc; }
+.ph-scale-row.is-selected { border:2px solid #168288; background:#eff8f7; }
+.ph-scale-row h3 { margin:0 0 .4rem; font-size:.95rem; }
+.ph-used-label { margin-left:.6rem; color:#0c7175; font-size:.72rem; font-weight:600; }
+.ph-axis { position:relative; height:23px; margin:0 .5rem; font-size:.68rem; color:#365765; }
+.ph-axis span { position:absolute; transform:translateX(-50%); }
+.ph-band { position:relative; height:29px; margin:0 .5rem; border:1px solid #839ba4; border-radius:3px; }
+.ph-band::after { content:""; position:absolute; inset:0; background:repeating-linear-gradient(90deg,#203d5022 0 1px,transparent 1px calc(100% / 14)); }
+.ph-colourless { position:absolute; left:23%; top:50%; transform:translate(-50%,-50%); color:#526b77; font-size:.7rem; }
+.ph-range { margin:.45rem 0 0; color:#496875; font-size:.74rem; line-height:1.45; }
+@media(max-width:680px) { .comparison-selectors { grid-template-columns:1fr; } .lab-heading-row { flex-wrap:wrap; } }
+@media(max-width:440px) { .ph-scale-content { padding:.85rem; } .ph-scale-row { padding:.7rem .5rem; } .ph-axis { font-size:.6rem; } .ph-used-label { display:block; margin:.2rem 0 0; } }
+
+</style>
+</head>
+<body>
+  <a id="skipLink" class="skip-link" href="#experiment">Direkt zum Experiment</a>
+
+  <header class="hero">
+    <div>
+      <p id="heroEyebrow" class="eyebrow">Chemie · Säuren, Laugen und Indikatoren</p>
+      <h1 id="heroTitle">Digitales Indikatorlabor</h1>
+      <p id="heroIntro" class="intro">Wähle eine Probe und gib anschließend einen Indikator hinzu.</p>
+    </div>
+    <div class="hero-tools" role="group" aria-label="Ansichtsoptionen">
+      <div class="mode-switch" role="group" aria-label="Labormodus wählen">
+        <button id="indicatorModeButton" class="mode-button" type="button" aria-pressed="true">
+          <span aria-hidden="true">◐</span>
+          Indikator-Prüfung
+        </button>
+        <button id="conductivityModeButton" class="mode-button" type="button" aria-pressed="false">
+          <span aria-hidden="true">⚡</span>
+          Leitfähigkeit
+        </button>
+        <button id="titrationModeButton" class="mode-button" type="button" aria-pressed="false"><span aria-hidden="true">⚗</span> Titration</button>
+      </div>
+      <button id="nameToggle" class="tool-button" type="button" aria-pressed="false">
+        <span aria-hidden="true">A–F</span>
+        Probenamen verbergen
+      </button>
+    </div>
+  </header>
+
+  <aside id="indicatorModelNote" class="model-note" aria-label="Wichtiger Modellhinweis">
+    <strong>Digitales Modell:</strong> Die dargestellten Farben sind idealisiert. Reale Farbtöne hängen unter anderem von Konzentration, Indikatormenge, Eigenfarbe und Beleuchtung ab. Die Simulation ist keine Anleitung für reale Laborversuche.
+  </aside>
+
+  <aside id="conductivityModelNote" class="model-note conductivity-note" aria-label="Wichtiger Modellhinweis" hidden>
+    <strong>Digitales Modell:</strong> Messanzeigen, Teilchenzahlen und Teilchenbewegungen sind qualitativ, vereinfacht und nicht maßstäblich. Die Simulation ist keine Anleitung für reale Laborversuche.
+  </aside>
+
+  <main id="experiment" class="workspace">
+    <section class="lab-panel lab-shell" aria-labelledby="labHeading">
+      <div class="lab-heading-row">
+        <div class="section-heading compact">
+          <div>
+            <h2 id="labHeading">Digital experimentieren</h2>
+            <p>Klicke unter dem Reagenzglas zuerst auf eine Probe und danach auf einen Indikator.</p>
+          </div>
+        </div>
+        <button id="colorScaleButton" class="scale-button" type="button" aria-haspopup="dialog" aria-controls="colorScaleDialog" disabled title="Nach vollständiger Indikatorzugabe verfügbar">Indikatorfarben</button>
+      </div>
+
+      <div id="labStage" class="lab-stage" role="img" aria-label="Experimentierplatz mit zwei Tropfflaschen und einem Reagenzglas">
+<svg id="indicatorDrawing" class="lab-real-drawing" viewBox="0 0 780 540" role="img" aria-labelledby="indTitle">
+<title id="indTitle">Reagenzglas im Stativ mit zwei Tropfpipetten und Vorratsflaschen</title><defs>
+ <linearGradient id="indMetal"><stop stop-color="#455e65"/><stop offset=".22" stop-color="#b1c1c5"/><stop offset=".42" stop-color="#eef4f4"/><stop offset=".62" stop-color="#91a9af"/><stop offset="1" stop-color="#46616a"/></linearGradient>
+ <linearGradient id="indGlass"><stop stop-color="#8cb5bf" stop-opacity=".28"/><stop offset=".1" stop-color="#fff" stop-opacity=".85"/><stop offset=".26" stop-color="#e3f3f5" stop-opacity=".06"/><stop offset=".75" stop-color="#fff" stop-opacity=".03"/><stop offset=".91" stop-color="#91b8c3" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity=".75"/></linearGradient>
+ <linearGradient id="indWater"><stop stop-color="#8ab7c2" stop-opacity=".35"/><stop offset=".3" stop-color="#d9edf0" stop-opacity=".28"/><stop offset=".8" stop-color="#c0dce3" stop-opacity=".3"/><stop offset="1" stop-color="#71a4b4" stop-opacity=".4"/></linearGradient>
+ <linearGradient id="indShade"><stop stop-color="#274d59" stop-opacity=".22"/><stop offset=".27" stop-color="#fff" stop-opacity=".12"/><stop offset=".72" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#244e5c" stop-opacity=".22"/></linearGradient>
+ <linearGradient id="indRubber"><stop stop-color="#253a3b"/><stop offset=".32" stop-color="#62817b"/><stop offset=".75" stop-color="#354e4d"/><stop offset="1" stop-color="#1e3537"/></linearGradient>
+ <linearGradient id="indHousing" x2="0" y2="1"><stop stop-color="#f6f7f2"/><stop offset=".22" stop-color="#e4eae5"/><stop offset="1" stop-color="#a6b9b5"/></linearGradient>
+ <linearGradient id="indBench" x2="0" y2="1"><stop stop-color="#d5dfdf"/><stop offset="1" stop-color="#afc2c5"/></linearGradient>
+ <filter id="indBlur"><feGaussianBlur stdDeviation="2"/></filter>
+ <filter id="indShadow" x="-.3" y="-.5" width="1.6" height="2"><feGaussianBlur stdDeviation="4"/></filter>
+ </defs>
+<defs>
+ <clipPath id="indTubeClip"><path d="M357 165 H423 V430 A33 33 0 0 1 357 430 Z"/></clipPath>
+ <clipPath id="indWetClip"><rect id="indWetRect" x="354" y="466" width="72" height="0"/></clipPath>
+ <linearGradient id="indAmber"><stop stop-color="#7c4b23"/><stop offset=".2" stop-color="#c29955"/><stop offset=".5" stop-color="#b8853c"/><stop offset=".9" stop-color="#825027"/><stop offset="1" stop-color="#d7b776"/></linearGradient>
+</defs>
+<path d="M-2000 494 H2780 V540 H-2000Z" fill="url(#indBench)"/><path d="M0 494 H780" stroke="#bbcdd0"/>
+<ellipse cx="435" cy="502" rx="135" ry="8" fill="#24434c" opacity=".15" filter="url(#indShadow)"/>
+<path d="M468 489 H540 L553 504 H454 Z" fill="#5c7379"/><path d="M468 489 H540 L545 496 H462Z" fill="#8b9d9f"/>
+<rect x="499" y="164" width="10" height="331" rx="4" fill="url(#indMetal)"/>
+<rect x="496" y="229" width="17" height="21" rx="3" fill="#617c81"/><path d="M503 239 H427" stroke="#91a7ac" stroke-width="8"/>
+<path d="M353 229 Q345 239 353 250 M427 229 Q435 239 427 250" fill="none" stroke="#7c979b" stroke-width="6"/>
+<path d="M355 232 V248 M425 232 V248" stroke="#3e5b60" stroke-width="4" stroke-linecap="round"/>
+<path d="M354 162 H426 V430 A36 36 0 0 1 354 430Z" fill="url(#indGlass)" stroke="#81a4ad" stroke-width="1.8"/>
+<g clip-path="url(#indTubeClip)">
+ <g clip-path="url(#indWetClip)"><rect id="tubeLiquid" x="354" y="162" width="72" height="305" fill="#c4e1e8" fill-opacity=".36"/><rect x="354" y="162" width="72" height="305" fill="url(#indShade)"/><g id="mixingLayer" filter="url(#indBlur)"></g></g>
+ <ellipse id="indSurface" cx="390" cy="466" rx="32" ry="4" fill="#d5e9ed" fill-opacity=".65" stroke="#8bb2ba" stroke-width=".7" opacity="0"/>
+ <g id="indRipples" fill="none" stroke="#fff" stroke-width="1.4"></g>
+</g>
+<g id="indDrops"></g>
+<path d="M360 175 V424 Q359 447 377 453" fill="none" stroke="#fff" stroke-width="3.8" stroke-linecap="round" opacity=".78"/>
+<path d="M419 180 V426 Q419 445 409 452" fill="none" stroke="#fff" stroke-width="1.5" opacity=".6"/>
+<path d="M362 442 Q390 472 418 442" fill="none" stroke="#87afb8" stroke-width="1.3" opacity=".5"/>
+<ellipse cx="390" cy="163" rx="37" ry="4.4" fill="url(#indGlass)" stroke="#7e9fa9" stroke-width="1.5"/>
+<ellipse cx="390" cy="163" rx="32.5" ry="2.6" fill="#edf5f5" opacity=".65"/>
+<g class="ind-bottle" transform="translate(190 0)">
+ <ellipse cx="0" cy="498" rx="40" ry="5" fill="#456670" opacity=".14"/>
+ <path d="M-16 396 H16 V417 Q33 425 33 440 V487 Q33 496 24 496 H-24 Q-33 496 -33 487 V440 Q-33 425 -16 417Z" fill="url(#indGlass)" stroke="#829e9f" stroke-width="1.2"/>
+ <path d="M-29 449 H29 V486 Q29 493 22 493 H-22 Q-29 493 -29 486Z" fill="#b5d6df" opacity=".48"/>
+ <path d="M-24 437 V483" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".4"/>
+ <rect x="-24" y="453" width="48" height="25" rx="2" fill="#f4f4e9" opacity=".94"/>
+ <text x="0" y="469" text-anchor="middle" fill="#526967" font-size="8.5">Probelösung</text>
+ <ellipse cx="0" cy="396" rx="17" ry="3" fill="url(#indGlass)" stroke="#6f8e95"/>
+</g>
+<g id="solutionDropper" class="real-pipette" transform="translate(190 348)">
+ <path class="pipette-bulb" d="M-13 38 V15 Q-13 0 0 0 Q13 0 13 15 V38Z" fill="url(#indRubber)" stroke="#3d5d5b" stroke-width="1"/>
+ <path d="M-8 12 Q-9 23 -8 31" stroke="#97b5a9" stroke-width="2" fill="none" opacity=".5"/>
+ <rect x="-16" y="36" width="32" height="12" rx="3" fill="url(#indRubber)"/>
+ <path d="M-6 48 V108 L-2 129 H2 L6 108 V48Z" fill="url(#indGlass)" stroke="#7a9faa" stroke-width="1.2"/>
+ <path d="M-3 75 V108 L0 125 L3 108 V75Z" fill="#b5d6df" opacity=".6"/>
+ <path d="M-3 52 V105" stroke="#fff" stroke-width="1.5" opacity=".8"/>
+ <ellipse class="pipette-tip-drop" cx="0" cy="130" rx="2" ry=".5" fill="#b5d6df" opacity="0"/>
+</g><g class="ind-bottle" transform="translate(590 0)">
+ <ellipse cx="0" cy="498" rx="40" ry="5" fill="#456670" opacity=".14"/>
+ <path d="M-16 396 H16 V417 Q33 425 33 440 V487 Q33 496 24 496 H-24 Q-33 496 -33 487 V440 Q-33 425 -16 417Z" fill="url(#indAmber)" stroke="#829e9f" stroke-width="1.2"/>
+ <path d="M-29 449 H29 V486 Q29 493 22 493 H-22 Q-29 493 -29 486Z" fill="#a97844" opacity=".48"/>
+ <path d="M-24 437 V483" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".4"/>
+ <rect x="-24" y="453" width="48" height="25" rx="2" fill="#f4f4e9" opacity=".94"/>
+ <text x="0" y="469" text-anchor="middle" fill="#526967" font-size="8.5">Indikator</text>
+ <ellipse cx="0" cy="396" rx="17" ry="3" fill="url(#indGlass)" stroke="#6f8e95"/>
+</g>
+<g id="indicatorDropper" class="real-pipette" transform="translate(590 348)">
+ <path class="pipette-bulb" d="M-13 38 V15 Q-13 0 0 0 Q13 0 13 15 V38Z" fill="url(#indRubber)" stroke="#3d5d5b" stroke-width="1"/>
+ <path d="M-8 12 Q-9 23 -8 31" stroke="#97b5a9" stroke-width="2" fill="none" opacity=".5"/>
+ <rect x="-16" y="36" width="32" height="12" rx="3" fill="url(#indRubber)"/>
+ <path d="M-6 48 V108 L-2 129 H2 L6 108 V48Z" fill="url(#indGlass)" stroke="#7a9faa" stroke-width="1.2"/>
+ <path d="M-3 75 V108 L0 125 L3 108 V75Z" fill="#a97844" opacity=".6"/>
+ <path d="M-3 52 V105" stroke="#fff" stroke-width="1.5" opacity=".8"/>
+ <ellipse class="pipette-tip-drop" cx="0" cy="130" rx="2" ry=".5" fill="#a97844" opacity="0"/>
+</g></svg><div class="real-tube-label" id="tubeLabel">Reagenzglas leer</div>
+      </div>
+
+      <div class="selection-dock" aria-label="Auswahl unter dem Reagenzglas">
+        <fieldset class="choice-group">
+          <legend><span>1</span> Probelösung anklicken</legend>
+          <p class="selection-hint">Der Klick füllt fünf Tropfen direkt in das Reagenzglas.</p>
+          <div id="solutionGrid" class="choice-grid solution-grid"></div>
+        </fieldset>
+
+        <fieldset class="choice-group indicator-group">
+          <legend><span>2</span> Indikatorlösung anklicken</legend>
+          <p class="selection-hint">Nach dem Befüllen löst der Klick den Indikatortropfen aus.</p>
+          <div id="indicatorGrid" class="choice-grid indicator-grid"></div>
+        </fieldset>
+      </div>
+
+      <div class="status-row">
+        <div id="statusBox" class="status-box" role="status" aria-live="polite">
+          Wähle zuerst eine Probelösung.
+        </div>
+        <button id="newExperimentButton" class="secondary-button" type="button">
+          Reagenzglas leeren
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <main id="conductivityLab" class="workspace conductivity-workspace" hidden>
+    <section class="lab-panel lab-shell conductivity-shell" aria-labelledby="conductivityHeading">
+      <div class="conductivity-toolbar">
+        <div>
+          <p class="eyebrow dark">Messstation</p>
+          <h2 id="conductivityHeading">Leitfähigkeitsprüfung</h2>
+        </div>
+        <button id="compareParticlesButton" class="scale-button compare-button" type="button" disabled>
+          <span aria-hidden="true">◉</span>
+          Teilchen vergleichen
+        </button>
+      </div>
+
+      <div id="conductivityStage" class="conductivity-stage">
+<svg id="conductivityDrawing" class="lab-real-drawing" viewBox="0 0 1000 600" role="img" aria-labelledby="condTitle">
+<title id="condTitle">Leitfähigkeitsmessung mit Becherglas, Elektroden, Spannungsquelle, Glühlampe und Messgerät</title><defs>
+ <linearGradient id="condMetal"><stop stop-color="#455e65"/><stop offset=".22" stop-color="#b1c1c5"/><stop offset=".42" stop-color="#eef4f4"/><stop offset=".62" stop-color="#91a9af"/><stop offset="1" stop-color="#46616a"/></linearGradient>
+ <linearGradient id="condGlass"><stop stop-color="#8cb5bf" stop-opacity=".28"/><stop offset=".1" stop-color="#fff" stop-opacity=".85"/><stop offset=".26" stop-color="#e3f3f5" stop-opacity=".06"/><stop offset=".75" stop-color="#fff" stop-opacity=".03"/><stop offset=".91" stop-color="#91b8c3" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity=".75"/></linearGradient>
+ <linearGradient id="condWater"><stop stop-color="#8ab7c2" stop-opacity=".35"/><stop offset=".3" stop-color="#d9edf0" stop-opacity=".28"/><stop offset=".8" stop-color="#c0dce3" stop-opacity=".3"/><stop offset="1" stop-color="#71a4b4" stop-opacity=".4"/></linearGradient>
+ <linearGradient id="condShade"><stop stop-color="#274d59" stop-opacity=".22"/><stop offset=".27" stop-color="#fff" stop-opacity=".12"/><stop offset=".72" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#244e5c" stop-opacity=".22"/></linearGradient>
+ <linearGradient id="condRubber"><stop stop-color="#253a3b"/><stop offset=".32" stop-color="#62817b"/><stop offset=".75" stop-color="#354e4d"/><stop offset="1" stop-color="#1e3537"/></linearGradient>
+ <linearGradient id="condHousing" x2="0" y2="1"><stop stop-color="#f6f7f2"/><stop offset=".22" stop-color="#e4eae5"/><stop offset="1" stop-color="#a6b9b5"/></linearGradient>
+ <linearGradient id="condBench" x2="0" y2="1"><stop stop-color="#d5dfdf"/><stop offset="1" stop-color="#afc2c5"/></linearGradient>
+ <filter id="condBlur"><feGaussianBlur stdDeviation="2"/></filter>
+ <filter id="condShadow" x="-.3" y="-.5" width="1.6" height="2"><feGaussianBlur stdDeviation="4"/></filter>
+ </defs>
+<defs><clipPath id="condBeakerClip"><path d="M404 272 H596 V515 Q596 532 580 532 H420 Q404 532 404 515Z"/></clipPath>
+<clipPath id="condWetClip"><rect id="condWetRect" x="400" y="532" width="200" height="0"/></clipPath>
+<radialGradient id="condGlow"><stop stop-color="#ffdf8b" stop-opacity=".8"/><stop offset=".35" stop-color="#ffe2a0" stop-opacity=".4"/><stop offset="1" stop-color="#ffdb78" stop-opacity="0"/></radialGradient>
+</defs>
+<path id="condBenchSurface" d="M-2000 540 H3000 V600 H-2000Z" fill="url(#condBench)"/>
+
+<path d="M622 533 H670 L684 545 H608Z" fill="#698187"/><rect x="641" y="166" width="8" height="369" rx="3" fill="url(#condMetal)"/><ellipse cx="500" cy="541" rx="115" ry="8" fill="#3b6069" opacity=".17" filter="url(#condShadow)"/>
+<g id="condPower" transform="translate(80 420)">
+ <path d="M8 0 H147 L160 12 V106 H0 V12Z" fill="url(#condHousing)" stroke="#8aa19f" stroke-width="1.3"/>
+ <rect x="0" y="12" width="160" height="94" rx="7" fill="#e5eae5" stroke="#a4b7b3"/>
+ <rect x="12" y="28" width="63" height="27" rx="3" fill="#29474c"/>
+ <text x="44" y="47" text-anchor="middle" fill="#c9e5d8" font-size="13" font-family="monospace">EIN</text>
+ <circle cx="122" cy="40" r="16" fill="url(#condMetal)" stroke="#607b7d"/><path d="M122 27 V34" stroke="#304f58" stroke-width="2"/>
+ <text x="80" y="70" font-size="10" text-anchor="middle" fill="#516c73">Spannungsquelle</text>
+ <circle cx="29" cy="91" r="9" fill="#a9554d" stroke="#f3e5df" stroke-width="2"/><text x="29" y="95" text-anchor="middle" fill="#fff" font-size="12">+</text>
+ <circle cx="131" cy="91" r="9" fill="#456875" stroke="#e4eff2" stroke-width="2"/><text x="131" y="95" text-anchor="middle" fill="#fff" font-size="12">−</text>
+ <rect x="14" y="106" width="22" height="5" rx="2" fill="#526b6d"/><rect x="126" y="106" width="22" height="5" rx="2" fill="#526b6d"/>
+</g>
+<g id="condMeter" transform="translate(750 380)">
+ <rect x="0" y="0" width="198" height="153" rx="12" fill="url(#condHousing)" stroke="#7d9698" stroke-width="1.5"/>
+ <rect x="10" y="12" width="178" height="102" rx="9" fill="#f8f8ef" stroke="#b0bdb7"/>
+ <text x="99" y="28" text-anchor="middle" fill="#516e70" font-size="11" letter-spacing="1">LEITFÄHIGKEIT</text>
+ <path d="M33 80 A75 75 0 0 1 165 80" fill="none" stroke="#a0b3af" stroke-width="1.2"/>
+ <g id="condMeterTicks" stroke="#6c8381" stroke-width="1.2"></g>
+ <text x="21" y="100" font-size="8" fill="#647c7a">gering</text><text x="155" y="100" font-size="8" fill="#647c7a">hoch</text>
+ <g id="meterNeedle" class="real-meter-needle" transform="rotate(-58 99 102)"><path d="M99 102 V41" stroke="#ac5148" stroke-width="2"/><path d="M99 102 V117" stroke="#555e57" stroke-width="3"/></g>
+ <circle cx="99" cy="102" r="6" fill="url(#condMetal)" stroke="#728583"/>
+ <path d="M13 14 H186 L13 67Z" fill="#fff" opacity=".32"/>
+ <g id="meterBars" class="real-meter-bars"><rect x="25" y="129" width="13" height="5" rx="1"/><rect x="44" y="129" width="13" height="5" rx="1"/><rect x="63" y="129" width="13" height="5" rx="1"/><rect x="82" y="129" width="13" height="5" rx="1"/><rect x="101" y="129" width="13" height="5" rx="1"/><rect x="120" y="129" width="13" height="5" rx="1"/><rect x="139" y="129" width="13" height="5" rx="1"/><rect x="158" y="129" width="13" height="5" rx="1"/></g><circle cx="20" cy="151" r="6" fill="#4c6978"/><circle cx="178" cy="151" r="6" fill="#a9554d"/></g>
+<g id="conductivityLamp" transform="translate(845 245)">
+ <circle class="real-lamp-glow" cy="3" r="68" fill="url(#condGlow)" opacity="0"/>
+ <path d="M-14 38 Q-14 28 -23 18 Q-37 2 -27 -17 Q-18 -34 0 -34 Q18 -34 27 -17 Q37 2 23 18 Q14 28 14 38Z" fill="url(#condGlass)" stroke="#8caaaf" stroke-width="1.4"/>
+ <path d="M-15 -22 Q-28 -10 -23 4" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+ <path d="M-6 40 L-10 8 M6 40 L10 8" fill="none" stroke="#77817a" stroke-width="1.2"/>
+ <path class="real-filament" d="M-10 8 L-7 1 L-3 8 L1 1 L5 8 L10 2" fill="none" stroke="#7b6b47" stroke-width="1.7"/>
+ <path d="M-14 36 H14 V52 Q0 62 -14 52Z" fill="url(#condMetal)" stroke="#7e9392"/>
+ <path d="M-14 40 H14 M-14 45 H14 M-12 50 H12" stroke="#607779" stroke-width="1.5"/>
+ <path d="M-22 56 H22 L29 77 H-29Z" fill="url(#condHousing)" stroke="#8ba3a2"/><rect x="-45" y="77" width="90" height="10" rx="3" fill="#60797a"/>
+ <circle cx="-27" cy="82" r="4" fill="#4c6978"/><circle cx="27" cy="82" r="4" fill="#a9554d"/>
+</g>
+<g fill="none" stroke-linecap="round" stroke-width="4.5"><path id="condWireA" stroke="#a9554d"/><path id="condWireB" stroke="#4c6978"/><path id="condWireC" stroke="#4c6978"/><path id="condWireD" stroke="#a9554d"/></g><path d="M401 270 H599 V515 Q599 536 580 536 H420 Q401 536 401 515Z" fill="url(#condGlass)" stroke="#82a5ad" stroke-width="1.8"/>
+<g clip-path="url(#condBeakerClip)">
+ <g id="conductivityLiquid" clip-path="url(#condWetClip)"><rect x="400" y="270" width="200" height="266" fill="url(#condWater)"/><rect x="400" y="270" width="200" height="266" fill="url(#condShade)"/></g>
+ <ellipse id="condSurface" cx="500" cy="532" rx="95" ry="8" fill="#d2e9ec" fill-opacity=".46" stroke="#92bac2" stroke-width=".8" opacity="0"/>
+</g>
+<g id="electrodeRig" class="real-electrode-rig"><rect x="636" y="186" width="17" height="21" rx="3" fill="#69858a"/><circle cx="654" cy="196" r="4" fill="#425f68"/>
+ <path d="M452 196 H644" stroke="#7d969c" stroke-width="10" stroke-linecap="round"/>
+ <rect x="451" y="188" width="18" height="26" rx="5" fill="#496b73"/><rect x="531" y="188" width="18" height="26" rx="5" fill="#496b73"/>
+ <rect x="454" y="210" width="12" height="149" rx="4" fill="url(#condMetal)" stroke="#607d82"/><rect x="534" y="210" width="12" height="149" rx="4" fill="url(#condMetal)" stroke="#607d82"/>
+ <path d="M457 218 V350 M537 218 V350" stroke="#dce7e6" stroke-width="1"/>
+ <circle cx="460" cy="194" r="4" fill="#a9554d"/><circle cx="540" cy="194" r="4" fill="#4c6978"/>
+</g>
+<g clip-path="url(#condBeakerClip)"><g clip-path="url(#condWetClip)"><rect x="400" y="270" width="200" height="266" fill="#b2d7de" opacity=".13"/></g><g id="condRipples" fill="none" stroke="#fff" stroke-width="1.4"></g></g>
+<ellipse cx="500" cy="271" rx="100" ry="7" fill="none" stroke="#8facb4" stroke-width="1.5"/>
+<path d="M410 279 V508 Q410 524 425 525" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+<path d="M590 282 V512" stroke="#fff" stroke-width="2" opacity=".65"/>
+<path d="M413 525 Q500 540 587 525" fill="none" stroke="#8cb0b6" stroke-width="1"/>
+<path d="M565 321 H586 M574 346 H586 M565 371 H586 M574 396 H586 M565 421 H586 M574 446 H586 M565 471 H586" stroke="#779da5" stroke-width="1.3" opacity=".65"/>
+<g id="condPour" opacity="0">
+ <path id="condPourStream" d="M500 220 V532" fill="none" stroke="#a2ccd7" stroke-width="5" stroke-opacity=".65"/>
+ <g id="condPourJug" transform="translate(500 220) rotate(65)">
+  <path d="M-85 0 H0 L-5 103 Q-5 114 -20 114 H-70 Q-85 114 -85 100Z" fill="url(#condGlass)" stroke="#87a8b2" stroke-width="1.5"/>
+  <path d="M-49 110 H-19 Q-9 110 -9 100 V20Z" fill="url(#condWater)"/>
+  <path d="M-85 20 H-101 Q-117 20 -117 35 V75 Q-117 89 -101 89 H-85" fill="none" stroke="#9ebcc3" stroke-width="5"/>
+  <path d="M-78 12 V98" stroke="#fff" stroke-width="3" opacity=".7"/>
+  <path d="M-88 0 H0 L7 7" fill="none" stroke="#7f9fa9" stroke-width="2"/>
+ </g>
+</g>
+</svg>
+<div class="real-beaker-label" id="conductivityBeakerLabel">Becherglas leer</div>        <div class="conductivity-readout" aria-live="polite">
+          <span class="readout-label">Anzeige</span>
+          <strong id="conductivityReading">bereit</strong>
+        </div>
+      </div>
+
+      <div class="conductivity-control-row">
+        <button id="measureConductivityButton" class="primary-button conductivity-action" type="button" disabled>
+          <span aria-hidden="true">⚡</span>
+          Leitfähigkeit prüfen
+        </button>
+        <button id="zoomParticlesButton" class="secondary-button conductivity-action" type="button" disabled>
+          <span aria-hidden="true">◉</span>
+          In die Lösung zoomen
+        </button>
+        <button id="resetConductivityButton" class="secondary-button conductivity-action" type="button">
+          Messstation zurücksetzen
+        </button>
+      </div>
+
+      <fieldset class="conductivity-choice-group">
+        <legend>Flüssigkeit auswählen</legend>
+        <div id="conductivitySolutionGrid" class="conductivity-solution-grid"></div>
+      </fieldset>
+    </section>
+  </main>
+
+
+  <main id="titrationLab" class="workspace titration-workspace" hidden>
+    <section class="lab-panel lab-shell titration-shell" aria-labelledby="titrationHeading">
+      <div class="titration-topline"><div><p class="eyebrow dark">Versuchsplatz</p><h2 id="titrationHeading">Säure-Base-Titration</h2></div><span class="tit-model-badge">Digitales Modell · 25 °C</span></div>
+      <div class="titration-layout">
+        <div class="titration-settings">
+          <fieldset><legend>Probelösung</legend>
+            <label for="titSample">Lösung</label><select id="titSample"></select>
+            <div class="tit-sample-label"><span id="titSampleCode">Probe A</span><strong>Konzentration unbekannt</strong></div>
+            <label for="titSampleVolume">Pipettiertes Probenvolumen</label>
+            <select id="titSampleVolume"><option value="10">10,00 mL</option><option value="20">20,00 mL</option><option value="25" selected>25,00 mL</option></select>
+          </fieldset>
+          <fieldset><legend>Maßlösung</legend>
+            <label for="titTitrant">Lösung in der Bürette</label><select id="titTitrant"></select>
+            <label for="titConcentration">Stoffmengenkonzentration</label>
+            <select id="titConcentration"><option value="0.05">0,050 mol/L</option><option value="0.1" selected>0,100 mol/L</option><option value="0.2">0,200 mol/L</option></select>
+          </fieldset>
+          <fieldset><legend>Indikator</legend>
+            <label class="sr-only" for="titIndicator">Indikator wählen</label>
+            <select id="titIndicator"><option value="btb">Bromthymolblau</option><option value="phenolphthalein">Phenolphthalein</option><option value="methylorange">Methylorange</option><option value="none">Ohne Indikator</option></select>
+          </fieldset>
+          <div class="tit-reset-buttons">
+            <button id="titRepeat" class="secondary-button" type="button">Versuch wiederholen</button>
+            <button id="titNewSample" class="secondary-button" type="button">Neue unbekannte Probe</button>
+          </div>
+        </div>
+        <div class="titration-bench">
+          <div class="titration-apparatus" id="titApparatus">
+            <svg viewBox="0 0 660 590" class="titration-drawing" aria-labelledby="titSvgTitle titSvgDesc">
+              <title id="titSvgTitle">Titration mit Bürette, Erlenmeyerkolben und Magnetrührer</title>
+              <desc id="titSvgDesc">Der Bürettenhahn lässt sich anklicken. Eine Lupe folgt dem Meniskus und zeigt die Bürettenskala in Schritten von 0,1 Millilitern. Ein weißes Rührfischchen dreht sich am Kolbenboden. Tropfen fallen aus der Bürette in die Probe.</desc>
+              <defs>
+                <linearGradient id="titMetal"><stop stop-color="#4f646c"/><stop offset=".24" stop-color="#b8c6ca"/><stop offset=".43" stop-color="#f5f8f8"/><stop offset=".58" stop-color="#a3b5bb"/><stop offset="1" stop-color="#425b65"/></linearGradient>
+                <linearGradient id="titGlass"><stop stop-color="#82b4c3" stop-opacity=".25"/><stop offset=".12" stop-color="#fff" stop-opacity=".85"/><stop offset=".28" stop-color="#e4f5f9" stop-opacity=".06"/><stop offset=".7" stop-color="#f0faff" stop-opacity=".03"/><stop offset=".91" stop-color="#7ea9b9" stop-opacity=".18"/><stop offset="1" stop-color="#faffff" stop-opacity=".82"/></linearGradient>
+                <linearGradient id="titLiquidShade"><stop stop-color="#244b51" stop-opacity=".18"/><stop offset=".2" stop-color="#fff" stop-opacity=".08"/><stop offset=".65" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#164554" stop-opacity=".2"/></linearGradient>
+                <linearGradient id="titPTFE" x1="0" y1="-4" x2="0" y2="4" gradientUnits="userSpaceOnUse"><stop stop-color="#ffffff"/><stop offset=".45" stop-color="#f1f4ed"/><stop offset="1" stop-color="#c2d0c6"/></linearGradient>
+                <linearGradient id="titWater"><stop stop-color="#83b5c3" stop-opacity=".3"/><stop offset=".3" stop-color="#e4f5f8" stop-opacity=".55"/><stop offset="1" stop-color="#81b0c2" stop-opacity=".25"/></linearGradient>
+                <linearGradient id="titHousing" x2="0" y2="1"><stop stop-color="#f4f6f4"/><stop offset=".22" stop-color="#e5ebe8"/><stop offset="1" stop-color="#a4b4b1"/></linearGradient>
+                <linearGradient id="titPlate" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".6" stop-color="#f4f5f0"/><stop offset="1" stop-color="#bac5bf"/></linearGradient>
+                <radialGradient id="titKnob"><stop stop-color="#637778"/><stop offset=".8" stop-color="#293f43"/><stop offset="1" stop-color="#182e33"/></radialGradient>
+                <linearGradient id="titBench" x2="0" y2="1"><stop stop-color="#d5dfdf"/><stop offset="1" stop-color="#b8c9cc"/></linearGradient>
+                <filter id="titBlur"><feGaussianBlur stdDeviation="1.6"/></filter>
+                <filter id="titSoftShadow" x="-.5" y="-1" width="2" height="3"><feGaussianBlur stdDeviation="4"/></filter>
+                <clipPath id="titBuretteClip"><rect x="314" y="39" width="24" height="244" rx="3"/></clipPath>
+                <clipPath id="titFlaskClip"><path d="M305 354 V394 Q305 403 296 412 L250 495 Q241 516 263 518 H389 Q411 516 402 495 L356 412 Q347 403 347 394 V354 Z"/></clipPath>
+                <clipPath id="titLiquidClip"><rect id="titLiquidClipRect" x="240" y="475" width="172" height="46"/></clipPath>
+                <clipPath id="titMagnifierClip"><circle r="61"/></clipPath>
+              </defs>
+              <path d="M0 560 H660 V590 H0Z" fill="url(#titBench)"/>
+              <path d="M0 560 H660" stroke="#bccdce"/>
+              <ellipse cx="322" cy="570" rx="137" ry="9" fill="#20414a" opacity=".18" filter="url(#titSoftShadow)"/>
+              <!-- Metal stand and a padded burette clamp. -->
+              <path d="M131 548 H215 L237 565 Q240 572 228 573 H124 Q113 571 118 565Z" fill="#4d656b"/>
+              <path d="M131 548 H215 L228 560 H125Z" fill="#7e9296"/>
+              <rect x="175" y="34" width="12" height="520" rx="5" fill="url(#titMetal)"/>
+              <rect x="171" y="98" width="20" height="26" rx="4" fill="#62777e" stroke="#415d67"/>
+              <rect x="180" y="107" width="137" height="8" rx="3" fill="url(#titMetal)"/>
+              <circle cx="170" cy="111" r="5" fill="#314c56"/>
+              <path d="M305 100 Q300 111 306 122 M345 100 Q351 111 345 122" fill="none" stroke="#7d969d" stroke-width="7"/>
+              <path d="M309 101 V121 M342 101 V121" stroke="#485f65" stroke-width="5" stroke-linecap="round"/>
+              <!-- Glass burette, clear liquid and a concave meniscus. -->
+              <path d="M312 32 V278 Q312 289 320 295 V317 L324 333 H328 L332 317 V295 Q340 289 340 278 V32" fill="url(#titGlass)" stroke="#7396a2" stroke-width="1.6"/>
+              <rect id="titBuretteLiquid" x="314" y="45" width="24" height="238" fill="url(#titWater)" clip-path="url(#titBuretteClip)"/>
+              <path d="M321 281 V316 L325 331 H327 L331 316 V281Z" fill="#bed9df" opacity=".4"/>
+              <path id="titMeniscus" d="M314 45 Q326 49 338 45" fill="none" stroke="#6898a6" stroke-width="1.4"/>
+              <path d="M316 37 V276" stroke="#fff" stroke-width="2" opacity=".9"/>
+              <ellipse cx="326" cy="32" rx="14" ry="3" fill="#e9f4f6" stroke="#7396a2" stroke-width="1.3"/>
+              <g id="titTicks" fill="#4c6268" font-size="10" font-family="system-ui"></g>
+              <text x="326" y="11" text-anchor="middle" fill="#556e76" font-size="10" letter-spacing="1.5">BÜRETTE · 50 mL</text>
+              <rect x="310" y="292" width="33" height="18" rx="7" fill="url(#titGlass)" stroke="#7895a0" stroke-width="1.5"/>
+              <g id="titValve" role="button" tabindex="0" aria-label="Bürettenhahn öffnen" aria-pressed="false">
+                <rect x="285" y="278" width="83" height="48" rx="12" fill="transparent"/>
+                <g id="titValveHandle"><rect x="298" y="296" width="56" height="11" rx="5" fill="#2b7b85" stroke="#1f5963" stroke-width="1.5"/><path d="M304 299 H348" stroke="#79b9bd" stroke-width="2" stroke-linecap="round"/><circle cx="326" cy="301.5" r="7" fill="#f3f3e8" stroke="#526f77" stroke-width="1.5"/><circle cx="326" cy="301.5" r="2" fill="#b2c4c5"/></g>
+              </g>
+              <text id="titValveText" x="276" y="306" text-anchor="end" fill="#58727a" font-size="11">geschlossen</text>
+              <!-- Magnetic stirrer, with the flask resting on its ceramic plate. -->
+              <path d="M241 531 H410 L421 557 Q424 567 414 568 H237 Q227 566 231 556Z" fill="url(#titHousing)" stroke="#8b9f9f" stroke-width="1"/>
+              <rect x="241" y="567" width="22" height="5" rx="2" fill="#415b61"/>
+              <rect x="390" y="567" width="22" height="5" rx="2" fill="#415b61"/>
+              <ellipse cx="326" cy="530" rx="86" ry="11" fill="#aabbb8"/>
+              <ellipse cx="326" cy="526" rx="85" ry="10" fill="url(#titPlate)" stroke="#c1cdca"/>
+              <ellipse cx="326" cy="522" rx="73" ry="6" fill="#7c9691" opacity=".13"/>
+              <rect x="247" y="546" width="54" height="14" rx="3" fill="#29464b"/>
+              <circle id="titStirLED" cx="256" cy="553" r="2.5" fill="#9bd4a5"/>
+              <text id="titStirDisplay" x="266" y="557" font-size="10" fill="#c9eed3" font-family="monospace">EIN</text>
+              <text x="313" y="557" font-size="8" letter-spacing=".8" fill="#62777b">STIR</text>
+              <g id="titStirKnob" role="button" tabindex="0" aria-label="Magnetrührer ausschalten" aria-pressed="true">
+                <circle cx="378" cy="550" r="22" fill="transparent"/>
+                <circle cx="378" cy="550" r="14" fill="#b6c6c5" stroke="#889f9e"/>
+                <circle cx="378" cy="550" r="11" fill="url(#titKnob)"/>
+                <path id="titKnobMarker" d="M378 542 V546" stroke="#e7f5ee" stroke-width="2" stroke-linecap="round"/>
+              </g>
+              <!-- Inner glass and liquid are drawn behind reflections. -->
+              <path d="M302 354 V394 Q302 400 294 409 L247 494 Q234 520 262 522 H390 Q418 520 405 494 L358 409 Q350 400 350 394 V354Z" fill="url(#titGlass)" stroke="#82a4ad" stroke-width="1.8"/>
+              <g clip-path="url(#titFlaskClip)">
+                <g clip-path="url(#titLiquidClip)">
+                  <rect id="titFlaskLiquid" x="240" y="410" width="172" height="112" fill="#f6d134" opacity=".72"/>
+                  <rect x="240" y="410" width="172" height="112" fill="url(#titLiquidShade)"/>
+                  <g id="titPlumes" filter="url(#titBlur)" aria-hidden="true"></g>
+                  <g id="titSwirl" fill="none" stroke="#fff" stroke-width="1" opacity=".25">
+                    <ellipse id="titSwirlRing" cx="326" cy="492" rx="46" ry="7" stroke-dasharray="40 60 18 65"/>
+                  </g>
+                </g>
+                <ellipse id="titFlaskSurface" cx="326" cy="475" rx="57" ry="5" fill="#f8db53" fill-opacity=".6" stroke="#728d80" stroke-opacity=".28" stroke-width=".8"/>
+                <path id="titSurfaceHighlight" d="M278 475 Q326 483 374 475" fill="none" stroke="#fff" stroke-width="1.2" opacity=".55"/>
+                <g id="titRipples" fill="none" stroke="#fff" stroke-width="1.3" aria-hidden="true"></g>
+                <ellipse cx="326" cy="516" rx="66" ry="3.5" fill="#e4ece0" fill-opacity=".06" stroke="#7d9c96" stroke-width=".7" stroke-opacity=".18"/>
+                <ellipse id="titStirShadow" cx="326" cy="516.6" rx="25" ry="2" fill="#3e625c" opacity=".2"/>
+                <g transform="translate(326 513)">
+                  <g id="titStirBar">
+                    <rect id="titStirBody" x="-23" y="-3.5" width="46" height="7" rx="3.5" fill="url(#titPTFE)" stroke="#98afa3" stroke-width=".65"/>
+                    <path id="titStirHighlight" d="M-19 -2 H19" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".9"/>
+                    <path id="titStirBand" d="M0 -3 V3" stroke="#b7c8bd" stroke-width="1.1" opacity=".55"/>
+                    <ellipse id="titStirEndCap" cx="21.8" cy="0" rx="1.2" ry="3.1" fill="#e5ece3" stroke="#afc1b4" stroke-width=".55" opacity=".3"/>
+                  </g>
+                </g>
+              </g>
+              <ellipse id="titTipDrop" cx="326" cy="334" rx="2" ry="1" fill="url(#titWater)" stroke="#7eabb8" stroke-width=".6" opacity="0" aria-hidden="true"/><g id="titDrops" aria-hidden="true"></g>
+              <path d="M308 362 V393 Q308 404 300 415 L259 489" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+              <path d="M344 365 V394 Q343 406 350 418 L394 494" fill="none" stroke="#fff" stroke-width="2" opacity=".55"/>
+              <path d="M255 514 Q326 525 397 514" fill="none" stroke="#7299a1" stroke-width="1.5" opacity=".55"/>
+              <ellipse cx="326" cy="354" rx="25" ry="4" fill="url(#titGlass)" stroke="#7b9aa5" stroke-width="1.5"/>
+              <ellipse cx="326" cy="354" rx="21" ry="2" fill="#e3eef0" opacity=".5"/>
+              <path d="M366 432 H376 M374 447 H384 M382 462 H392" stroke="#6e929a" stroke-width="1" opacity=".55"/>
+              <rect x="309" y="414" width="36" height="15" rx="2" fill="#fafbf8" opacity=".82"/>
+              <text id="titFlaskLabel" x="327" y="425" text-anchor="middle" fill="#63797e" font-size="9">Probe A</text>
+              <!-- The magnified scale and the real meniscus share the same reading. -->
+              <g id="titMagnifierLink" fill="none" stroke="#548a93" stroke-width="1.2" opacity=".8" aria-hidden="true">
+                <path id="titMagnifierConnector" d="M338 45 L378 71" stroke-dasharray="3 3"/>
+                <rect id="titMeniscusFocus" x="310" y="38" width="32" height="14" rx="5"/>
+              </g>
+              <g id="titMagnifier" transform="translate(434 103)" role="img" aria-label="Bürettenlupe: Den unteren Meniskusrand an der Skala ablesen. Ein Teilstrich entspricht 0,1 Millilitern.">
+                <path d="M45 47 L64 69" stroke="#365c65" stroke-width="10" stroke-linecap="round"/>
+                <circle r="65" fill="#f8fbfa" stroke="#365c65" stroke-width="3"/>
+                <g clip-path="url(#titMagnifierClip)">
+                  <rect x="-65" y="-65" width="130" height="130" fill="#f7fbfa"/>
+                  <rect x="-39" y="-65" width="47" height="130" fill="url(#titGlass)" stroke="#93afb5" stroke-width="1.2"/>
+                  <path d="M-38 -8 Q-15 8 7 -8 V65 H-38Z" fill="url(#titWater)"/>
+                  <path id="titZoomMeniscus" d="M-38 -8 Q-15 8 7 -8" fill="none" stroke="#497d89" stroke-width="1.8"/>
+                  <path d="M-34 -65 V65" stroke="#fff" stroke-width="2" opacity=".85"/>
+                  <g id="titZoomTicks" fill="#294c59" font-size="13" font-family="system-ui" font-variant-numeric="tabular-nums"></g>
+                  <path d="M-49 0 H8" stroke="#b77d35" stroke-width="1" stroke-dasharray="3 3" opacity=".75"/>
+                </g>
+                <circle r="61" fill="none" stroke="#b2c9ca" stroke-width="1"/>
+                <rect x="-65" y="-91" width="110" height="22" rx="7" fill="#f7fbfa" fill-opacity=".96"/>
+                <text x="-10" y="-76" text-anchor="middle" fill="#365c65" font-size="12" font-family="system-ui">Lupe · mL</text>
+                <text x="0" y="84" text-anchor="middle" fill="#506f76" font-size="10" font-family="system-ui">Teilstrich: 0,1 mL</text>
+              </g>
+            </svg>
+            <div class="tit-readouts" aria-label="Messanzeigen">
+              <div class="tit-reading tit-main-reading"><span>Bürettenstand</span><strong><output id="titReading">0,00</output><small> mL</small></strong></div>
+              <div class="tit-reading"><span>Anfangsstand</span><strong><output id="titStartReading">0,00</output><small> mL</small></strong></div>
+              <div class="tit-reading"><span>Zugabe gesamt</span><strong><output id="titTotal">0,00</output><small> mL</small></strong></div>
+              <button id="titRefill" class="secondary-button" type="button">Bürette auffüllen</button>
+            </div>
+            <span class="tit-flask-caption" id="titSampleCaption">Salzsäure · 25,00 mL</span>
+          </div>
+          <div class="tit-valve-controls">
+            <button id="titToggle" class="primary-button" type="button" aria-pressed="false">Hahn öffnen</button>
+            <label for="titSpeed">Tropfgeschwindigkeit<select id="titSpeed"><option value="0.05">Langsam · 1 Tropfen/s</option><option value="0.25" selected>Mittel · 5 Tropfen/s</option><option value="2">Schnell · 2 mL/s</option></select></label>
+            <button id="titOneDrop" class="secondary-button" type="button">Ein Tropfen · 0,05 mL</button>
+          </div>
+          <div class="tit-stir-controls">
+            <div><strong>Magnetrührer</strong><span id="titStirState">Rührfischchen läuft</span></div>
+            <button id="titStirToggle" class="secondary-button" type="button" aria-pressed="true">Ausschalten</button>
+            <label for="titStirSpeed">Rührgeschwindigkeit <output id="titStirSpeedLabel">Mittel</output><input id="titStirSpeed" type="range" min="1" max="3" step="1" value="2"></label>
+          </div>
+          <p id="titStatus" class="tit-status" role="status" aria-live="polite">Versuchsaufbau bereit. Hahn geschlossen.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="colorScaleDialog" class="scale-dialog" aria-labelledby="colorScaleHeading">
+    <div class="scale-dialog-header">
+      <div><p class="eyebrow">Indikatorfarben</p><h2 id="colorScaleHeading">pH-Skala</h2></div>
+      <button id="closeColorScaleButton" class="dialog-close" type="button" aria-label="pH-Skala schließen">×</button>
+    </div>
+    <div class="ph-scale-content">
+      <p class="ph-scale-note">Die Farbbänder sind vereinfachte Orientierungsskalen. Der verwendete Indikator ist markiert.</p>
+      <div id="colorScaleRows"></div>
+      <p class="ph-scale-note">Universalindikator: herstellerabhängig. Rotkohlsaft: abhängig von Pflanze und Zubereitung. Phenolphthalein: kurzzeitige Modellfarbe; in stark alkalischen Proben kann die Farbe mit der Zeit verblassen.</p>
+      <button id="closeColorScaleBottomButton" class="secondary-button" type="button">Zurück zum Experiment</button>
+    </div>
+  </dialog>
+
+  <dialog id="particleDialog" class="particle-dialog" aria-labelledby="particleDialogHeading">
+    <div class="particle-dialog-header">
+      <div>
+        <p class="eyebrow dark">Modellansicht · nicht maßstäblich</p>
+        <h2 id="particleDialogHeading">Teilchenansicht</h2>
+      </div>
+      <button id="closeParticleDialogButton" class="dialog-close" type="button" aria-label="Teilchenansicht schließen">×</button>
+    </div>
+
+    <p class="molecule-key">Atomfarben in H₂O, H₃O⁺ und OH⁻: Sauerstoff (O) rot · Wasserstoff (H) weiß.</p>
+    <section id="singleParticleView" class="single-particle-view">
+      <div class="particle-view-title">
+        <div>
+          <span id="singleParticleClass" class="solution-badge">neutral</span>
+          <h3 id="singleParticleName">–</h3>
+        </div>
+        <span id="singleParticleConductivity" class="conductivity-pill">–</span>
+      </div>
+      <div id="singleParticleCanvas" class="particle-canvas" role="img" aria-label="Vereinfachtes Teilchenmodell"></div>
+      <div id="singleParticleLegend" class="particle-legend" aria-label="Teilchenlegende"></div>
+    </section>
+
+    <section id="comparisonParticleView" class="comparison-particle-view" hidden>
+      <div class="comparison-selectors">
+        <div class="comparison-reference"><span>Referenz · Probe im Becherglas</span><strong id="comparisonReferenceName">–</strong></div>
+        <label for="comparisonRightSelect">Vergleichsprobe
+          <select id="comparisonRightSelect"></select>
+        </label>
+      </div>
+      <div class="comparison-grid">
+        <article class="comparison-card">
+          <header><span id="comparisonLeftClass" class="solution-badge">neutral</span><h3 id="comparisonLeftName">–</h3></header>
+          <div id="comparisonLeftCanvas" class="particle-canvas compact" role="img" aria-label="Linkes vereinfachtes Teilchenmodell"></div>
+          <div id="comparisonLeftLegend" class="particle-legend compact"></div>
+        </article>
+        <article class="comparison-card">
+          <header><span id="comparisonRightClass" class="solution-badge">neutral</span><h3 id="comparisonRightName">–</h3></header>
+          <div id="comparisonRightCanvas" class="particle-canvas compact" role="img" aria-label="Rechtes vereinfachtes Teilchenmodell"></div>
+          <div id="comparisonRightLegend" class="particle-legend compact"></div>
+        </article>
+      </div>
+    </section>
+
+    <div class="particle-dialog-actions">
+      <button id="toggleParticleMotionButton" class="secondary-button" type="button" aria-pressed="false">Bewegung anhalten</button>
+      <button id="closeParticleDialogBottomButton" class="primary-button" type="button">Zurück zur Messstation</button>
+    </div>
+  </dialog>
+
+  <footer>
+    <p>Digitales Modell für den Chemieunterricht · ohne externe Bibliotheken · offline lauffähig</p>
+  </footer>
+
+  <div id="liveRegion" class="sr-only" aria-live="assertive"></div>
+  <script>
+"use strict";
+
+/*
+ * Digitales Indikatorlabor
+ * Alle Bildschirmfarben sind didaktische Modellfarben.
+ * Reine Experimentieroberfläche ohne Auswertung oder Versuchsprotokoll.
+ * Die App benötigt keine externen Bibliotheken.
+ */
+
+const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+const SOLUTIONS = [
+  {
+    id: "citric",
+    code: "A",
+    name: "Zitronensäure",
+    classification: "Säure",
+  },
+  {
+    id: "acetic",
+    code: "B",
+    name: "Essigsäure",
+    classification: "Säure",
+  },
+  {
+    id: "neutral",
+    code: "C",
+    name: "Neutrale Modelllösung",
+    classification: "neutral",
+  },
+  {
+    id: "bicarbonate",
+    code: "D",
+    name: "Natriumhydrogencarbonat-Lösung",
+    classification: "Lauge",
+  },
+  {
+    id: "soap",
+    code: "E",
+    name: "Seifenlösung",
+    classification: "Lauge",
+  },
+  {
+    id: "lye",
+    code: "F",
+    name: "Verdünnte Natronlauge",
+    classification: "Lauge",
+  },
+];
+
+const INDICATORS = [
+  {
+    id: "btb",
+    name: "Bromthymolblau",
+    short: "BTB",
+    bottleColor: "#236fa4",
+    results: {
+      citric: colorResult("#f2ce32", "gelb", "Bromthymolblau erscheint bei dieser Probe gelb."),
+      acetic: colorResult("#f2ce32", "gelb", "Bromthymolblau erscheint bei dieser Probe gelb."),
+      neutral: colorResult("#699986", "grün", "Bromthymolblau erscheint bei dieser Probe grün."),
+      bicarbonate: colorResult("#1679b8", "blau", "Bromthymolblau erscheint bei dieser Probe blau."),
+      soap: colorResult("#1679b8", "blau", "Bromthymolblau erscheint bei dieser Probe blau."),
+      lye: colorResult("#1679b8", "blau", "Bromthymolblau erscheint bei dieser Probe blau."),
+    },
+  },
+  {
+    id: "methylorange",
+    name: "Methylorange",
+    short: "MO",
+    bottleColor: "#ed7b24",
+    results: {
+      citric: colorResult("#df3030", "rot", "Methylorange erscheint bei dieser Probe rot."),
+      acetic: colorResult("#df3030", "rot", "Methylorange erscheint bei dieser Probe rot."),
+      neutral: colorResult("#f2ce32", "gelb", "Methylorange erscheint bei dieser Probe gelb."),
+      bicarbonate: colorResult("#f2ce32", "gelb", "Methylorange erscheint bei dieser Probe gelb."),
+      soap: colorResult("#f2ce32", "gelb", "Methylorange erscheint bei dieser Probe gelb."),
+      lye: colorResult("#f2ce32", "gelb", "Methylorange erscheint bei dieser Probe gelb."),
+    },
+  },
+  {
+    id: "phenolphthalein",
+    name: "Phenolphthalein",
+    short: "PP",
+    bottleColor: "#d95d9f",
+    results: {
+      citric: colorResult("#f8fcfd", "farblos", "Phenolphthalein bleibt bei dieser Probe farblos."),
+      acetic: colorResult("#f8fcfd", "farblos", "Phenolphthalein bleibt bei dieser Probe farblos."),
+      neutral: colorResult("#f8fcfd", "farblos", "Phenolphthalein bleibt bei dieser Probe farblos."),
+      bicarbonate: colorResult("#f3e2ed", "zartrosa", "Phenolphthalein erscheint bei dieser Probe zartrosa."),
+      soap: colorResult("#d82c87", "pink bis rotviolett", "Phenolphthalein erscheint bei dieser Probe pink bis rotviolett."),
+      lye: colorResult("#d82c87", "pink bis rotviolett", "Phenolphthalein erscheint bei dieser Probe pink bis rotviolett."),
+    },
+  },
+  {
+    id: "universal",
+    name: "Universalindikator",
+    short: "UI",
+    bottleColor: "#487cc1",
+    results: {
+      citric: colorResult("#e63d2e", "rot", "Der Universalindikator erscheint bei dieser Probe rot."),
+      acetic: colorResult("#eb642b", "orange", "Der Universalindikator erscheint bei dieser Probe orange."),
+      neutral: colorResult("#39a85b", "grün", "Der Universalindikator erscheint bei dieser Probe grün."),
+      bicarbonate: colorResult("#2da592", "blaugrün", "Der Universalindikator erscheint bei dieser Probe blaugrün."),
+      soap: colorResult("#2787bd", "blau", "Der Universalindikator erscheint bei dieser Probe blau."),
+      lye: colorResult("#4559a8", "violett", "Der Universalindikator erscheint bei dieser Probe violett."),
+    },
+  },
+  {
+    id: "cabbage",
+    name: "Rotkohlsaft",
+    short: "RK",
+    bottleColor: "#713b94",
+    results: {
+      citric: colorResult("#cc8ab8", "pink", "Rotkohlsaft erscheint bei dieser Probe pink."),
+      acetic: colorResult("#cc8ab8", "pink", "Rotkohlsaft erscheint bei dieser Probe pink."),
+      neutral: colorResult("#6a3fd1", "blauviolett", "Rotkohlsaft erscheint bei dieser Probe blauviolett."),
+      bicarbonate: colorResult("#4863a1", "blauviolett", "Rotkohlsaft erscheint bei dieser Probe blauviolett."),
+      soap: colorResult("#2e8b72", "blaugrün", "Rotkohlsaft erscheint bei dieser Probe blaugrün."),
+      lye: colorResult("#39d353", "grün", "Rotkohlsaft erscheint bei dieser Probe grün."),
+    },
+  },
+];
+
+/*
+ * Leitfähigkeitsmodell
+ * Die Kennwerte steuern ausschließlich die qualitative Bildschirmanzeige.
+ * Sie sind keine Messwerte. Intern werden vergleichbare Modellbedingungen
+ * angenommen; Konzentration, Temperatur und Zellkonstante werden nicht als
+ * Messgrößen simuliert.
+ */
+const PARTICLE_TYPES = {
+  water: particleType("Wasserteilchen (H₂O)", "water", "", "#73c7dc"),
+  sugar: particleType("Zuckerteilchen", "neutral-molecule", "", "#e9bd6d"),
+  sodium: particleType("Natrium-Ion", "sodium", "+", "#71b7ee"),
+  potassium: particleType("Kalium-Ion", "sodium", "+", "#8db8ef"),
+  chloride: particleType("Chlorid-Ion", "chloride", "−", "#9bd475"),
+  oxonium: particleType("Oxonium-Ion (H₃O⁺)", "oxonium", "+", "#f08b83"),
+  hydrogenSulfate: particleType("Hydrogensulfat-Ion", "hydrogen-sulfate", "−", "#f3bd62"),
+  sulfate: particleType("Sulfat-Ion", "sulfate", "2−", "#e5d657"),
+  hydroxide: particleType("Hydroxid-Ion (OH⁻)", "hydroxide", "−", "#6fd1c5"),
+};
+
+const CONDUCTIVITY_SOLUTIONS = [
+  {
+    id: "distilled-water",
+    code: "W",
+    name: "Destilliertes Wasser",
+    displayClass: "neutral",
+    scientificClass: "neutrale Flüssigkeit",
+    conductivity: 0.015,
+    conductivityLabel: "sehr gering",
+    liquidColor: "rgba(170, 220, 234, 0.56)",
+    particles: [{ type: "water", count: 16 }],
+  },
+  {
+    id: "sugar-solution",
+    code: "Z",
+    name: "Zuckerlösung",
+    displayClass: "neutral",
+    scientificClass: "neutrale Lösung",
+    conductivity: 0.025,
+    conductivityLabel: "sehr gering",
+    liquidColor: "rgba(179, 222, 232, 0.58)",
+    particles: [
+      { type: "water", count: 13 },
+      { type: "sugar", count: 6 },
+    ],
+  },
+  {
+    id: "salt-solution",
+    code: "K",
+    name: "Kochsalzlösung",
+    displayClass: "neutral",
+    scientificClass: "neutrale Salzlösung",
+    conductivity: 0.38,
+    conductivityLabel: "deutlich",
+    liquidColor: "rgba(169, 218, 232, 0.61)",
+    particles: [
+      { type: "water", count: 10 },
+      { type: "sodium", count: 6 },
+      { type: "chloride", count: 6 },
+    ],
+  },
+  {
+    id: "hydrochloric-acid",
+    code: "S1",
+    name: "Salzsäure",
+    displayClass: "Säure",
+    scientificClass: "saure Lösung",
+    conductivity: 0.86,
+    conductivityLabel: "hoch",
+    liquidColor: "rgba(174, 221, 234, 0.6)",
+    particles: [
+      { type: "water", count: 9 },
+      { type: "oxonium", count: 8 },
+      { type: "chloride", count: 8 },
+    ],
+  },
+  {
+    id: "sulfuric-acid",
+    code: "S2",
+    name: "Schwefelsäure – wässrige Lösung",
+    displayClass: "Säure",
+    scientificClass: "saure Lösung",
+    conductivity: 1,
+    conductivityLabel: "sehr hoch",
+    liquidColor: "rgba(174, 221, 234, 0.6)",
+    particles: [
+      { type: "water", count: 8 },
+      { type: "oxonium", count: 11 },
+      { type: "hydrogenSulfate", count: 9 },
+      { type: "sulfate", count: 1 },
+    ],
+  },
+  {
+    id: "sodium-hydroxide",
+    code: "L1",
+    name: "Natronlauge",
+    displayClass: "Lauge",
+    scientificClass: "basische Lösung",
+    conductivity: 0.68,
+    conductivityLabel: "hoch",
+    liquidColor: "rgba(174, 221, 234, 0.6)",
+    particles: [
+      { type: "water", count: 9 },
+      { type: "sodium", count: 8 },
+      { type: "hydroxide", count: 8 },
+    ],
+  },
+  {
+    id: "potassium-hydroxide",
+    code: "L2",
+    name: "Kalilauge",
+    displayClass: "Lauge",
+    scientificClass: "basische Lösung",
+    conductivity: 0.73,
+    conductivityLabel: "hoch",
+    liquidColor: "rgba(174, 221, 234, 0.6)",
+    particles: [
+      { type: "water", count: 9 },
+      { type: "potassium", count: 8 },
+      { type: "hydroxide", count: 8 },
+    ],
+  },
+];
+
+const state = {
+  activeMode: "indicator",
+  solutionId: null,
+  indicatorId: null,
+  solutionLoaded: false,
+  reacted: false,
+  busy: false,
+  anonymous: false,
+};
+
+const conductivityState = {
+  solutionId: null,
+  phase: "empty",
+  busy: false,
+  testedIds: new Set(),
+  inspectedIds: new Set(),
+  particleView: "single",
+  motionPaused: false,
+};
+
+const elements = {
+  skipLink: byId("skipLink"),
+  heroEyebrow: byId("heroEyebrow"),
+  heroTitle: byId("heroTitle"),
+  heroIntro: byId("heroIntro"),
+  indicatorModeButton: byId("indicatorModeButton"),
+  conductivityModeButton: byId("conductivityModeButton"),
+  indicatorModelNote: byId("indicatorModelNote"),
+  conductivityModelNote: byId("conductivityModelNote"),
+  indicatorLab: byId("experiment"),
+  conductivityLab: byId("conductivityLab"),
+  nameToggle: byId("nameToggle"),
+  solutionGrid: byId("solutionGrid"),
+  indicatorGrid: byId("indicatorGrid"),
+  solutionDropper: byId("solutionDropper"),
+  indicatorDropper: byId("indicatorDropper"),
+  tubeLiquid: byId("tubeLiquid"),
+  mixingLayer: byId("mixingLayer"),
+  tubeLabel: byId("tubeLabel"),
+  labStage: byId("labStage"),
+  newExperimentButton: byId("newExperimentButton"),
+  statusBox: byId("statusBox"),
+  colorScaleButton: byId("colorScaleButton"),
+  colorScaleDialog: byId("colorScaleDialog"),
+  colorScaleRows: byId("colorScaleRows"),
+  closeColorScaleButton: byId("closeColorScaleButton"),
+  closeColorScaleBottomButton: byId("closeColorScaleBottomButton"),
+  liveRegion: byId("liveRegion"),
+  conductivityStage: byId("conductivityStage"),
+  conductivitySolutionGrid: byId("conductivitySolutionGrid"),
+  conductivityBeakerLabel: byId("conductivityBeakerLabel"),
+  conductivityLiquid: byId("conductivityLiquid"),
+  conductivityReading: byId("conductivityReading"),
+  conductivityLamp: byId("conductivityLamp"),
+  meterNeedle: byId("meterNeedle"),
+  meterBars: byId("meterBars"),
+  electrodeRig: byId("electrodeRig"),
+  measureConductivityButton: byId("measureConductivityButton"),
+  zoomParticlesButton: byId("zoomParticlesButton"),
+  resetConductivityButton: byId("resetConductivityButton"),
+  compareParticlesButton: byId("compareParticlesButton"),
+  particleDialog: byId("particleDialog"),
+  particleDialogHeading: byId("particleDialogHeading"),
+  closeParticleDialogButton: byId("closeParticleDialogButton"),
+  closeParticleDialogBottomButton: byId("closeParticleDialogBottomButton"),
+  singleParticleView: byId("singleParticleView"),
+  singleParticleName: byId("singleParticleName"),
+  singleParticleClass: byId("singleParticleClass"),
+  singleParticleConductivity: byId("singleParticleConductivity"),
+  singleParticleCanvas: byId("singleParticleCanvas"),
+  singleParticleLegend: byId("singleParticleLegend"),
+  comparisonParticleView: byId("comparisonParticleView"),
+  comparisonReferenceName: byId("comparisonReferenceName"),
+  comparisonRightSelect: byId("comparisonRightSelect"),
+  comparisonLeftName: byId("comparisonLeftName"),
+  comparisonRightName: byId("comparisonRightName"),
+  comparisonLeftClass: byId("comparisonLeftClass"),
+  comparisonRightClass: byId("comparisonRightClass"),
+  comparisonLeftCanvas: byId("comparisonLeftCanvas"),
+  comparisonRightCanvas: byId("comparisonRightCanvas"),
+  comparisonLeftLegend: byId("comparisonLeftLegend"),
+  comparisonRightLegend: byId("comparisonRightLegend"),
+  toggleParticleMotionButton: byId("toggleParticleMotionButton"),
+};
+
+function byId(id) {
+  return document.getElementById(id);
+}
+
+function colorResult(hex, label, explanation) {
+  return { hex, label, explanation };
+}
+
+function particleType(name, className, mark, color) {
+  return { name, className, mark, color };
+}
+
+function hexToRgb(hex) {
+  const clean = hex.replace("#", "");
+  return {
+    r: Number.parseInt(clean.slice(0, 2), 16),
+    g: Number.parseInt(clean.slice(2, 4), 16),
+    b: Number.parseInt(clean.slice(4, 6), 16),
+  };
+}
+
+function resultFor(indicator, solution) {
+  return indicator.results[solution.id];
+}
+
+function getSolution() {
+  return SOLUTIONS.find((solution) => solution.id === state.solutionId) || null;
+}
+
+function getIndicator() {
+  return INDICATORS.find((indicator) => indicator.id === state.indicatorId) || null;
+}
+
+function visibleSolutionName(solution, includeReveal = false) {
+  if (!state.anonymous) return solution.name;
+  return includeReveal ? `Probe ${solution.code} – ${solution.name}` : `Probe ${solution.code}`;
+}
+
+function renderChoices() {
+  renderSolutions();
+  renderIndicators();
+  updateControls();
+}
+
+function renderSolutions() {
+  elements.solutionGrid.replaceChildren();
+  SOLUTIONS.forEach((solution) => {
+    const selected = state.solutionId === solution.id;
+    const locked = state.solutionLoaded || state.busy;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "choice-card";
+    button.dataset.solutionId = solution.id;
+    button.setAttribute("aria-pressed", String(selected));
+    button.setAttribute("aria-label", `${visibleSolutionName(solution)}: fünf Tropfen einfüllen`);
+    button.disabled = locked;
+
+    const title = visibleSolutionName(solution);
+    const details = state.anonymous
+      ? "Antippen: Probe einfüllen"
+      : "Antippen: 5 Tropfen einfüllen";
+
+    button.innerHTML = `<span class="choice-icon" aria-hidden="true">${escapeHtml(solution.code)}</span><span class="choice-copy"><strong>${escapeHtml(title)}</strong><small>${escapeHtml(details)}</small></span>`;
+    button.addEventListener("click", () => selectSolution(solution.id));
+    elements.solutionGrid.append(button);
+  });
+}
+
+function renderIndicators() {
+  elements.indicatorGrid.replaceChildren();
+  INDICATORS.forEach((indicator) => {
+    const selected = state.indicatorId === indicator.id;
+    const locked = !state.solutionLoaded || state.reacted || state.busy;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "choice-card";
+    button.dataset.indicatorId = indicator.id;
+    button.setAttribute("aria-pressed", String(selected));
+    button.setAttribute("aria-label", `${indicator.name}: einen Tropfen zugeben`);
+    button.disabled = locked;
+    button.innerHTML = `<span class="choice-icon indicator-icon" aria-hidden="true" style="--indicator-color:${indicator.bottleColor}">${escapeHtml(indicator.short)}</span><span class="choice-copy"><strong>${escapeHtml(indicator.name)}</strong><small>Antippen: 1 Tropfen zugeben</small></span>`;
+    button.addEventListener("click", () => selectIndicator(indicator.id));
+    elements.indicatorGrid.append(button);
+  });
+}
+
+async function selectSolution(id) {
+  if (state.solutionLoaded || state.busy) return;
+  state.solutionId = id;
+  renderSolutions();
+  updateControls();
+  const solution = getSolution();
+  announce(`${visibleSolutionName(solution)} ausgewählt.`);
+  await addSolution();
+}
+
+async function selectIndicator(id) {
+  if (!state.solutionLoaded || state.reacted || state.busy) return;
+  state.indicatorId = id;
+  renderIndicators();
+  updateControls();
+  const indicator = getIndicator();
+  announce(`${indicator.name} ausgewählt.`);
+  await addIndicator();
+}
+
+function updateControls() {
+  const choicesLocked = state.solutionLoaded || state.busy;
+  elements.colorScaleButton.disabled = !state.reacted || state.busy;
+  elements.colorScaleButton.title = state.reacted ? "Indikatorfarben anzeigen" : "Nach vollständiger Indikatorzugabe verfügbar";
+
+  elements.solutionGrid.querySelectorAll("button").forEach((button) => {
+    button.disabled = choicesLocked;
+  });
+  elements.indicatorGrid.querySelectorAll("button").forEach((button) => {
+    button.disabled = !state.solutionLoaded || state.reacted || state.busy;
+  });
+  elements.newExperimentButton.disabled = state.busy;
+  elements.nameToggle.disabled = state.busy;
+
+  updateModeControlAvailability();
+}
+
+async function addSolution() {
+  const solution = getSolution();
+  if (!solution || state.solutionLoaded || state.busy) return;
+
+  state.busy = true;
+  updateControls();
+  setStatus(`Die Probelösung wird eingetropft: 0 von 5 Tropfen.`);
+  elements.tubeLabel.textContent = visibleSolutionName(solution);
+
+  await animateDrops({
+    dropper: elements.solutionDropper,
+    count: 5,
+    color: "#9bd8ec",
+    className: "solution-falling-drop",
+    onImpact(index) {
+      const count = index + 1;
+      const filling = window.LabVisuals.setIndicatorFill(count);
+      setStatus(`Die Probelösung wird eingetropft: ${count} von 5 Tropfen.`);
+      return filling;
+    },
+  });
+
+  state.solutionLoaded = true;
+  state.busy = false;
+  renderSolutions();
+  renderIndicators();
+  updateControls();
+  setStatus("5 Tropfen Probelösung sind im Reagenzglas. Klicke nun auf eine Indikatorlösung.");
+  elements.indicatorGrid.querySelector("button:not(:disabled)")?.focus({ preventScroll: true });
+  announce("Fünf Tropfen Probelösung wurden eingefüllt.");
+}
+
+async function addIndicator() {
+  const solution = getSolution();
+  const indicator = getIndicator();
+  if (!solution || !indicator || !state.solutionLoaded || state.reacted || state.busy) return;
+
+  state.busy = true;
+  updateControls();
+  setStatus(`Ein Tropfen ${indicator.name} wird zugegeben.`);
+  elements.tubeLabel.textContent = `${visibleSolutionName(solution)} · ${indicator.name}`;
+
+  await animateDrops({
+    dropper: elements.indicatorDropper,
+    count: 1,
+    color: indicator.bottleColor,
+    className: "indicator-drop",
+    onImpact() {
+      const result = resultFor(indicator, solution);
+      return window.LabVisuals.mixIndicator(result.hex);
+    },
+  });
+
+  state.reacted = true;
+  state.busy = false;
+  renderIndicators();
+  updateControls();
+  const result = resultFor(indicator, solution);
+  setStatus("Indikator zugegeben. Für einen neuen Versuch das Reagenzglas leeren.");
+  elements.newExperimentButton.focus({ preventScroll: true });
+  announce(`Der Farbton im Reagenzglas ist ${result.label}.`);
+}
+
+function animateDrops(options) {
+  return window.LabVisuals.drops(options);
+}
+
+function resetExperiment() {
+  if (elements.colorScaleDialog.open) closeColorScales(false);
+  state.solutionId = null;
+  state.indicatorId = null;
+  state.solutionLoaded = false;
+  state.reacted = false;
+  state.busy = false;
+  elements.tubeLiquid.style.cssText = "";
+  elements.mixingLayer.style.cssText = "";
+  elements.mixingLayer.classList.remove("is-mixing");
+  window.LabVisuals.resetIndicator();
+  elements.tubeLabel.textContent = "Reagenzglas leer";
+  renderChoices();
+  setStatus("Wähle zuerst eine Probelösung.");
+  announce("Ein neuer, leerer Versuch wurde gestartet.");
+}
+
+function toggleNames() {
+  state.anonymous = !state.anonymous;
+  elements.nameToggle.setAttribute("aria-pressed", String(state.anonymous));
+  elements.nameToggle.innerHTML = state.anonymous
+    ? '<span aria-hidden="true">A–F</span> Probenamen anzeigen'
+    : '<span aria-hidden="true">A–F</span> Probenamen verbergen';
+  renderSolutions();
+  const solution = getSolution();
+  if (solution) {
+    if (state.solutionLoaded) elements.tubeLabel.textContent = visibleSolutionName(solution) + (getIndicator() ? ` · ${getIndicator().name}` : "");
+    if (!state.reacted) {
+      setStatus(state.solutionLoaded
+        ? `${visibleSolutionName(solution)} befindet sich im Reagenzglas. Klicke nun auf einen Indikator.`
+        : `${visibleSolutionName(solution)} wird gleich eingefüllt.`);
+    }
+  }
+  updateControls();
+  announce(state.anonymous ? "Probennamen verborgen." : "Probennamen sichtbar.");
+}
+
+function setStatus(message, warning = false) {
+  elements.statusBox.textContent = message;
+  elements.statusBox.classList.toggle("warning", warning);
+}
+
+// Schematic reference colours, not a pH calculation for the selected sample.
+// References and limitations are recorded in TITRATION_TECHNIK.md.
+const PH_SCALES = {
+  btb: {
+    stops: [[0,"#f2ce32"],[6.2,"#f2ce32"],[7,"#699986"],[7.6,"#1679b8"],[14,"#1679b8"]],
+    label: "Gelb → Grün → Blau · Umschlagsbereich etwa pH 6,2–7,6.",
+  },
+  methylorange: {
+    stops: [[0,"#df3030"],[3.1,"#df3030"],[3.7,"#ed842c"],[4.4,"#f2ce32"],[14,"#f2ce32"]],
+    label: "Rot → Orange → Gelb · Umschlagsbereich etwa pH 3,1–4,4.",
+  },
+  phenolphthalein: {
+    stops: [[0,"#f8fcfd"],[8.3,"#f8fcfd"],[9,"#f3c9df"],[10,"#d82c87"],[14,"#d82c87"]],
+    label: "Farblos → Pink · Umschlagsbereich etwa pH 8,3–10,0; kurzzeitige Modellfarbe.",
+  },
+  universal: {
+    stops: [[0,"#e63d2e"],[2,"#e63d2e"],[4,"#eb642b"],[5,"#f2ce32"],[6,"#a4bb39"],[7,"#39a85b"],[8,"#2da592"],[10,"#2787bd"],[12,"#4559a8"],[14,"#713b94"]],
+    label: "Rot → Orange → Gelb → Grün → Blau → Violett · beispielhafter Farbverlauf.",
+  },
+  cabbage: {
+    stops: [[0,"#cc0066"],[1,"#cc0066"],[2,"#cc8ab8"],[3,"#cc8ab8"],[4,"#a64d97"],[5,"#a64d97"],[6,"#8a3fa0"],[7,"#6a3fd1"],[8,"#40408a"],[9,"#5bb3d6"],[10,"#2e8b72"],[11,"#2e8b72"],[12,"#39d353"],[14,"#e4ce45"]],
+    label: "Pink/Rot → Violett → Blau → Grün → Gelb · ungefähre Orientierung.",
+  },
+};
+
+function openColorScales() {
+  if (!state.reacted || state.busy) return;
+  elements.colorScaleRows.replaceChildren();
+  INDICATORS.forEach(indicator => {
+    const scale = PH_SCALES[indicator.id];
+    const row = document.createElement("section");
+    row.className = "ph-scale-row";
+    row.dataset.indicatorId = indicator.id;
+    const heading = document.createElement("h3");
+    heading.textContent = indicator.name;
+    if (indicator.id === state.indicatorId) {
+      row.classList.add("is-selected");
+      const used = document.createElement("span");
+      used.className = "ph-used-label";
+      used.textContent = "Im Versuch verwendet";
+      heading.append(used);
+    }
+    const axis = document.createElement("div");
+    axis.className = "ph-axis";
+    axis.setAttribute("aria-hidden", "true");
+    for (let ph = 0; ph <= 14; ph++) {
+      const tick = document.createElement("span");
+      tick.style.left = `${ph / 14 * 100}%`;
+      tick.textContent = ph;
+      axis.append(tick);
+    }
+    const band = document.createElement("div");
+    band.className = "ph-band";
+    band.style.background = `linear-gradient(90deg,${scale.stops.map(([ph, colour]) => `${colour} ${ph / 14 * 100}%`).join(",")})`;
+    band.setAttribute("role", "img");
+    band.setAttribute("aria-label", `${indicator.name}, pH-Skala 0 bis 14: ${scale.label}`);
+    if (indicator.id === "phenolphthalein") {
+      const clear = document.createElement("span");
+      clear.className = "ph-colourless";
+      clear.textContent = "farblos";
+      band.append(clear);
+    }
+    const caption = document.createElement("p");
+    caption.className = "ph-range";
+    caption.textContent = scale.label;
+    row.append(heading, axis, band, caption);
+    elements.colorScaleRows.append(row);
+  });
+  if (typeof elements.colorScaleDialog.showModal === "function") elements.colorScaleDialog.showModal();
+  else elements.colorScaleDialog.setAttribute("open", "");
+  elements.closeColorScaleButton.focus({preventScroll: true});
+}
+
+function closeColorScales(returnFocus = true) {
+  if (typeof elements.colorScaleDialog.close === "function") elements.colorScaleDialog.close();
+  else elements.colorScaleDialog.removeAttribute("open");
+  if (returnFocus) elements.colorScaleButton.focus({preventScroll: true});
+}
+
+function announce(message) {
+  elements.liveRegion.textContent = "";
+  window.setTimeout(() => {
+    elements.liveRegion.textContent = message;
+  }, 20);
+}
+
+function withAlpha(hex, alpha) {
+  const { r, g, b } = hexToRgb(hex);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function escapeHtml(value) {
+  const span = document.createElement("span");
+  span.textContent = String(value);
+  return span.innerHTML;
+}
+
+function switchMode(nextMode) {
+  if (!["indicator", "conductivity", "titration"].includes(nextMode)) return;
+  if (state.busy || conductivityState.busy) return;
+
+  if (window.titrationController) window.titrationController.close();
+  state.activeMode = nextMode;
+  const indicatorActive = nextMode === "indicator";
+
+  elements.indicatorLab.hidden = !indicatorActive;
+  elements.indicatorModelNote.hidden = !indicatorActive;
+  elements.nameToggle.hidden = !indicatorActive;
+
+  elements.conductivityLab.hidden = nextMode !== "conductivity";
+  elements.conductivityModelNote.hidden = nextMode !== "conductivity";
+  byId("titrationLab").hidden = nextMode !== "titration";
+  byId("titrationModeButton").setAttribute("aria-pressed", String(nextMode === "titration"));
+
+  elements.indicatorModeButton.setAttribute("aria-pressed", String(indicatorActive));
+  elements.conductivityModeButton.setAttribute("aria-pressed", String(nextMode === "conductivity"));
+
+  if (indicatorActive) {
+    elements.heroEyebrow.textContent = "Chemie · Säuren, Laugen und Indikatoren";
+    elements.heroTitle.textContent = "Digitales Indikatorlabor";
+    elements.heroIntro.textContent = "Wähle eine Probe und gib anschließend einen Indikator hinzu.";
+    elements.skipLink.href = "#experiment";
+    document.title = "Digitales Indikatorlabor";
+  } else if (nextMode === "conductivity") {
+    elements.heroEyebrow.textContent = "Chemie · Leitfähigkeit und Teilchenmodell";
+    elements.heroTitle.textContent = "Digitales Leitfähigkeitslabor";
+    elements.heroIntro.textContent = "Qualitative Leitfähigkeitsmessung mit anschließender Teilchenansicht und direktem Modellvergleich.";
+    elements.skipLink.href = "#conductivityLab";
+    document.title = "Digitales Leitfähigkeitslabor";
+  } else {
+    elements.heroEyebrow.textContent = "Chemie · Maßanalyse";
+    elements.heroTitle.textContent = "Digitales Titrationslabor";
+    elements.heroIntro.textContent = "Bürette, Probelösung und Indikator.";
+    elements.skipLink.href = "#titrationLab";
+    document.title = "Digitales Titrationslabor";
+  }
+
+  if (elements.colorScaleDialog.open) closeColorScales(false);
+  if (elements.particleDialog.open) closeParticleDialog(false);
+  updateModeControlAvailability();
+  announce(indicatorActive ? "Indikator-Prüfung geöffnet." : nextMode === "conductivity" ? "Leitfähigkeitsmessung geöffnet." : "Titration geöffnet.");
+}
+
+function updateModeControlAvailability() {
+  const locked = state.busy || conductivityState.busy;
+  elements.indicatorModeButton.disabled = locked;
+  elements.conductivityModeButton.disabled = locked;
+  byId("titrationModeButton").disabled = locked;
+}
+
+function getConductivitySolution(id = conductivityState.solutionId) {
+  return CONDUCTIVITY_SOLUTIONS.find((solution) => solution.id === id) || null;
+}
+
+function conductivityClassName(value) {
+  if (value === "Säure") return "acid";
+  if (value === "Lauge") return "lye";
+  return "neutral";
+}
+
+function renderConductivitySolutions() {
+  elements.conductivitySolutionGrid.replaceChildren();
+
+  CONDUCTIVITY_SOLUTIONS.forEach((solution) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "conductivity-solution-card";
+    button.dataset.solutionId = solution.id;
+    button.setAttribute("aria-pressed", String(conductivityState.solutionId === solution.id));
+    button.setAttribute("aria-label", `${solution.name}, in das Becherglas füllen`);
+    button.disabled = conductivityState.busy;
+
+    const icon = document.createElement("span");
+    icon.className = "solution-flask-icon";
+    icon.style.setProperty("--card-liquid", solution.liquidColor);
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = solution.code;
+
+    const content = document.createElement("span");
+    const name = document.createElement("strong");
+    name.textContent = solution.name;
+    content.append(name);
+
+    button.append(icon, content);
+    if (conductivityState.testedIds.has(solution.id)) {
+      const testedMark = document.createElement("span");
+      testedMark.className = "tested-mark";
+      testedMark.setAttribute("aria-label", "bereits gemessen");
+      testedMark.textContent = "✓";
+      button.append(testedMark);
+    }
+
+    button.addEventListener("click", () => selectConductivitySolution(solution.id));
+    elements.conductivitySolutionGrid.append(button);
+  });
+}
+
+async function selectConductivitySolution(id) {
+  if (conductivityState.busy) return;
+  const solution = getConductivitySolution(id);
+  if (!solution) return;
+
+  conductivityState.busy = true;
+  conductivityState.phase = "filling";
+  conductivityState.solutionId = id;
+  resetConductivityApparatus(false);
+  renderConductivitySolutions();
+  updateConductivityControls();
+
+  elements.conductivityBeakerLabel.textContent = solution.name;
+  elements.conductivityReading.textContent = "wird eingefüllt";
+  elements.conductivityLiquid.style.setProperty("--liquid-color", solution.liquidColor);
+
+  await window.LabVisuals.fillConductivity();
+  elements.conductivityLiquid.classList.add("is-filled");
+
+  conductivityState.phase = "ready";
+  conductivityState.busy = false;
+  renderConductivitySolutions();
+  updateConductivityControls();
+  elements.conductivityReading.textContent = "messbereit";
+  elements.measureConductivityButton.focus({ preventScroll: true });
+  announce(`${solution.name} befindet sich im Becherglas. Messung bereit.`);
+}
+
+async function measureConductivity() {
+  const solution = getConductivitySolution();
+  if (!solution || conductivityState.busy || conductivityState.phase !== "ready") return;
+
+  conductivityState.busy = true;
+  conductivityState.phase = "measuring";
+  elements.conductivityReading.textContent = "Messung läuft";
+  elements.electrodeRig.classList.add("is-lowered");
+  updateConductivityControls();
+  announce("Leitfähigkeitsmessung läuft.");
+
+  await window.LabVisuals.lowerElectrodes();
+  await showConductivityLevel(solution);
+
+  conductivityState.testedIds.add(solution.id);
+  conductivityState.phase = "done";
+  conductivityState.busy = false;
+  elements.conductivityReading.textContent = solution.conductivityLabel;
+  renderConductivitySolutions();
+  updateConductivityControls();
+  elements.zoomParticlesButton.focus({ preventScroll: true });
+  announce(`Messung abgeschlossen. Leitfähigkeit: ${solution.conductivityLabel}.`);
+}
+
+function showConductivityLevel(solution) {
+  const level = Math.max(0, Math.min(1, solution.conductivity));
+  elements.conductivityStage.style.setProperty("--lamp-level", String(level));
+  elements.conductivityStage.classList.add("is-measured");
+  return window.LabVisuals.settleMeter(level);
+}
+
+function resetConductivityApparatus(clearSelection = true) {
+  window.LabVisuals.resetConductivity();
+  elements.electrodeRig.classList.remove("is-lowered");
+  elements.conductivityStage.classList.remove("is-measured", "ions-active", "is-zooming");
+  elements.conductivityStage.style.setProperty("--lamp-level", "0");
+  elements.meterNeedle.style.setProperty("--needle-angle", "-58deg");
+  [...elements.meterBars.children].forEach((bar) => bar.classList.remove("is-active"));
+  elements.conductivityLiquid.classList.remove("is-filled");
+
+  if (clearSelection) {
+    conductivityState.solutionId = null;
+    conductivityState.phase = "empty";
+    conductivityState.busy = false;
+    elements.conductivityBeakerLabel.textContent = "Becherglas leer";
+    elements.conductivityReading.textContent = "bereit";
+    renderConductivitySolutions();
+    updateConductivityControls();
+    announce("Messstation zurückgesetzt.");
+  }
+}
+
+function updateConductivityControls() {
+  const busy = conductivityState.busy;
+  elements.measureConductivityButton.disabled = busy || conductivityState.phase !== "ready";
+  elements.zoomParticlesButton.disabled = busy || conductivityState.phase !== "done";
+  elements.resetConductivityButton.disabled = busy;
+  elements.compareParticlesButton.disabled = busy || !getConductivitySolution();
+  elements.conductivitySolutionGrid.querySelectorAll("button").forEach((button) => {
+    button.disabled = busy;
+  });
+  updateModeControlAvailability();
+}
+
+async function openSingleParticleView() {
+  const solution = getConductivitySolution();
+  if (!solution || conductivityState.phase !== "done" || conductivityState.busy) return;
+
+  conductivityState.inspectedIds.add(solution.id);
+  conductivityState.particleView = "single";
+  elements.singleParticleView.hidden = false;
+  elements.comparisonParticleView.hidden = true;
+  elements.particleDialogHeading.textContent = "Teilchenansicht";
+  elements.singleParticleName.textContent = solution.name;
+  elements.singleParticleConductivity.textContent = `Leitfähigkeit: ${solution.conductivityLabel}`;
+  setSolutionBadge(elements.singleParticleClass, solution.displayClass);
+  renderParticleModel(solution, elements.singleParticleCanvas, elements.singleParticleLegend);
+  renderConductivitySolutions();
+  updateConductivityControls();
+
+  elements.conductivityStage.classList.add("is-zooming");
+  await waitFor(REDUCED_MOTION.matches ? 10 : 260);
+  showParticleDialog();
+  window.setTimeout(() => elements.conductivityStage.classList.remove("is-zooming"), 200);
+  announce(`Teilchenansicht für ${solution.name} geöffnet.`);
+}
+
+function openParticleComparison() {
+  const reference = getConductivitySolution();
+  if (conductivityState.busy || !reference) return;
+
+  conductivityState.particleView = "comparison";
+  elements.singleParticleView.hidden = true;
+  elements.comparisonParticleView.hidden = false;
+  elements.particleDialogHeading.textContent = "Teilchenmodelle vergleichen";
+  elements.comparisonReferenceName.textContent = reference.name;
+  populateComparisonSelector(reference);
+  renderComparisonSide(reference, "left");
+  renderParticleComparison();
+  showParticleDialog();
+  announce("Vergleichsansicht geöffnet.");
+}
+
+function populateComparisonSelector(reference) {
+  const select = elements.comparisonRightSelect;
+  const previous = select.value;
+  select.replaceChildren();
+  CONDUCTIVITY_SOLUTIONS.forEach((solution) => {
+    select.add(new Option(solution.name, solution.id));
+  });
+  select.value = getConductivitySolution(previous) ? previous : CONDUCTIVITY_SOLUTIONS.find(solution => solution.id !== reference.id).id;
+}
+
+function renderParticleComparison() {
+  const right = getConductivitySolution(elements.comparisonRightSelect.value);
+  if (!right) return;
+  // The beaker's reference model remains mounted when the comparison changes.
+  renderComparisonSide(right, "right");
+}
+
+function renderComparisonSide(solution, side) {
+  const isLeft = side === "left";
+  const nameElement = isLeft ? elements.comparisonLeftName : elements.comparisonRightName;
+  const classElement = isLeft ? elements.comparisonLeftClass : elements.comparisonRightClass;
+  const canvas = isLeft ? elements.comparisonLeftCanvas : elements.comparisonRightCanvas;
+  const legend = isLeft ? elements.comparisonLeftLegend : elements.comparisonRightLegend;
+
+  nameElement.textContent = solution.name;
+  setSolutionBadge(classElement, solution.displayClass);
+  renderParticleModel(solution, canvas, legend);
+}
+
+// One oxygen atom plus the formula's number of hydrogen atoms.
+// The same symbol is used in the moving model and its legend.
+function createMolecularSymbol(typeKey) {
+  const geometry = {
+    water: { oxygen: [32, 23], hydrogen: [[15, 43], [49, 43]], charge: "" },
+    hydroxide: { oxygen: [25, 34], hydrogen: [[48, 34]], charge: "−" },
+    oxonium: { oxygen: [32, 29], hydrogen: [[32, 8], [12, 43], [52, 43]], charge: "+" },
+  }[typeKey];
+  if (!geometry) return null;
+
+  const ns = "http://www.w3.org/2000/svg";
+  const node = (tag, attributes, text) => {
+    const element = document.createElementNS(ns, tag);
+    Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+    if (text !== undefined) element.textContent = text;
+    return element;
+  };
+  const svg = node("svg", { viewBox: "0 0 74 66", class: "molecular-symbol", "aria-hidden": "true", focusable: "false", "data-molecule": typeKey });
+  const [ox, oy] = geometry.oxygen;
+  geometry.hydrogen.forEach(([x, y]) => {
+    svg.append(node("line", { x1: ox, y1: oy, x2: x, y2: y, stroke: "#c3d4d9", "stroke-width": 4, "stroke-linecap": "round" }));
+  });
+  const atom = (element, x, y, radius, fill) => {
+    svg.append(node("circle", { cx: x, cy: y, r: radius, fill, stroke: element === "O" ? "#a93c38" : "#81949e", "stroke-width": 1.3, "data-element": element }));
+    svg.append(node("ellipse", { cx: x - radius * .25, cy: y - radius * .36, rx: radius * .5, ry: radius * .27, fill: "#ffffff66" }));
+    svg.append(node("text", { x, y: y + .7, "text-anchor": "middle", "dominant-baseline": "central", "font-size": element === "O" ? 14 : 11, "font-family": "Arial, sans-serif", "font-weight": 700, fill: "#243946" }, element));
+  };
+  atom("O", ox, oy, 12, "#e8756e");
+  geometry.hydrogen.forEach(([x, y]) => atom("H", x, y, 7.5, "#f5f8fa"));
+  if (geometry.charge) {
+    // Brackets show that the charge belongs to the entire ion.
+    svg.append(node("path", { d: "M7 2 H2 V59 H7 M58 2 H63 V59 H58", fill: "none", stroke: "currentColor", "stroke-width": 1.4, opacity: .8 }));
+    svg.append(node("text", { x: 64, y: 12, fill: "currentColor", "font-size": 17, "font-family": "Arial, sans-serif", "font-weight": 700, class: "molecule-charge" }, geometry.charge));
+  }
+  return svg;
+}
+
+function renderParticleModel(solution, canvas, legend) {
+  canvas.replaceChildren();
+  legend.replaceChildren();
+
+  const particleKeys = [];
+  solution.particles.forEach((entry) => {
+    for (let index = 0; index < entry.count; index += 1) particleKeys.push(entry.type);
+  });
+
+  const shuffled = stableShuffle(particleKeys, stringSeed(solution.id));
+  const total = shuffled.length;
+  const columns = Math.max(4, Math.ceil(Math.sqrt(total * 1.55)));
+  const rows = Math.ceil(total / columns);
+
+  const positions = [];
+  shuffled.forEach((typeKey, index) => {
+    const type = PARTICLE_TYPES[typeKey];
+    if (!type) return;
+    const row = Math.floor(index / columns);
+    const column = index % columns;
+    let x, y;
+    // Seeded, irregular spacing keeps the same particles legible on repeated visits.
+    for (let attempt = 0; attempt < 180; attempt++) {
+      x = 7 + seededUnit(index * 193 + attempt * 7 + 17, stringSeed(solution.id)) * 86;
+      y = 9 + seededUnit(index * 137 + attempt * 11 + 41, stringSeed(solution.id)) * 82;
+      if (positions.every(p => ((x-p.x)/11)**2 + ((y-p.y)/14)**2 > 1)) break;
+      if (attempt === 179) {
+        x = 5 + ((column + .5) / columns) * 90;
+        y = 7 + ((row + .5) / rows) * 86;
+      }
+    }
+    positions.push({x,y});
+
+    const particle = document.createElement("span");
+    particle.className = `particle ${type.className}`;
+    particle.style.left = `calc(${x}% - 1.2rem)`;
+    particle.style.top = `calc(${y}% - 1.2rem)`;
+    particle.style.setProperty("--duration", `${5.8 + seededUnit(index + 3, total) * 4.2}s`);
+    particle.style.setProperty("--delay", `${-seededUnit(index + 9, total) * 4}s`);
+    particle.style.setProperty("--drift-x", `${5 + seededUnit(index + 23, total) * 9}px`);
+    particle.style.setProperty("--drift-y", `${-4 - seededUnit(index + 31, total) * 9}px`);
+    if (total > 25) particle.style.setProperty("--particle-size", "1.9rem");
+    particle.setAttribute("aria-hidden", "true");
+
+    const molecule = createMolecularSymbol(typeKey);
+    if (molecule) {
+      particle.classList.add("molecular-particle");
+      particle.append(molecule);
+    } else {
+      const mark = document.createElement("span");
+      mark.textContent = type.mark;
+      particle.append(mark);
+    }
+    canvas.append(particle);
+  });
+
+  const visibleTypes = solution.particles.map((entry) => entry.type);
+  [...new Set(visibleTypes)].forEach((typeKey) => {
+    const type = PARTICLE_TYPES[typeKey];
+    const item = document.createElement("span");
+    item.className = "legend-item";
+    const symbol = document.createElement("span");
+    symbol.className = "legend-symbol";
+    symbol.style.setProperty("--legend-color", type.color);
+    const molecule = createMolecularSymbol(typeKey);
+    if (molecule) {
+      symbol.classList.add("molecular-legend-symbol");
+      symbol.append(molecule);
+    } else {
+      symbol.textContent = type.mark;
+    }
+    symbol.setAttribute("aria-hidden", "true");
+    const text = document.createElement("span");
+    text.textContent = type.name;
+    item.append(symbol, text);
+    legend.append(item);
+  });
+
+  window.LabVisuals.animateParticles(canvas);
+  const particleNames = [...new Set(visibleTypes.map((key) => PARTICLE_TYPES[key].name))];
+  canvas.setAttribute("aria-label", `${solution.name}: vereinfachtes, nicht maßstäbliches Modell mit ${particleNames.join(", ")}.`);
+}
+
+function stableShuffle(values, seed) {
+  return values
+    .map((value, index) => ({ value, order: seededUnit(index + 1, seed) }))
+    .sort((a, b) => a.order - b.order)
+    .map((entry) => entry.value);
+}
+
+function seededUnit(index, seed) {
+  const value = Math.sin(index * 12.9898 + seed * 78.233) * 43758.5453;
+  return value - Math.floor(value);
+}
+
+function stringSeed(value) {
+  return [...value].reduce((sum, character) => sum + character.charCodeAt(0), 0);
+}
+
+function setSolutionBadge(element, label) {
+  element.textContent = label;
+  element.classList.remove("acid", "lye", "neutral");
+  element.classList.add(conductivityClassName(label));
+}
+
+function showParticleDialog() {
+  setParticleMotion(false);
+  if (typeof elements.particleDialog.showModal === "function") {
+    elements.particleDialog.showModal();
+  } else {
+    elements.particleDialog.setAttribute("open", "");
+  }
+  elements.closeParticleDialogButton.focus({ preventScroll: true });
+}
+
+function closeParticleDialog(returnFocus = true) {
+  if (typeof elements.particleDialog.close === "function" && elements.particleDialog.open) {
+    elements.particleDialog.close();
+  } else {
+    elements.particleDialog.removeAttribute("open");
+  }
+  setParticleMotion(false);
+  if (returnFocus) {
+    const target = conductivityState.particleView === "comparison"
+      ? elements.compareParticlesButton
+      : elements.zoomParticlesButton;
+    target.focus({ preventScroll: true });
+  }
+}
+
+function setParticleMotion(paused) {
+  conductivityState.motionPaused = paused;
+  document.body.classList.toggle("particles-paused", paused);
+  window.LabVisuals?.syncParticles();
+  elements.toggleParticleMotionButton.setAttribute("aria-pressed", String(paused));
+  elements.toggleParticleMotionButton.textContent = paused ? "Bewegung fortsetzen" : "Bewegung anhalten";
+}
+
+function toggleParticleMotion() {
+  setParticleMotion(!conductivityState.motionPaused);
+}
+
+function waitFor(milliseconds) {
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+}
+
+elements.newExperimentButton.addEventListener("click", resetExperiment);
+elements.nameToggle.addEventListener("click", toggleNames);
+elements.colorScaleButton.addEventListener("click", openColorScales);
+elements.closeColorScaleButton.addEventListener("click", () => closeColorScales());
+elements.closeColorScaleBottomButton.addEventListener("click", () => closeColorScales());
+elements.colorScaleDialog.addEventListener("click", event => {
+  if (event.target === elements.colorScaleDialog) closeColorScales();
+});
+elements.colorScaleDialog.addEventListener("cancel", event => {
+  event.preventDefault();
+  closeColorScales();
+});
+elements.indicatorModeButton.addEventListener("click", () => switchMode("indicator"));
+elements.conductivityModeButton.addEventListener("click", () => switchMode("conductivity"));
+elements.measureConductivityButton.addEventListener("click", measureConductivity);
+elements.zoomParticlesButton.addEventListener("click", openSingleParticleView);
+elements.resetConductivityButton.addEventListener("click", () => resetConductivityApparatus(true));
+elements.compareParticlesButton.addEventListener("click", openParticleComparison);
+elements.closeParticleDialogButton.addEventListener("click", () => closeParticleDialog());
+elements.closeParticleDialogBottomButton.addEventListener("click", () => closeParticleDialog());
+elements.toggleParticleMotionButton.addEventListener("click", toggleParticleMotion);
+elements.comparisonRightSelect.addEventListener("change", renderParticleComparison);
+elements.particleDialog.addEventListener("click", (event) => {
+  if (event.target === elements.particleDialog) closeParticleDialog();
+});
+elements.particleDialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
+  closeParticleDialog();
+});
+elements.particleDialog.addEventListener("close", () => setParticleMotion(false));
+
+document.querySelectorAll(".ion-motion").forEach((particle, index) => {
+  particle.dataset.charge = index % 2 === 0 ? "+" : "−";
+});
+
+renderChoices();
+renderConductivitySolutions();
+updateConductivityControls();
+setStatus("Wähle zuerst eine Probelösung.");
+
+</script>
+  <script>
+/* Titration: ideales Konzentrationsmodell bei 25 °C.
+ * Wasser: Kw=1e-14. HCl/HNO3 sowie NaOH/KOH vollständig dissoziiert.
+ * H2SO4: erste Stufe vollständig; zweite Stufe Ka2=0.0119.
+ * Ladungsbilanz mit Gesamtsulfat und Volumenänderung wird numerisch gelöst.
+ * Keine pH-Werte oder Probenkonzentrationen werden in der Oberfläche ausgegeben.
+ * Quellen und Modellgrenzen: TITRATION_TECHNIK.md.
+ */
+(function (root, factory) {
+  const model = factory();
+  if (typeof module === 'object' && module.exports) module.exports = model;
+  else root.TitrationModel = model;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  const species = Object.freeze({
+    hcl: { name: 'Salzsäure', kind: 'acid', equivalents: 1 },
+    hno3: { name: 'Salpetersäure', kind: 'acid', equivalents: 1 },
+    h2so4: { name: 'Schwefelsäure', kind: 'acid', equivalents: 2 },
+    naoh: { name: 'Natronlauge', kind: 'base', equivalents: 1 },
+    koh: { name: 'Kalilauge', kind: 'base', equivalents: 1 }
+  });
+  function pH(sample, titrant, sampleMl, addedMl) {
+    if (!species[sample.id] || !species[titrant.id] || sampleMl <= 0 || addedMl < 0 ||
+        !Number.isFinite(sample.c) || !Number.isFinite(titrant.c) || sample.c <= 0 || titrant.c <= 0)
+      throw new RangeError('Ungültige Modellparameter');
+    const volume = (sampleMl + addedMl) / 1000;
+    let cation = 0, anion = 0, sulfate = 0;
+    [[sample, sampleMl], [titrant, addedMl]].forEach(([solution, ml]) => {
+      const c = solution.c * ml / 1000 / volume;
+      if (solution.id === 'h2so4') sulfate += c;
+      else if (species[solution.id].kind === 'base') cation += c;
+      else anion += c;
+    });
+    // Monoton fallende Ladungsbilanz als Funktion des pH-Werts.
+    let low = -2, high = 16;
+    for (let i = 0; i < 90; i++) {
+      const mid = (low + high) / 2;
+      const h = 10 ** -mid;
+      const negativeSulfate = sulfate * (h + 2 * 0.0119) / (h + 0.0119);
+      const balance = h + cation - 1e-14 / h - anion - negativeSulfate;
+      if (balance > 0) low = mid;
+      else high = mid;
+    }
+    return (low + high) / 2;
+  }
+  function blend(a, b, t) { return a.map((x, i) => Math.round(x + (b[i] - x) * t)); }
+  function colour(indicator, ph) {
+    const clamp = v => Math.max(0, Math.min(1, v));
+    let rgb;
+    if (indicator === 'btb') {
+      const t = clamp((ph - 6.2) / 1.4);
+      rgb = t < .5 ? blend([246, 209, 52], [97, 168, 105], t * 2)
+        : blend([97, 168, 105], [32, 121, 195], (t - .5) * 2);
+    } else if (indicator === 'phenolphthalein') {
+      rgb = blend([222, 241, 246], [220, 47, 134], clamp((ph - 8.3) / 1.7));
+    } else if (indicator === 'methylorange') {
+      rgb = blend([226, 65, 64], [248, 186, 44], clamp((ph - 3.1) / 1.3));
+    } else rgb = [222, 241, 246];
+    return `rgb(${rgb.join(', ')})`;
+  }
+  return Object.freeze({ species, pH, colour });
+});
+
+</script>
+  <script>
+(function () {
+  'use strict';
+  const M = window.TitrationModel;
+  const $ = id => document.getElementById(id);
+  const ids = ['Sample', 'SampleVolume', 'Titrant', 'Concentration', 'Indicator', 'SampleCode',
+    'Reading', 'StartReading', 'Total', 'Repeat', 'NewSample', 'Refill', 'Toggle', 'Speed',
+    'OneDrop', 'Status', 'BuretteLiquid', 'Meniscus', 'FlaskLiquid', 'FlaskSurface',
+    'FlaskLabel', 'SampleCaption', 'Valve', 'ValveHandle', 'ValveText', 'Apparatus', 'Drops',
+    'TipDrop', 'LiquidClipRect', 'SurfaceHighlight', 'Plumes', 'Ripples', 'SwirlRing', 'StirBar',
+    'StirBody', 'StirShadow', 'StirHighlight', 'StirBand', 'StirEndCap',
+    'Magnifier', 'MagnifierConnector', 'MeniscusFocus', 'ZoomTicks',
+    'StirToggle', 'StirSpeed', 'StirSpeedLabel', 'StirState', 'StirKnob', 'KnobMarker', 'StirLED', 'StirDisplay'];
+  const el = Object.fromEntries(ids.map(id => [id, $('tit' + id)]));
+  const NS = 'http://www.w3.org/2000/svg';
+  const samples = new Map();
+  let sampleSerial = 0;
+  // Volumes are integer microlitres; every simulated drop has 50 µL.
+  const s = { open: false, frame: 0, last: 0, carry: 0, reading: 0, start: 0, total: 0,
+    sample: null, titrant: null, sampleMl: 25, indicator: 'btb', delivered: 0, stirring: true };
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const visual = {frame: 0, last: 0, angle: 0, spin: 0, liquidY: 475, colour: [246,209,52], target: [246,209,52], drops: [], plumes: [], ripples: []};
+  const rgb = value => value.match(/[\d.]+/g).map(Number);
+  const rgbText = value => `rgb(${value.map(Math.round).join(',')})`;
+  function svg(tag, attrs, parent) {
+    const node = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+    parent.appendChild(node); return node;
+  }
+  const format = n => n.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  function status(text) { el.Status.textContent = text; }
+  function createSample(id) {
+    const previous = samples.get(id);
+    const factor = M.species[id].equivalents;
+    const options = Array.from({length: 19}, (_, i) => (60 + i * 5) / 1000 / factor)
+      .filter(c => !previous || Math.abs(c - previous.c) > 1e-10);
+    const concentration = options[Math.floor(Math.random() * options.length)];
+    const serial = sampleSerial++;
+    const code = serial < 26 ? String.fromCharCode(65 + serial) : String(serial + 1);
+    const sample = {id, c: concentration, code: `Probe ${code}`};
+    samples.set(id, sample);
+    return sample;
+  }
+  function close() {
+    s.open = false;
+    cancelAnimationFrame(s.frame);
+    s.frame = 0; s.last = 0; s.carry = 0;
+    el.TipDrop.setAttribute('opacity', 0);
+    updateValve();
+  }
+  function updateValve() {
+    el.ValveHandle.setAttribute('transform', s.open ? 'rotate(90 326 301.5)' : '');
+    el.Valve.setAttribute('aria-pressed', String(s.open));
+    el.Valve.setAttribute('aria-label', s.open ? 'Bürettenhahn schließen' : 'Bürettenhahn öffnen');
+    el.ValveText.textContent = s.open ? 'offen' : 'geschlossen';
+    el.Toggle.textContent = s.open ? 'Hahn schließen' : 'Hahn öffnen';
+    el.Toggle.setAttribute('aria-pressed', String(s.open));
+    el.Apparatus.classList.toggle('tit-flowing', s.open);
+    el.Refill.disabled = s.open || s.reading === 0;
+    el.OneDrop.disabled = s.open || s.reading >= 50000 || s.sampleMl * 1000 + s.total >= 200000;
+    const blocked = s.reading >= 50000 || s.sampleMl * 1000 + s.total >= 200000;
+    el.Toggle.disabled = blocked;
+    el.Valve.setAttribute('aria-disabled', String(blocked));
+    el.Valve.setAttribute('tabindex', blocked ? '-1' : '0');
+    // Keep the solution settings fixed during an actual run. Reset buttons remain usable.
+    const started = s.total > 0 || s.open;
+    [el.Sample, el.SampleVolume, el.Titrant, el.Concentration, el.Indicator].forEach(e => e.disabled = started);
+  }
+  function render() {
+    el.Reading.textContent = format(s.reading / 1000);
+    el.StartReading.textContent = format(s.start / 1000);
+    el.Total.textContent = format(s.total / 1000);
+    const y = 45 + 225 * s.reading / 50000;
+    el.BuretteLiquid.setAttribute('y', y - 2);
+    el.BuretteLiquid.setAttribute('height', 285 - y);
+    // A quadratic curve's midpoint lies halfway toward its control point.
+    // Its lowest point must coincide with the graduation, not sit below it.
+    el.Meniscus.setAttribute('d', `M314 ${y - 2} Q326 ${y + 2} 338 ${y - 2}`);
+    renderMagnifier(y);
+    // Display the liquid already in the flask; a falling drop is still in transit.
+    const volume = s.sampleMl + s.delivered / 1000;
+    visual.liquidY = 518 - Math.min(100, 12 + Math.sqrt(volume / 200) * 86);
+    visual.target = rgb(M.colour(s.indicator, M.pH(s.sample, s.titrant, s.sampleMl, s.delivered / 1000)));
+    const radius = Math.max(22, 79 - (518 - visual.liquidY) * .57);
+    el.LiquidClipRect.setAttribute('y', visual.liquidY);
+    el.LiquidClipRect.setAttribute('height', 522 - visual.liquidY);
+    el.FlaskSurface.setAttribute('cy', visual.liquidY);
+    el.FlaskSurface.setAttribute('rx', radius);
+    el.SurfaceHighlight.setAttribute('d', `M${326-radius+4} ${visual.liquidY} Q326 ${visual.liquidY+8} ${326+radius-4} ${visual.liquidY}`);
+    el.SwirlRing.setAttribute('cy', visual.liquidY + 8);
+    el.SwirlRing.setAttribute('rx', radius * .77);
+    el.SampleCode.textContent = s.sample.code;
+    el.FlaskLabel.textContent = s.sample.code;
+    el.SampleCaption.textContent = `${M.species[s.sample.id].name} · ${format(s.sampleMl)} mL`;
+    updateValve();
+  }
+  let magnifiedReading = -1;
+  function renderMagnifier(meniscusY) {
+    if (magnifiedReading === s.reading) return;
+    magnifiedReading = s.reading;
+    el.Magnifier.setAttribute('transform', `translate(434 ${meniscusY + 58})`);
+    el.MagnifierConnector.setAttribute('d', `M338 ${meniscusY} L378 ${meniscusY + 26}`);
+    el.MeniscusFocus.setAttribute('y', meniscusY - 7);
+    el.ZoomTicks.replaceChildren();
+    // 0.1 mL occupies 10 SVG units. Half a graduation is one 0.05 mL drop.
+    const centreTick = Math.floor(s.reading / 100);
+    for (let tenth = Math.max(0, centreTick - 6); tenth <= Math.min(500, centreTick + 6); tenth++) {
+      const tickY = (tenth * 100 - s.reading) / 10;
+      const major = tenth % 5 === 0;
+      svg('line', {x1: major ? -17 : -5, x2: 8, y1: tickY, y2: tickY, stroke: '#345b68', 'stroke-width': major ? 1.4 : .9, 'data-ml': tenth / 10}, el.ZoomTicks);
+      if (major && Math.abs(tickY) <= 42) {
+        const label = svg('text', {x: 15, y: tickY + 4.5}, el.ZoomTicks);
+        label.textContent = (tenth / 10).toLocaleString('de-DE', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+      }
+    }
+  }
+  function paintColour() {
+    const colour = rgbText(visual.colour);
+    el.FlaskLiquid.setAttribute('fill', colour);
+    el.FlaskSurface.setAttribute('fill', colour);
+    el.FlaskLiquid.setAttribute('opacity', s.indicator === 'none' || (s.indicator === 'phenolphthalein' && visual.colour[1] > 220) ? '.24' : '.72');
+  }
+  function clearMotion() {
+    visual.drops = []; visual.plumes = []; visual.ripples = [];
+    el.Drops.replaceChildren(); el.Plumes.replaceChildren(); el.Ripples.replaceChildren();
+  }
+  function impact(drop) {
+    s.delivered += drop.amount;
+    render();
+    if (motion.matches) { visual.colour = visual.target.slice(); paintColour(); return; }
+    const localPH = M.pH(s.titrant, s.titrant, 1, 0);
+    const colour = M.colour(s.indicator, localPH);
+    // These short colour trails illustrate local mixing, not a fluid-dynamics calculation.
+    if (s.indicator !== 'none') {
+      const node = svg('path', {fill:'none', stroke:colour, 'stroke-width':5, 'stroke-linecap':'round', opacity:.65}, el.Plumes);
+      visual.plumes.push({node, age:0, x:326, y:visual.liquidY+2, seed:visual.angle, strength:Math.min(1,drop.amount/50)});
+      if (visual.plumes.length > 24) visual.plumes.shift().node.remove();
+    }
+    const node = svg('ellipse', {cx:326, cy:visual.liquidY, rx:2, ry:1, opacity:.65}, el.Ripples);
+    visual.ripples.push({node, age:0});
+  }
+  function dropAnimation(microlitres) {
+    if (motion.matches || document.hidden || $('titrationLab').hidden) { impact({amount:microlitres}); return; }
+    const node = svg('ellipse', {cx:326,cy:335,rx:2.2,ry:3.2,fill:'url(#titWater)',stroke:'#7eabb8','stroke-width':.7}, el.Drops);
+    visual.drops.push({node, age:0, amount:microlitres});
+    startVisual();
+  }
+  function updateStirrer() {
+    el.StirToggle.setAttribute('aria-pressed', String(s.stirring));
+    el.StirToggle.textContent = s.stirring ? 'Ausschalten' : 'Einschalten';
+    el.StirState.textContent = s.stirring ? 'Rührfischchen läuft' : 'Rührfischchen steht';
+    el.StirKnob.setAttribute('aria-pressed', String(s.stirring));
+    el.StirKnob.setAttribute('aria-label', s.stirring ? 'Magnetrührer ausschalten' : 'Magnetrührer einschalten');
+    el.StirLED.setAttribute('fill', s.stirring ? '#9bd4a5' : '#758781');
+    el.StirDisplay.textContent = s.stirring ? 'EIN' : 'AUS';
+    el.StirSpeedLabel.textContent = ['Langsam','Mittel','Schnell'][Number(el.StirSpeed.value)-1];
+    el.KnobMarker.setAttribute('transform', `rotate(${s.stirring ? (Number(el.StirSpeed.value)-2)*55 : -120} 378 550)`);
+    startVisual();
+  }
+  function startVisual() {
+    if (!visual.frame && !document.hidden && !$('titrationLab').hidden) {
+      visual.last = 0; visual.frame = requestAnimationFrame(visualFrame);
+    }
+  }
+  function visualFrame(time) {
+    visual.frame = 0;
+    if (document.hidden || $('titrationLab').hidden) return;
+    const dt = visual.last ? Math.min((time-visual.last)/1000,.05) : 0;
+    visual.last = time;
+    const speed = Number(el.StirSpeed.value);
+    const targetSpin = s.stirring && !motion.matches ? [130,220,330][speed-1] : 0;
+    visual.spin += (targetSpin-visual.spin) * (1-Math.exp(-dt*7));
+    visual.angle = (visual.angle + dt*visual.spin) % 360;
+    // Project a horizontal cylinder onto the shallow view of the flask floor.
+    // Its visible length shortens end-on; it does not turn upright in screen space.
+    const yaw = visual.angle * Math.PI / 180;
+    const length = 12 + 34 * Math.abs(Math.cos(yaw));
+    const tilt = 3 * Math.sin(2 * yaw);
+    const capWidth = 1.2 + 4.6 * Math.abs(Math.sin(yaw));
+    el.StirBar.setAttribute('transform', `rotate(${tilt})`);
+    el.StirBody.setAttribute('x', -length / 2);
+    el.StirBody.setAttribute('width', length);
+    el.StirHighlight.setAttribute('d', `M${-length / 2 + 4} -2 H${length / 2 - 4}`);
+    el.StirBand.setAttribute('opacity', .55 * Math.abs(Math.cos(yaw)));
+    el.StirEndCap.setAttribute('cx', (Math.sin(yaw) >= 0 ? 1 : -1) * (length / 2 - capWidth));
+    el.StirEndCap.setAttribute('rx', capWidth);
+    el.StirEndCap.setAttribute('opacity', .3 + .5 * Math.abs(Math.sin(yaw)));
+    el.StirShadow.setAttribute('rx', length / 2 + 2);
+    el.StirShadow.setAttribute('ry', 1.6 + .4 * Math.abs(Math.cos(yaw)));
+    el.SwirlRing.setAttribute('stroke-dashoffset', -visual.angle*.35);
+    el.SwirlRing.parentNode.setAttribute('opacity', visual.spin/330*.32);
+    for (let i=visual.drops.length-1;i>=0;i--) {
+      const d=visual.drops[i]; d.age+=dt;
+      const y=335+1050*d.age*d.age;
+      if(y>=visual.liquidY) { d.node.remove(); visual.drops.splice(i,1); impact(d); }
+      else { d.node.setAttribute('cy', y); d.node.setAttribute('ry', 3.2+Math.min(1.5,d.age*4)); }
+    }
+    for(let i=visual.plumes.length-1;i>=0;i--) {
+      const p=visual.plumes[i]; p.age+=dt*(s.stirring ? .8+speed*.38 : .17);
+      if(p.age>1.7) { p.node.remove(); visual.plumes.splice(i,1); continue; }
+      const a=p.age, bend=Math.sin(a*3+p.seed*.017)*a*15;
+      const depth=Math.min(34, (518-p.y)*.8)*(1-Math.exp(-a*2));
+      p.node.setAttribute('d', `M${p.x} ${p.y} C${p.x-3} ${p.y+depth*.45} ${p.x+bend} ${p.y+depth} ${p.x+bend+a*9} ${p.y+depth}`);
+      p.node.setAttribute('stroke-width', 3+a*7);
+      p.node.setAttribute('opacity', Math.max(0,.65*(1-a/1.7)));
+    }
+    for(let i=visual.ripples.length-1;i>=0;i--) {
+      const r=visual.ripples[i]; r.age+=dt;
+      if(r.age>.6) { r.node.remove(); visual.ripples.splice(i,1); continue; }
+      r.node.setAttribute('cy',visual.liquidY); r.node.setAttribute('rx',2+r.age*35);
+      r.node.setAttribute('ry',.7+r.age*5); r.node.setAttribute('opacity',.65*(1-r.age/.6));
+    }
+    const mix = motion.matches ? 1 : 1-Math.exp(-dt/(s.stirring ? .8/speed : 7));
+    visual.colour = visual.colour.map((c,i)=>c+(visual.target[i]-c)*mix);
+    paintColour();
+    visual.frame = requestAnimationFrame(visualFrame);
+  }
+  function dispense(requested) {
+    const available = Math.min(50000 - s.reading, 200000 - s.sampleMl * 1000 - s.total);
+    const amount = Math.min(Math.floor(requested / 50) * 50, available);
+    if (amount <= 0) return;
+    s.reading += amount; s.total += amount;
+    dropAnimation(amount); render();
+    if (s.reading >= 50000) { close(); status('Bürette leer. Hahn geschlossen.'); }
+    else if (s.sampleMl * 1000 + s.total >= 200000) { close(); status('Kolben gefüllt. Hahn geschlossen.'); }
+  }
+  function frame(time) {
+    if (!s.open) return;
+    const elapsed = s.last ? Math.min((time - s.last) / 1000, .1) : 0;
+    s.last = time;
+    s.carry += elapsed * Number(el.Speed.value) * 1000;
+    const wholeDrops = Math.floor((s.carry + 1e-8) / 50);
+    if (wholeDrops > 0) { s.carry -= wholeDrops * 50; dispense(wholeDrops * 50); }
+    if (s.open) {
+      const dropSize = Math.min(1, s.carry/50);
+      el.TipDrop.setAttribute('opacity', motion.matches ? 0 : .85);
+      el.TipDrop.setAttribute('ry', .4+dropSize*2.8);
+      el.TipDrop.setAttribute('cy', 333.5+dropSize*2);
+      el.TipDrop.setAttribute('rx', .7+dropSize*1.5);
+      s.frame = requestAnimationFrame(frame);
+    }
+  }
+  function toggle() {
+    if (s.open) { close(); status('Hahn geschlossen.'); return; }
+    if (s.reading >= 50000 || s.sampleMl * 1000 + s.total >= 200000) return;
+    s.open = true; s.last = 0; s.carry = 0;
+    updateValve(); status('Hahn offen.');
+    s.frame = requestAnimationFrame(frame);
+  }
+  function reset(newSample = false) {
+    close();
+    const id = el.Sample.value;
+    s.sample = newSample ? createSample(id) : (samples.get(id) || createSample(id));
+    s.sampleMl = Number(el.SampleVolume.value);
+    s.titrant = {id: el.Titrant.value, c: Number(el.Concentration.value)};
+    s.indicator = el.Indicator.value;
+    s.reading = 0; s.start = 0; s.total = 0; s.delivered = 0;
+    clearMotion(); render(); visual.colour = visual.target.slice(); paintColour(); updateStirrer();
+    status(newSample ? 'Neue Probe angesetzt. Hahn geschlossen.' : 'Versuchsaufbau bereit. Hahn geschlossen.');
+  }
+  Object.entries(M.species).forEach(([id, item]) => {
+    el.Sample.add(new Option(item.name, id));
+    el.Titrant.add(new Option(item.name, id));
+  });
+  el.Titrant.value = 'naoh';
+  // Scale reads downwards, with 1 mL marks and numbers every 5 mL.
+  for (let ml = 0; ml <= 50; ml++) {
+    const y = 45 + ml * 4.5;
+    const line = document.createElementNS(NS, 'line');
+    line.setAttribute('x1', ml % 5 === 0 ? '320' : '330'); line.setAttribute('x2', '338');
+    line.setAttribute('y1', y); line.setAttribute('y2', y); line.setAttribute('stroke', '#496b7a');
+    $('titTicks').appendChild(line);
+    if (ml % 5 === 0) {
+      const label = document.createElementNS(NS, 'text');
+      label.setAttribute('x', '349'); label.setAttribute('y', y + 4); label.textContent = ml;
+      $('titTicks').appendChild(label);
+    }
+  }
+  [el.Sample, el.SampleVolume, el.Titrant, el.Concentration, el.Indicator].forEach(e => e.addEventListener('change', () => reset()));
+  el.Toggle.addEventListener('click', toggle);
+  el.Valve.addEventListener('click', toggle);
+  el.Valve.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  });
+  el.OneDrop.addEventListener('click', () => {
+    if (!s.open) { dispense(50); status('Ein Tropfen zugegeben. Hahn geschlossen.'); }
+  });
+  el.Repeat.addEventListener('click', () => reset());
+  el.NewSample.addEventListener('click', () => reset(true));
+  el.Refill.addEventListener('click', () => {
+    if (s.open) return;
+    s.reading = 0; s.start = 0; render();
+    status('Bürette aufgefüllt. Zugabe gesamt bleibt erhalten.');
+  });
+  function toggleStirrer() { s.stirring = !s.stirring; updateStirrer(); }
+  el.StirToggle.addEventListener('click', toggleStirrer);
+  el.StirKnob.addEventListener('click', toggleStirrer);
+  el.StirKnob.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleStirrer(); }
+  });
+  el.StirSpeed.addEventListener('input', updateStirrer);
+  function syncVisibility() {
+    if(document.hidden || $('titrationLab').hidden) {
+      cancelAnimationFrame(visual.frame); visual.frame=0;
+      if(s.sample) { s.delivered=s.total; clearMotion(); render(); visual.colour=visual.target.slice(); paintColour(); }
+    } else startVisual();
+  }
+  new MutationObserver(syncVisibility).observe($('titrationLab'), {attributes:true,attributeFilter:['hidden']});
+  document.addEventListener('visibilitychange', syncVisibility);
+  $('titrationModeButton').addEventListener('click', () => switchMode('titration'));
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && s.open) { close(); status('Hahn beim Verlassen der Ansicht geschlossen.'); }
+  });
+  window.addEventListener('pagehide', close);
+  window.titrationController = Object.freeze({close: () => {
+    if (s.open) { close(); status('Hahn geschlossen.'); }
+  }});
+  const compactDrawing = window.matchMedia('(max-width:440px)');
+  function fitDrawing() { el.Apparatus.querySelector('svg').setAttribute('viewBox', compactDrawing.matches ? '95 0 410 590' : '0 0 660 590'); }
+  compactDrawing.addEventListener('change', fitDrawing); fitDrawing();
+  reset();
+  if (window.location.hash === '#titration') switchMode('titration');
+})();
+
+</script>
+  <script>
+(() => {
+  'use strict';
+  const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg';
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)'), compact=matchMedia('(max-width:520px)');
+  const lerp=(a,b,t)=>a+(b-a)*t, ease=t=>t*t*(3-2*t);
+  const ind={surface:466,count:0};
+  const cond={fill:0,lower:0,level:0};
+  const svg=(tag,attrs,parent)=>{const n=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,v));parent.appendChild(n);return n;};
+  function animate(duration,draw) {
+    if(reduced.matches) {draw(1);return Promise.resolve();}
+    return new Promise(resolve=>{
+      const start=performance.now();
+      function tick(time) {const t=reduced.matches?1:Math.min(1,(time-start)/duration);draw(t);if(t<1)requestAnimationFrame(tick);else resolve();}
+      draw(0);requestAnimationFrame(tick);
+    });
+  }
+  function home(id) {return compact.matches?(id==='solutionDropper'?255:525):(id==='solutionDropper'?190:590);}
+  function positionPipette(el,t) {
+    const k=ease(t);el.setAttribute('transform',`translate(${lerp(home(el.id),390,k)} ${lerp(348,12,k)-Math.sin(k*Math.PI)*35}) rotate(${Math.sin(k*Math.PI)*(el.id==='solutionDropper'?9:-9)})`);
+  }
+  function setIndicatorFill(count) {
+    ind.count=count;
+    const from=ind.surface,to=count?463-(8+count*7)*2.98:466;
+    function draw(t) {
+      ind.surface=lerp(from,to,ease(t));
+      $('indWetRect').setAttribute('y',ind.surface);$('indWetRect').setAttribute('height',count?468-ind.surface:0);
+      $('indSurface').setAttribute('cy',ind.surface);$('indSurface').setAttribute('opacity',count?1:0);
+    }
+    if(!count) {draw(1);return Promise.resolve();}
+    return animate(180,draw);
+  }
+  function ripple(parent,x,y,radius=26) {
+    if(reduced.matches)return;
+    const n=svg('ellipse',{cx:x,cy:y,rx:2,ry:.5,opacity:.7},parent);
+    animate(620,t=>{if(parent.id==='indRipples')n.setAttribute('cy',ind.surface);n.setAttribute('rx',2+radius*t);n.setAttribute('ry',.5+3*t);n.setAttribute('opacity',.7*(1-t));}).then(()=>n.remove());
+  }
+  async function drops({dropper,count,color,className,onImpact}) {
+    if(reduced.matches) {for(let i=0;i<count;i++)await onImpact(i);return;}
+    dropper.classList.add('is-active');
+    await animate(560,t=>positionPipette(dropper,t));
+    for(let i=0;i<count;i++) {
+      const tip=dropper.querySelector('.pipette-tip-drop');tip.setAttribute('fill',color);
+      await animate(170,t=>{tip.setAttribute('opacity',.85);tip.setAttribute('ry',.4+t*3);tip.setAttribute('cy',129+t*2.5);tip.setAttribute('rx',1+t*1.8);});
+      tip.setAttribute('opacity',0);dropper.classList.add('is-squeezing');
+      const end=ind.surface, n=svg('ellipse',{cx:390,cy:143,rx:2.6,ry:3.7,fill:color,'fill-opacity':.7,stroke:'#6f9aa7','stroke-width':.5,'class':className},$('indDrops'));
+      await animate(420,t=>{n.setAttribute('cy',lerp(143,end,t*t));n.setAttribute('ry',3.7+t*1.5);if(t>.25)dropper.classList.remove('is-squeezing');});
+      n.remove();
+      const impact=onImpact(i);ripple($('indRipples'),390,ind.surface,28);await impact;
+    }
+    await animate(500,t=>positionPipette(dropper,1-t));
+    dropper.classList.remove('is-active','is-squeezing');
+  }
+  function colourChannels(hex){return hex.match(/[a-f\d]{2}/gi).map(v=>parseInt(v,16));}
+  async function mixIndicator(colour) {
+    $('tubeLiquid').style.backgroundColor=colour;
+    const target=colourChannels(colour),start=[204,225,230];
+    const paths=[];
+    if(!reduced.matches)for(let i=0;i<3;i++)paths.push(svg('path',{fill:'none',stroke:colour,'stroke-width':i===0?7:4,'stroke-linecap':'round',opacity:.8},$('mixingLayer')));
+    await animate(1950,t=>{
+      const spread=ease(Math.max(0,(t-.12)/.88));
+      const c=start.map((v,i)=>Math.round(lerp(v,target[i],spread)));
+      $('tubeLiquid').setAttribute('fill',`rgb(${c.join(',')})`);$('tubeLiquid').setAttribute('fill-opacity',lerp(.36,.78,spread));
+      $('indSurface').setAttribute('fill',`rgb(${c.join(',')})`);
+      paths.forEach((p,i)=>{
+        const depth=Math.min(462-ind.surface,18+t*150),x=390+(i-1)*6,w=Math.sin(t*7+i)*Math.min(20,t*35);
+        p.setAttribute('d',`M${x} ${ind.surface} C${x-8} ${ind.surface+depth*.3} ${x+w} ${ind.surface+depth*.58} ${x+w} ${ind.surface+depth*.78} Q${x-w} ${ind.surface+depth} ${x+5} ${ind.surface+depth}`);
+        p.setAttribute('stroke-width',5+t*15);p.setAttribute('opacity',Math.max(0,.8*(1-t)));
+      });
+    });
+    $('mixingLayer').replaceChildren();$('tubeLiquid').setAttribute('fill',colour);
+  }
+  function resetIndicator() {
+    setIndicatorFill(0);$('tubeLiquid').setAttribute('fill','#c4e1e8');$('tubeLiquid').setAttribute('fill-opacity','.36');$('indSurface').setAttribute('fill','#d5e9ed');
+    $('indDrops').replaceChildren();$('indRipples').replaceChildren();$('mixingLayer').replaceChildren();
+    ['solutionDropper','indicatorDropper'].forEach(id=>positionPipette($(id),0));
+  }
+  function locations(){return compact.matches?{power:[300,57],meter:[500,32],lamp:[650,218]}:{power:[80,420],meter:[750,380],lamp:[845,245]};}
+  function drawConductivity() {
+    const {power:p,meter:m,lamp:l}=locations(),offset=cond.lower*82;
+    $('condPower').setAttribute('transform',`translate(${p})`);$('condMeter').setAttribute('transform',`translate(${m})`);$('conductivityLamp').setAttribute('transform',`translate(${l})`);
+    $('electrodeRig').setAttribute('transform',`translate(0 ${offset})`);
+    const y=194+offset;
+    $('condWireA').setAttribute('d',compact.matches?`M${p[0]+29} ${p[1]+91} C329 220 420 150 460 ${y}`:`M109 511 C65 511 50 500 50 470 C50 270 335 120 460 ${y}`);
+    $('condWireB').setAttribute('d',compact.matches?`M${p[0]+131} ${p[1]+91} C455 220 505 224 ${m[0]+20} ${m[1]+151}`:`M211 511 C260 574 700 572 770 531`);
+    $('condWireC').setAttribute('d',compact.matches?`M${m[0]+178} ${m[1]+151} C711 222 710 323 ${l[0]-27} ${l[1]+82}`:`M928 531 C980 444 942 341 818 327`);
+    $('condWireD').setAttribute('d',`M${l[0]+27} ${l[1]+82} C${l[0]+50} ${l[1]+120} 600 170 540 ${y}`);
+    const surface=532-cond.fill*142;
+    $('condWetRect').setAttribute('y',surface);$('condWetRect').setAttribute('height',cond.fill?536-surface:0);
+    $('condSurface').setAttribute('cy',surface);$('condSurface').setAttribute('opacity',cond.fill>0?1:0);
+    $('meterNeedle').setAttribute('transform',`rotate(${-58+116*cond.level} 99 102)`);
+    $('conductivityLamp').querySelector('.real-lamp-glow').setAttribute('opacity',cond.level*.92);
+    $('conductivityLamp').querySelector('.real-filament').setAttribute('stroke',`rgb(${Math.round(lerp(123,255,cond.level))},${Math.round(lerp(107,204,cond.level))},${Math.round(lerp(71,86,cond.level))})`);
+  }
+  async function fillConductivity() {
+    $('condPour').setAttribute('opacity',0);
+    await animate(360,t=>{$('condPour').setAttribute('opacity',t);$('condPourJug').setAttribute('transform',`translate(500 ${lerp(115,220,ease(t))}) rotate(${lerp(10,65,ease(t))})`);$('condPourStream').setAttribute('opacity',0);});
+    $('condPourStream').setAttribute('opacity',1);
+    await animate(1350,t=>{
+      cond.fill=t;drawConductivity();const y=532-t*142;
+      $('condPourStream').setAttribute('d',`M500 220 Q${500+Math.sin(t*30)*1.5} 310 500 ${y}`);
+      $('condSurface').setAttribute('ry',8+Math.sin(t*35)*1.2);
+    });
+    $('condPourStream').setAttribute('opacity',0);ripple($('condRipples'),500,390,55);
+    await animate(360,t=>{$('condPour').setAttribute('opacity',1-t);$('condPourJug').setAttribute('transform',`translate(500 ${lerp(220,115,ease(t))}) rotate(${lerp(65,10,ease(t))})`);});
+    $('condSurface').setAttribute('ry',8);
+  }
+  async function lowerElectrodes() {
+    let touched=false;
+    await animate(1100,t=>{cond.lower=ease(t);drawConductivity();
+      if(!touched && 359+cond.lower*82>=390){touched=true;ripple($('condRipples'),460,390,23);ripple($('condRipples'),540,390,23);}
+    });
+  }
+  async function settleMeter(level) {
+    await animate(1250,t=>{
+      const response=t===1?1:1-Math.exp(-6*t)*Math.cos(6*t);
+      cond.level=Math.max(0,Math.min(1,level*response));drawConductivity();
+      Array.from($('meterBars').children).forEach((bar,i)=>bar.classList.toggle('is-active',i<Math.max(1,Math.round(cond.level*8))));
+    });
+  }
+  function resetConductivity() {
+    cond.fill=0;cond.lower=0;cond.level=0;
+    $('condPour').setAttribute('opacity',0);$('condRipples').replaceChildren();
+    Array.from($('meterBars').children).forEach(b=>b.classList.remove('is-active'));drawConductivity();
+  }
+  function animateParticles(canvas) {
+    const particles=Array.from(canvas.children);
+    particles.forEach((p,i)=>{
+      const rand=j=>{const n=Math.sin((i+1)*37.13+j*17.47+particles.length)*43758.5453;return n-Math.floor(n);};
+      const frames=Array.from({length:9},(_,j)=>({transform:`translate(${(rand(j*2)-.5)*16}px,${(rand(j*2+1)-.5)*14}px) rotate(${(rand(j+80)-.5)*16}deg)`}));
+      frames.push(frames[0]);
+      p.animate(frames,{duration:9000+rand(44)*7000,iterations:Infinity,easing:'linear',delay:-rand(33)*6000});
+    });
+    syncParticles();
+  }
+  function syncParticles() {
+    const paused=!$('particleDialog').open||document.hidden||document.body.classList.contains('particles-paused')||reduced.matches;
+    for(const canvas of document.querySelectorAll('.particle-canvas')) {
+      const visible=!canvas.closest('[hidden]');
+      for(const animation of canvas.getAnimations({subtree:true}))paused||!visible?animation.pause():animation.play();
+    }
+  }
+  function layout() {
+    $('indicatorDrawing').setAttribute('viewBox',compact.matches?'190 0 400 540':'0 0 780 540');
+    $('conductivityDrawing').setAttribute('viewBox',compact.matches?'280 0 440 600':'0 0 1000 600');
+    document.querySelectorAll('.ind-bottle').forEach((n,i)=>n.setAttribute('transform',`translate(${home(i?'indicatorDropper':'solutionDropper')} 0)`));
+    ['solutionDropper','indicatorDropper'].forEach(id=>{if(!$(id).classList.contains('is-active'))positionPipette($(id),0);});drawConductivity();
+  }
+  for(let i=0;i<=12;i++){
+    const a=(-58+i*116/12)*Math.PI/180,r1=i%3?65:61,r2=71;
+    svg('line',{x1:99+Math.sin(a)*r1,y1:102-Math.cos(a)*r1,x2:99+Math.sin(a)*r2,y2:102-Math.cos(a)*r2},$('condMeterTicks'));
+  }
+  new MutationObserver(syncParticles).observe($('particleDialog'),{attributes:true,attributeFilter:['open']});
+  document.addEventListener('visibilitychange',syncParticles);reduced.addEventListener('change',syncParticles);compact.addEventListener('change',layout);
+  window.LabVisuals=Object.freeze({drops,setIndicatorFill,mixIndicator,resetIndicator,fillConductivity,lowerElectrodes,settleMeter,resetConductivity,animateParticles,syncParticles});
+  resetIndicator();resetConductivity();layout();
+})();
+
+</script>
+<script>switchMode("titration");</script>
+</body>
+</html>
