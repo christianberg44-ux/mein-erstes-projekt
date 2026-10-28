@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#244b3d">
+  <title>Kresse · Keimlabor</title>
+  <meta name="description" content="Keimungsversuche mit Gartenkresse: sechs Petrischalen selbst vorbereiten, sieben Tage im Zeitraffer verfolgen und die Keimlinge selbst zählen.">
+  <style>
+:root{--ink:#253c32;--muted:#6d7b71;--green:#28533e;--green-light:#e8eee2;--line:#dce1d5;--paper:#fbfcf8;--background:#f0f2e9;--blue:#5c91a7;--gold:#ae8138;font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--background);font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,a,input{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer;color:inherit}button:disabled{cursor:default;opacity:.48}button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid #b18239;outline-offset:4px}button{transition:background .15s,box-shadow .15s,transform .15s}button:not(:disabled):active{transform:translateY(1px)}[hidden]{display:none!important}.app-header{max-width:1500px;margin:auto;padding:22px 38px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:20px}.brand{display:flex;gap:12px;text-decoration:none;align-items:center;color:var(--green);font-family:Georgia,serif;font-size:27px;font-weight:bold;line-height:1}.brand small{font:9px "Segoe UI",sans-serif;letter-spacing:2.5px;display:block;margin-top:8px}.brand-icon{width:44px;height:48px;border:1px solid #a4b59f;border-radius:13px;display:grid;place-items:center}.brand-icon svg{width:30px}.header-actions{display:flex;gap:18px;align-items:center}.text-button{background:transparent;border:0;padding:10px 2px;font-size:13px;font-weight:600;color:#4d6353}.text-button:hover{text-decoration:underline}.outline-button{padding:10px 14px;border:1px solid #cbd5c5;background:#fafbf7;border-radius:7px;font-size:12px;font-weight:600}.outline-button:hover{background:#e9efe5}.outline-button span{font-size:20px;vertical-align:-1px;margin-right:6px}main{max-width:1440px;padding:30px 38px 15px;margin:auto}.intro{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 28px}.eyebrow{font-size:10px;letter-spacing:1.7px;font-weight:700;margin:0 0 9px;color:var(--muted)}h1{font-family:Georgia,"Times New Roman",serif;font-weight:normal;font-size:38px;line-height:1.14;letter-spacing:-1px;margin:0 0 10px}h2{font-weight:600;font-size:21px;letter-spacing:-.4px;margin:0}h3{font-size:16px}.subtitle{font-size:14px;color:var(--muted);margin:0}.phase-tag{font-size:12px;font-weight:600;border:1px solid #d5dece;background:#e6eddf;padding:10px 15px;border-radius:30px;white-space:nowrap}.status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#668859;margin-right:8px;vertical-align:middle}.dish-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}.dish-tab{position:relative;display:flex;align-items:center;gap:8px;background:#f8faf4;border:1px solid #dce2d5;border-radius:12px;padding:8px;text-align:left;min-width:0;overflow:hidden;height:91px}.dish-tab:hover{border-color:#8ca180}.dish-tab[aria-pressed=true]{background:white;border:1.5px solid var(--green);box-shadow:0 3px 8px #283f3010}.tab-preview{width:68px;flex:none;pointer-events:none}.tab-preview svg{display:block;width:100%;height:auto}.tab-text{min-width:0}.tab-text strong{font-size:13px;font-weight:650;display:block}.tab-text small{font-size:10px;color:var(--muted);display:block;margin-top:7px}.tab-check{position:absolute;top:6px;right:7px;font-size:11px;color:var(--green)}.readiness{display:flex;justify-content:space-between;align-items:center;margin:17px 0 20px;font-size:11px;gap:12px}.readiness>div:first-child{display:flex;align-items:center;flex-wrap:wrap;gap:3px}.readiness .status-dot{margin-right:5px}.ready-hint{margin-left:13px;color:var(--muted)}.ready-dots{display:flex;gap:5px}.ready-dots i{display:block;width:19px;height:4px;border-radius:3px;background:#d5decf}.ready-dots i.done{background:var(--green)}.workbench{display:grid;grid-template-columns:minmax(0,1fr) 340px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--paper);box-shadow:0 10px 30px #2c4b3010}.experiment-view{min-width:0;background:radial-gradient(ellipse at 48% 45%,#fff 0,#f7f9f2 68%,#f0f3e9 100%);padding:25px 28px 18px;position:relative;display:flex;flex-direction:column}.view-top{display:flex;justify-content:space-between;align-items:center}.view-top h2{font-family:Georgia,serif;font-size:27px;font-weight:normal}.day-badge{padding:7px 12px;background:#e8eee2;border:1px solid #dbe3d4;border-radius:5px;font-size:12px}.dish-stage{position:relative;width:100%;max-width:690px;margin:auto;flex:1;display:grid;align-items:center;min-height:420px}#dish-canvas{width:100%}#dish-canvas>svg{display:block;width:100%;max-height:560px;overflow:visible}.dish-caption{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #dfe6d9;font-size:11px;color:var(--muted)}.action-status{min-height:22px;font-size:12px;text-align:center;margin-top:8px;color:#527149}.setup-panel{padding:24px;background:#fff;border-left:1px solid var(--line)}.panel-heading{padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:18px}.panel-heading h2{font-size:18px}fieldset{border:0;padding:0;margin:0 0 20px;min-width:0}legend{font-size:12px;font-weight:650;padding:0;margin-bottom:10px}legend span{color:#8b9b86;font-size:10px;margin-right:8px;font-weight:500}.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.material-button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:#fafbf7;border:1px solid #dfe5d8;border-radius:8px;min-height:85px;padding:10px 6px;position:relative}.material-button strong{font-size:11px;line-height:1.35;font-weight:600}.material-button:hover:not(:disabled){background:#f0f5e8;border-color:#93a889}.material-button.selected{border-color:#69916b;background:#eff5e9}.material-button.selected:after{content:'✓';position:absolute;right:7px;top:4px;font-size:10px;color:#366341}.material-button:disabled.selected{opacity:1}.material-symbol{display:block;width:40px;height:30px;position:relative}.soil-symbol{background:radial-gradient(circle at 30% 50%,#ae8b59 0 2px,transparent 3px),radial-gradient(circle at 60% 40%,#967346 0 2px,transparent 3px),radial-gradient(circle at 65% 80%,#3b2c1e 0 2px,transparent 3px),linear-gradient(#846241,#4b3625);border-radius:55% 60% 30% 25%;height:22px;margin-top:8px;box-shadow:1px 3px 3px #2a221222}.cotton-symbol{background:radial-gradient(ellipse at 40% 30%,white,#fff 35%,#e5e6e1);border-radius:50% 55% 40% 60%;box-shadow:1px 2px 4px #48524122,inset 2px 2px 3px #fff}.seeds-symbol{background:radial-gradient(ellipse at 18% 27%,#ab7040 0 3px,transparent 4px),radial-gradient(ellipse at 65% 17%,#98542d 0 3px,transparent 4px),radial-gradient(ellipse at 50% 50%,#ae7143 0 3px,transparent 4px),radial-gradient(ellipse at 25% 80%,#96542c 0 3px,transparent 4px),radial-gradient(ellipse at 80% 80%,#ab7547 0 3px,transparent 4px)}.water-symbol{width:30px;height:30px}.water-state{font-size:10px;margin-top:9px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}.tiny-button{font-size:10px;background:transparent;border:0;text-decoration:underline;padding:2px;color:#65745f}.environment-button{display:flex;align-items:center;text-align:left;width:100%;padding:10px;border:1px solid var(--line);border-radius:7px;background:#fafbf8;margin-bottom:7px;gap:10px}.environment-button>span:nth-child(2){flex:1}.environment-button strong{font-size:11px;display:block;font-weight:600}.environment-button small{font-size:10px;display:block;color:var(--muted);margin-top:4px}.environment-button[aria-pressed=true]{background:#eef3e8;border-color:#819c73}.env-icon{font-size:25px;width:24px;text-align:center;color:#617252}.air-icon{font-size:31px}.switch{width:27px;height:15px;background:#d4dccf;border-radius:10px;position:relative;flex:none}.switch:after{content:'';width:11px;height:11px;position:absolute;border-radius:50%;background:#fff;top:2px;left:2px;box-shadow:0 1px 3px #23332220}.environment-button[aria-pressed=true] .switch{background:#537449}.environment-button[aria-pressed=true] .switch:after{left:14px}.micro-note{font-size:10px;line-height:1.5;color:var(--muted);margin:7px 1px 0}.location-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.location-options button{background:#fafbf7;border:1px solid var(--line);border-radius:7px;padding:9px 2px;display:flex;flex-direction:column;gap:5px;align-items:center}.location-options button[aria-pressed=true]{border-color:#709566;background:#eef5e8}.location-options span{font-size:23px;line-height:1.1}.location-options strong{font-size:10px;font-weight:600}.location-options small{font-size:10px;color:var(--muted)}.primary-button{background:var(--green);border:1px solid var(--green);border-radius:7px;padding:13px 15px;color:white;font-size:13px;font-weight:600}.primary-button:hover:not(:disabled){background:#36684f}.setup-footer{border-top:1px solid var(--line);padding-top:16px;text-align:center}.setup-footer .primary-button{width:100%}.setup-footer p{font-size:10px;color:var(--muted);line-height:1.5;margin:9px 0 2px}.setup-footer .text-button{font-size:10px;padding:6px}.setup-panel.locked fieldset{opacity:.7}.view-controls{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:6px}.view-controls .outline-button{font-size:11px;padding:9px 12px}#count-button[aria-pressed=true]{background:#e8e8cd;border-color:#c7b66e}.count-bar{border:1px solid #e0d5a6;background:#fbf7e9;border-radius:7px;padding:12px 16px;margin-top:16px;display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px}.count-bar small{width:100%;font-size:10px;color:#81764c}.count-bar .text-button{font-size:10px;padding:0}.result-row{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:15px 0;border-bottom:1px solid var(--line)}.result-row span{color:var(--muted)}.result-row strong{text-align:right;line-height:1.5;font-weight:500}#result-settings{margin-bottom:25px}.result-hint{font-size:12px;line-height:1.7;color:var(--muted)}.app-footer{display:flex;justify-content:space-between;gap:16px;font-size:10px;color:#7c8877;margin:19px 0 5px;line-height:1.5}.app-footer i{display:inline-block;width:6px;height:6px;background:#a2b094;border-radius:50%;margin-right:7px}.timelapse{background:#fafbf7;border:1px solid var(--line);border-radius:16px;padding:26px}.timeline-heading{display:flex;justify-content:space-between;align-items:center}.timeline-heading h2{font-family:Georgia,serif;font-size:29px;font-weight:normal}.timeline{display:flex;margin:23px 0;gap:8px}.timeline-step{flex:1;border-top:4px solid #dfe5d9;padding-top:9px;font-size:11px;color:#788470}.timeline-step.current{border-color:var(--green);color:var(--green);font-weight:bold}.timeline-step.past{border-color:#9ab38b}.watering-notice{display:flex;gap:13px;background:#eaf2f2;border:1px solid #d4e4e4;border-radius:8px;padding:13px 18px;align-items:center;margin-bottom:20px}.watering-notice svg{width:22px;fill:currentColor;color:#5e94a7;flex:none}.watering-notice strong{font-size:12px}.watering-notice p{font-size:11px;color:#647b7b;margin:5px 0 0;line-height:1.5}.time-dishes,.compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.time-dish,.compare-card{border:1px solid var(--line);border-radius:12px;background:radial-gradient(ellipse at center,#fff,#f3f5ec);overflow:hidden;position:relative;padding:15px 17px 12px;min-width:0}.time-dish-head{display:flex;justify-content:space-between;font-size:12px;font-weight:600}.time-dish>svg,.compare-card>svg{width:100%;height:auto;display:block}.time-dish-caption{font-size:10px;line-height:1.7;color:var(--muted);min-height:34px}.water-pill{font-size:9px;font-weight:500;color:#6a7c6e;padding:2px 5px;border-radius:3px;background:#e8ede3}.time-dish.watering .water-pill{background:#d9edf5;color:#337a91}.auto-water{position:absolute;right:22%;top:22%;width:50px;height:95px;pointer-events:none;opacity:0}.time-dish.watering .auto-water{opacity:1}.auto-water:before{content:'';position:absolute;left:15px;top:0;width:14px;height:46px;border:2px solid #598a9d;border-radius:6px 6px 2px 2px;background:linear-gradient(90deg,#fff9,#b7d7e4);transform:rotate(-20deg)}.auto-water i{position:absolute;left:8px;top:43px;width:6px;height:10px;background:#74b6d3;border-radius:60% 60% 65% 65%;animation:water-drop .7s linear infinite;box-shadow:0 0 0 1px #ffffff80}.auto-water i:nth-child(2){animation-delay:.23s}.auto-water i:nth-child(3){animation-delay:.46s}.time-dish.watering:after{content:'';position:absolute;inset:2px;border:2px solid #8ab8c7;pointer-events:none;border-radius:10px;opacity:.5}dialog{border:1px solid #d7dfce;border-radius:15px;color:var(--ink);padding:0;max-width:660px;width:calc(100% - 30px);max-height:90vh;box-shadow:0 20px 90px #152a3c40}dialog::backdrop{background:#182a2266;backdrop-filter:blur(3px)}.dialog-top{padding:22px 25px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);background:#fafbf7}.dialog-content{padding:12px 25px 25px;font-size:13px;line-height:1.7}.dialog-content a{color:#326d50}.close-dialog{width:32px;height:32px;background:#eef1e8;border:0;border-radius:50%;font-size:24px;line-height:1}.compare-dialog{max-width:1150px}.compare-grid{padding:20px}.compare-card h3{margin:0;font-size:15px}.compare-card button{width:100%;margin-top:12px}.compare-card p{font-size:11px;line-height:1.6;color:var(--muted);margin:0}.small-dialog{max-width:430px}.dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}.small-dialog .primary-button{font-size:12px}.seed-target{outline:none}.seed-target[role=button]{cursor:pointer}.seed-target[role=button]:focus-visible>circle:first-child{stroke:#bf973f;stroke-width:3}.seed-target[role=button]:hover{filter:brightness(1.08)}#action-animation{position:absolute;inset:0;pointer-events:none;overflow:hidden}.action-tool{position:absolute;left:58%;top:10%;width:130px;height:130px;animation:tool-in 1s ease both}.action-tool svg{width:100%;height:100%}.action-drop{position:absolute;width:8px;height:13px;background:#6ca8c2;border-radius:55%;left:55%;top:33%;animation:manual-drop .7s ease-in both}.action-drop:nth-child(2){animation-delay:.15s;left:49%}.action-drop:nth-child(3){animation-delay:.3s;left:59%}.action-drop.seed{width:6px;height:9px;background:#a47241;border-radius:50%;}.action-drop.soil{width:18px;height:15px;background:#5c422d;border-radius:35%}.action-drop.cotton{width:70px;height:36px;background:#fff;border-radius:50%;box-shadow:0 1px 5px #3333}.brand[href="#"]{pointer-events:none}.empty-note{position:absolute;inset:45% 20% auto;text-align:center;color:#879381;font-size:12px;pointer-events:none}.busy #setup-controls,.busy .setup-footer{pointer-events:none}.paused .auto-water i{animation-play-state:paused}
+@keyframes water-drop{0%{opacity:0;transform:translateY(0)}15%{opacity:.9}90%{opacity:.8}100%{opacity:0;transform:translateY(45px)}}@keyframes manual-drop{0%{transform:translateY(-55px);opacity:0}20%{opacity:1}100%{transform:translateY(115px);opacity:0}}@keyframes tool-in{0%{transform:translate(25px,-55px) rotate(-15deg);opacity:0}20%,65%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(25px,-55px) rotate(-15deg);opacity:0}}
+.time-dish>svg{height:190px}
+@media(min-width:1450px){main{padding-top:38px}.dish-stage{min-height:490px}.workbench{grid-template-columns:minmax(0,1fr) 370px}.setup-panel{padding:27px}}
+@media(max-width:1100px){main{padding:25px 24px}.app-header{padding:18px 24px}.tab-preview{width:45px}.dish-tab{height:76px;gap:4px}.tab-text strong{font-size:12px}.tab-text small{font-size:9px}.workbench{grid-template-columns:minmax(0,1fr) 310px}.setup-panel{padding:20px}.experiment-view{padding:22px}.dish-stage{min-height:320px}.ready-hint{margin-left:7px;font-size:10px}}
+@media(max-width:800px){.app-header{padding:16px 18px}.brand{font-size:23px}.brand-icon{width:37px;height:42px}.header-actions{gap:10px}.header-actions .text-button{font-size:11px}.header-actions .outline-button{font-size:10px;padding:9px}.header-actions .outline-button span{display:none}main{padding:22px 18px}.intro{margin-bottom:22px}h1{font-size:31px}.subtitle{font-size:12px}.phase-tag{font-size:10px;padding:8px 10px}.dish-tabs{gap:6px}.dish-tab{flex-direction:column;align-items:center;text-align:center;height:96px;padding:5px}.tab-preview{height:45px;width:56px}.tab-text small{margin-top:4px}.tab-check{font-size:9px}.ready-hint{width:100%;margin-left:17px;line-height:1.4;margin-top:4px}.workbench{grid-template-columns:minmax(0,1fr) 285px}.experiment-view{padding:18px 15px}.setup-panel{padding:17px}.dish-stage{min-height:280px}.dish-caption{flex-direction:column;gap:6px}.time-dishes,.compare-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.timelapse{padding:20px}.app-footer>span:last-child{display:none}.material-button strong{font-size:10px}.location-options strong{font-size:9px}.panel-heading h2{font-size:16px}}
+@media(max-width:650px){.workbench{grid-template-columns:1fr}.setup-panel{border-left:0;border-top:1px solid var(--line);padding:22px}.experiment-view{padding:20px;min-height:380px}.dish-stage{min-height:260px;max-width:420px}.dish-caption{flex-direction:row;font-size:10px}.header-actions{gap:11px}.header-actions .text-button{max-width:60px;font-size:10px;line-height:1.5}.app-header{gap:10px}.brand{font-size:21px}.brand small{font-size:8px}.brand-icon{display:none}main{padding:20px 12px}.intro{align-items:flex-start;padding:0 5px;gap:8px}.eyebrow{font-size:9px}h1{font-size:27px;max-width:230px;line-height:1.2}.subtitle{font-size:10px}.phase-tag{font-size:9px;margin-top:5px}.phase-tag .status-dot{width:4px;height:4px;margin-right:3px}.dish-tabs{grid-template-columns:repeat(6,94px);overflow-x:auto;padding:1px 1px 7px;scrollbar-width:thin;scrollbar-color:#9fac92 transparent}.dish-tab{height:95px}.readiness{margin:10px 4px 16px;font-size:10px}.ready-dots i{width:11px}.ready-dots{gap:3px}.ready-hint{max-width:260px}.view-top h2{font-size:25px}.setup-panel fieldset{margin-bottom:20px}.material-button{min-height:85px}.material-button strong{font-size:12px}.location-options strong{font-size:11px}.environment-button strong{font-size:12px}.location-options button{padding:13px 3px}.micro-note,.water-state{font-size:11px}.view-controls{gap:8px}.view-controls .text-button{font-size:11px}.count-bar small{line-height:1.6}.time-dish{padding:12px 9px}.time-dishes{gap:8px}.timelapse{padding:18px 10px}.timeline-heading{padding:0 5px}.timeline-heading .outline-button{max-width:120px;font-size:10px;line-height:1.5}.timeline{gap:5px}.timeline-step{font-size:9px}.time-dish-head{font-size:11px}.water-pill{font-size:8px}.watering-notice{padding:12px;gap:9px}.watering-notice p{font-size:10px}.watering-notice strong{font-size:11px}.time-dish-caption{font-size:9px}.compare-grid{grid-template-columns:1fr;padding:12px}.compare-card>svg{max-height:370px}.compare-card p{font-size:12px}.dialog-top{padding:18px}.dialog-content{padding:10px 20px 20px}.app-footer{font-size:9px;margin:15px 5px}.panel-heading h2{font-size:19px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}.auto-water i{animation:none!important;opacity:1;transform:translateY(25px)}.action-tool{animation:none!important}}
+.setup-hint{margin:0 0 18px;padding:16px;border:1px solid #dfcf9c;border-left:3px solid #b49245;border-radius:8px;background:#fcf8ec;text-align:left}.setup-hint .eyebrow{font-size:8px;letter-spacing:1.2px;color:#8c753c;margin-bottom:8px}.setup-hint h3{font-size:14px;margin:0 0 9px;color:#605126}.setup-hint p:not(.eyebrow){font-size:12px;line-height:1.65;margin:0 0 11px;color:#665b3c}.hint-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.hint-button{font-size:11px;padding:8px 10px;border:1px solid #d6c792;border-radius:6px;background:#fffdf5;color:#756236;font-weight:600}.hint-actions .text-button{font-size:10px;color:#756236;padding:8px 0}.setup-hint:focus{outline:2px solid #b99a50;outline-offset:3px}.settings-compare{width:100%;border-collapse:collapse;text-align:left;font-size:12px;table-layout:fixed}.settings-compare th,.settings-compare td{padding:13px 10px;border-bottom:1px solid #dce1d5;vertical-align:top;overflow-wrap:anywhere}.settings-compare thead{background:#f0f3e9}.settings-compare tbody th{font-weight:500;color:#6d7b71;width:28%}.settings-compare td{color:#334b3b}.settings-compare-scroll{overflow-x:auto}#setup-compare-dialog h2{font-size:19px}@media(max-width:480px){.settings-compare{font-size:11px}.settings-compare th,.settings-compare td{padding:11px 6px}.setup-hint p:not(.eyebrow){font-size:13px}.hint-actions .text-button{font-size:11px}}
+
+</style>
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="#" aria-label="Keimlabor"><span class="brand-icon"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 27V16M16 18C7 19 4 12 5 6c8 0 12 5 11 12Zm0-3c0-7 5-11 12-10 0 7-5 11-12 10Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span><span>Keimlabor<small>GARTENKRESSE</small></span></a>
+    <div class="header-actions"><button id="info-button" class="text-button" type="button">Modellhinweise</button><button id="reset-button" class="outline-button" type="button"><span aria-hidden="true">↺</span> Neue Versuchsreihe</button></div>
+  </header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">DEIN EXPERIMENTIERTISCH</p><h1>Was braucht ein Samen?</h1><p class="subtitle">6 Ansätze. Je 25 Kressesamen. Eine Woche Zeit.</p></div><div class="phase-tag" id="phase-tag"><span class="status-dot"></span>Vorbereitung</div></section>
+    <nav id="dish-tabs" class="dish-tabs" aria-label="Ansatz auswählen"></nav>
+    <section class="readiness" id="readiness"><div><span class="status-dot"></span><strong id="ready-count">0 von 6 Ansätzen fertig</strong><span class="ready-hint">Sobald alle Ansätze fertig sind, beginnt die Woche automatisch.</span></div><div id="ready-dots" class="ready-dots" aria-hidden="true"></div></section>
+    <section id="workbench" class="workbench">
+      <div class="experiment-view">
+        <div class="view-top"><div><p class="eyebrow">PETRISCHALE <span id="dish-number">01</span></p><h2 id="dish-title">Kontrolle</h2></div><span id="day-badge" class="day-badge">Tag 0</span></div>
+        <div id="dish-stage" class="dish-stage"><div id="dish-canvas"></div><div id="action-animation" aria-hidden="true"></div></div>
+        <div class="dish-caption"><span id="seed-caption">Noch keine Samen eingelegt</span><span id="place-caption">Versuchstisch · 20 °C</span></div>
+        <div id="view-controls" class="view-controls" hidden><button type="button" id="cover-button" class="outline-button" hidden>Abdeckung anheben</button><button type="button" id="count-button" class="outline-button" aria-pressed="false">Zählhilfe einschalten</button><button type="button" id="compare-button" class="text-button">Alle Schalen vergleichen <span aria-hidden="true">↗</span></button></div>
+        <div id="count-bar" class="count-bar" hidden><span>Von dir markiert: <strong id="manual-count">0</strong> / 25</span><button type="button" id="clear-marks" class="text-button">Markierungen löschen</button><small>Tippe die Samenplätze an, die du zählen möchtest. Erneutes Tippen hebt die Markierung auf.</small></div>
+        <div id="action-status" class="action-status" role="status" aria-live="polite"></div>
+      </div>
+      <aside class="setup-panel" id="setup-panel" aria-labelledby="setup-title">
+        <div class="panel-heading"><p class="eyebrow" id="panel-eyebrow">MATERIAL & BEDINGUNGEN</p><h2 id="setup-title">Ansatz zusammenstellen</h2></div>
+        <div id="setup-controls">
+          <fieldset><legend><span>01</span> Unterlage</legend><div class="option-grid"><button type="button" class="material-button" data-action="soil"><span class="material-symbol soil-symbol" aria-hidden="true"></span><strong>Erde einfüllen</strong></button><button type="button" class="material-button" data-action="cotton"><span class="material-symbol cotton-symbol" aria-hidden="true"></span><strong>Watte einlegen</strong></button></div></fieldset>
+          <fieldset><legend><span>02</span> Samen & Wasser</legend><div class="option-grid"><button type="button" class="material-button" data-action="seeds"><span class="material-symbol seeds-symbol" aria-hidden="true"></span><strong>25 Samen einstreuen</strong></button><button type="button" class="material-button" data-action="water"><svg class="water-symbol" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3C17 10 9 18 9 25a11 11 0 0 0 22 0C31 18 23 10 20 3Z" fill="#afd4df" stroke="#558b9d" stroke-width="1.4"/><path d="M15 24q-2 5 3 7" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg><strong>Wasser zugeben</strong></button></div><div class="water-state"><span id="water-state">Wasser: nicht zugegeben</span><button type="button" id="remove-water" class="tiny-button" hidden>Entfernen</button></div></fieldset>
+          <fieldset><legend><span>03</span> Licht & Luft</legend><button type="button" class="environment-button" data-action="dark" aria-pressed="false"><span class="env-icon" aria-hidden="true">◐</span><span><strong id="dark-label">Abdunkeln</strong><small id="dark-sub">Schale steht im Licht</small></span><span class="switch" aria-hidden="true"></span></button><button type="button" class="environment-button" data-action="oxygen" aria-pressed="false"><span class="env-icon air-icon" aria-hidden="true">≋</span><span><strong>Sauerstofffreie Kammer</strong><small id="oxygen-sub">Luft ist vorhanden</small></span><span class="switch" aria-hidden="true"></span></button><p class="micro-note">Die Kammer modelliert eine Umgebung ohne Sauerstoff.</p></fieldset>
+          <fieldset><legend><span>04</span> Standort</legend><div class="location-options"><button type="button" data-place="room"><span aria-hidden="true">▱</span><strong>Tisch</strong><small>20 °C</small></button><button type="button" data-place="fridge"><span aria-hidden="true">❄</span><strong>Kühlschrank</strong><small>5 °C</small></button><button type="button" data-place="warm"><span aria-hidden="true">♨</span><strong>Wärmeplatte</strong><small>25 °C</small></button></div><p class="micro-note">Licht und Standort werden getrennt eingestellt.</p></fieldset>
+        </div>
+        <div id="result-settings" hidden></div>
+        <section id="setup-hint" class="setup-hint" tabindex="-1" aria-labelledby="hint-title" hidden><p class="eyebrow">DENKANSTOSS ZUM AUFBAU</p><h3 id="hint-title">Noch einmal vergleichen</h3><p id="hint-text" role="status" aria-live="polite" aria-atomic="true"></p><div class="hint-actions"><button type="button" id="next-hint" class="hint-button">Noch ein Tipp</button><button type="button" id="hint-compare" class="text-button">Mit Kontrolle vergleichen</button></div></section>
+        <div class="setup-footer"><button type="button" id="ready-button" class="primary-button">Ansatz fertig</button><p id="ready-help">Sind alle Bedingungen eingestellt?</p><button type="button" id="empty-dish" class="text-button">Schale leeren</button></div>
+      </aside>
+    </section>
+    <section id="timelapse" class="timelapse" hidden>
+      <div class="timeline-heading"><div><p class="eyebrow">EINE WOCHE IM ZEITRAFFER</p><h2 id="time-title">Tag 1</h2></div><button type="button" id="pause-button" class="outline-button">Zeitraffer pausieren</button></div>
+      <div class="timeline" id="timeline"></div>
+      <div class="watering-notice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C10 7 5 11 5 16a7 7 0 0 0 14 0c0-5-5-9-7-14Z" fill="currentColor"/></svg><div><strong id="watering-title">Die Ansätze werden täglich versorgt.</strong><p>Angefeuchtete Schalen werden nachgegossen. Trocken angesetzte Schalen bleiben trocken.</p></div></div>
+      <div id="time-dishes" class="time-dishes"></div>
+    </section>
+    <footer class="app-footer"><span><i aria-hidden="true"></i>Vereinfachtes biologisches Modell · Reale Versuche können abweichen.</span><span><em>Lepidium sativum</em> · Gartenkresse</span></footer>
+  </main>
+  <dialog id="info-dialog"><div class="dialog-top"><h2>Zum Modell</h2><button type="button" class="close-dialog" data-close="info-dialog" aria-label="Modellhinweise schließen">×</button></div><div class="dialog-content"><p>Diese Umgebung ist eine Simulation. Die gezeigten Keimzahlen und die Entwicklung während der sieben Tage sind didaktische Modellannahmen, keine Vorhersage für eine bestimmte Saatgutpackung.</p><p>Erde und Watte sind beim Einfüllen trocken. Eine Wasserzugabe feuchtet die Unterlage an; im Zeitraffer wird diese Feuchtigkeit täglich erhalten. Ohne Wasserzugabe bleibt die Schale trocken.</p><p>Die sauerstofffreie Kammer ist eine besondere Modellbedingung. Ein geschlossener Petrischalendeckel allein wäre nicht sauerstofffrei. In der Simulation erfolgt die Versorgung dieser Kammer über einen geschlossenen Zugang mit sauerstofffreiem Wasser.</p><p>Der Kühlschrank verändert hier nur die Temperatur. Auch dort bleiben die gewählten Lichtbedingungen erhalten. Im Dunkelansatz bleibt die Abdeckung beim Nachgießen geschlossen.</p><p>Ein sichtbarer Wurzelaustritt gilt als Keimung. Die Zählhilfe markiert ausschließlich deine Auswahl; sie bewertet sie nicht.</p><p>Beim Verlassen wird der Arbeitsstand nach Möglichkeit in diesem Browser gespeichert. Es werden keine Ergebnisse an eine Lehrkraft übertragen.</p><h3>Fachliche Grundlagen</h3><ul><li><a href="https://www.saps.org.uk/teaching-resources/resources/756/using-cress-in-the-lab/" target="_blank" rel="noopener noreferrer">Science & Plants for Schools: Using Cress in the Lab</a></li><li><a href="https://orgprints.org/id/eprint/29444/" target="_blank" rel="noopener noreferrer">JLU Gießen / IGZ: Forschungsbericht zur Gartenkresse, 2015</a></li><li><a href="https://doi.org/10.1104/pp.110.169706" target="_blank" rel="noopener noreferrer">Morris et al.: Regulation of Seed Germination in Lepidium sativum, 2011</a></li></ul></div></dialog>
+  <dialog id="compare-dialog" class="compare-dialog"><div class="dialog-top"><div><p class="eyebrow">TAG 7</p><h2>Alle sechs Ansätze</h2></div><button type="button" class="close-dialog" data-close="compare-dialog" aria-label="Vergleich schließen">×</button></div><div id="compare-grid" class="compare-grid"></div></dialog>
+  <dialog id="reset-dialog" class="small-dialog"><div class="dialog-top"><h2>Neu beginnen?</h2><button type="button" class="close-dialog" data-close="reset-dialog" aria-label="Abbrechen">×</button></div><div class="dialog-content"><p>Die sechs Ansätze und deine Zählmarkierungen werden geleert.</p><div class="dialog-actions"><button type="button" class="outline-button" data-close="reset-dialog">Abbrechen</button><button type="button" class="primary-button" id="confirm-reset">Neue Versuchsreihe</button></div></div></dialog>
+  <dialog id="setup-compare-dialog"><div class="dialog-top"><div><p class="eyebrow">DEINE GEWÄHLTEN EINSTELLUNGEN</p><h2>Mit der Kontrolle vergleichen</h2></div><button type="button" class="close-dialog" data-close="setup-compare-dialog" aria-label="Einstellungsvergleich schließen">×</button></div><div class="dialog-content"><p>Gehe die Bedingungen Zeile für Zeile durch. Welche Unterschiede gehören zu deiner Versuchsfrage?</p><div class="settings-compare-scroll"><table class="settings-compare"><thead><tr><th scope="col">Bedingung</th><th scope="col">Kontrolle</th><th scope="col" id="compare-setup-name">Dein Ansatz</th></tr></thead><tbody id="settings-compare-body"></tbody></table></div><div class="dialog-actions"><button type="button" class="primary-button" data-close="setup-compare-dialog">Weiter am Ansatz arbeiten</button></div></div></dialog>
+  <script>
+/*
+ * Kresse · Keimlabor: deterministic teaching model, not measured prediction.
+ * Exact counts and the compressed growth schedule are didactic assumptions.
+ * UMD: window.CressModel in a browser; module.exports for the model checks.
+ */
+(function (root, factory) {
+  'use strict';
+  var api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.CressModel = api;
+}(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+
+  var DISHES = [
+    ['control', 'Kontrolle'], ['water', 'Wasser'], ['soil', 'Erde'],
+    ['air', 'Luft'], ['light', 'Licht'], ['heat', 'Wärme']
+  ];
+  var SEED_COUNT = 25;
+  var COLD_INDICES = [1, 4, 7, 10, 13, 16, 19, 22];
+
+  function initialDishes() {
+    return DISHES.map(function (entry) {
+      return {
+        id: entry[0], name: entry[1], medium: null, water: false,
+        seeds: false, oxygen: true, dark: false, place: 'room',
+        ready: false, day: 0, marked: [], results: null
+      };
+    });
+  }
+
+  function clamp(value, lower, upper) {
+    return Math.max(lower, Math.min(upper, value));
+  }
+
+  function cleanDay(day) {
+    return typeof day === 'number' && Number.isFinite(day) ? clamp(day, 0, 7) : 0;
+  }
+
+  function isRecord(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+  }
+
+  function resultFor(dish, day) {
+    if (!isRecord(dish) || dish.seeds !== true) return [];
+    var elapsed = arguments.length < 2 ? 7 : cleanDay(day);
+    var wet = dish.water === true;
+    var oxygen = dish.oxygen === true;
+    var cold = dish.place === 'fridge';
+    var warmth = dish.place === 'warm' ? 1.12 : 1;
+    var dark = dish.dark === true;
+
+    return Array.from({ length: SEED_COUNT }, function (_, index) {
+      var result = { index: index, stage: 'seed', vigor: 0, etiolated: dark };
+      if (elapsed === 0 || !wet) return result;
+      result.stage = 'swollen';
+      result.vigor = Math.min(1, elapsed) * 0.12;
+      if (!oxygen || index === 24) return result;
+
+      if (cold) {
+        var rank = COLD_INDICES.indexOf(index);
+        if (rank < 0) return result;
+        var coldOnset = 2.4 + rank * 0.6;
+        if (elapsed >= coldOnset) {
+          result.stage = 'root';
+          result.vigor = clamp(0.07 + (elapsed - coldOnset) * 0.035, 0.07, 0.23);
+        }
+        return result;
+      }
+
+      // The deterministic spread gives individually visible stages without
+      // introducing different seed lots into comparisons between conditions.
+      var onset = 1.4 + ((index * 7) % 11) * 0.055;
+      var growth = (elapsed * warmth - onset) / (7 - onset);
+      if (growth <= 0) return result;
+      result.vigor = clamp(growth, 0.035, 1);
+      result.stage = growth < 0.25 ? 'root' : 'sprout';
+      return result;
+    });
+  }
+
+  function sanitizeDish(value, index) {
+    var position = Number.isInteger(index) && index >= 0 && index < DISHES.length ? index : 0;
+    var fallback = initialDishes()[position];
+    if (!isRecord(value)) return fallback;
+    fallback.medium = value.medium === 'soil' || value.medium === 'cotton' ? value.medium : null;
+    fallback.water = value.water === true;
+    fallback.seeds = value.seeds === true;
+    fallback.oxygen = value.oxygen !== false;
+    fallback.dark = value.dark === true;
+    fallback.place = ['room', 'fridge', 'warm'].indexOf(value.place) !== -1 ? value.place : 'room';
+    fallback.day = cleanDay(value.day);
+    fallback.ready = value.ready === true && fallback.seeds && fallback.medium !== null;
+    if (fallback.seeds && Array.isArray(value.marked)) {
+      fallback.marked = Array.from(new Set(value.marked.filter(function (n) {
+        return Number.isInteger(n) && n >= 0 && n < SEED_COUNT;
+      }))).slice(0, SEED_COUNT);
+    }
+    // Never trust stored result arrays: compute them from the stored setup.
+    fallback.results = fallback.seeds && fallback.day > 0 ? resultFor(fallback, fallback.day) : null;
+    return fallback;
+  }
+
+  function sanitizeDishes(value) {
+    if (!Array.isArray(value) || value.length !== DISHES.length) return initialDishes();
+    // Canonical identities prevent duplicated/mislabelled reference dishes.
+    return DISHES.map(function (entry, index) {
+      var matching = value.find(function (item) { return isRecord(item) && item.id === entry[0]; });
+      return sanitizeDish(matching, index);
+    });
+  }
+
+  function validDish(dish) {
+    return isRecord(dish) && DISHES.some(function (entry) { return entry[0] === dish.id; }) &&
+      (dish.medium === null || dish.medium === 'soil' || dish.medium === 'cotton') &&
+      typeof dish.water === 'boolean' && typeof dish.seeds === 'boolean' &&
+      typeof dish.oxygen === 'boolean' && typeof dish.dark === 'boolean' &&
+      typeof dish.ready === 'boolean' && ['room', 'fridge', 'warm'].indexOf(dish.place) !== -1 &&
+      typeof dish.day === 'number' && Number.isFinite(dish.day) && dish.day >= 0 && dish.day <= 7 &&
+      Array.isArray(dish.marked) && dish.marked.length <= SEED_COUNT &&
+      new Set(dish.marked).size === dish.marked.length && dish.marked.every(function (n) {
+        return Number.isInteger(n) && n >= 0 && n < SEED_COUNT;
+      });
+  }
+
+  function readyToRun(dishes) {
+    return Array.isArray(dishes) && dishes.length === DISHES.length &&
+      new Set(dishes.map(function (dish) { return dish && dish.id; })).size === DISHES.length &&
+      dishes.every(function (dish) {
+        return validDish(dish) && dish.ready && dish.seeds && dish.medium !== null;
+      });
+  }
+
+  return Object.freeze({
+    SEED_COUNT: SEED_COUNT,
+    initialDishes: initialDishes,
+    resultFor: resultFor,
+    sanitizeDish: sanitizeDish,
+    sanitizeDishes: sanitizeDishes,
+    validDish: validDish,
+    readyToRun: readyToRun
+  });
+}));
+
+</script>
+  <script>
+/* Formative setup feedback: compare conditions, never prescribe a setting. */
+(function (root, factory) {
+  'use strict';
+  var api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.CressCheck = api;
+}(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  var fields = ['medium', 'water', 'oxygen', 'dark', 'place'];
+  var factors = {water:'water', soil:'medium', air:'oxygen', light:'dark', heat:'place'};
+  var names = {medium:'Unterlage', water:'Wasserversorgung', oxygen:'Luftbedingungen', dark:'Beleuchtung', place:'Temperatur'};
+  var record = function (v) { return v !== null && typeof v === 'object' && !Array.isArray(v); };
+  function issue(code, tips, relatedFields, goControl) {
+    return {code:code, title:'Noch einmal vergleichen', tips:tips, relatedFields:relatedFields || [], goControl:!!goControl};
+  }
+  function fieldList(keys) {return keys.map(function (key) {return names[key];}).join(', ');}
+  function preparation(dish) {
+    if (!record(dish) || (dish.id !== 'control' && !Object.prototype.hasOwnProperty.call(factors, dish.id)) ||
+      (dish.medium !== null && dish.medium !== 'soil' && dish.medium !== 'cotton') ||
+      ['water','seeds','oxygen','dark','ready'].some(function (key) {return typeof dish[key] !== 'boolean';}) ||
+      ['room','fridge','warm'].indexOf(dish.place) === -1) {
+      return issue('setup-invalid', [
+        'Dieser Aufbau lässt sich noch nicht vollständig prüfen. Sieh dir die Schale und ihre Einstellungen an.',
+        'Gehe die Bereiche Unterlage, Samen und Wasser, Licht und Luft sowie Standort einzeln durch.',
+        'Falls eine Einstellung nicht mehr zu deiner Schale passt, stelle den Ansatz mit den vorhandenen Bedienelementen erneut zusammen.'
+      ]);
+    }
+    if (!dish.seeds) return issue('seeds-missing', [
+      'Schau genau in die Petrischale: Was möchtest du am Ende der Woche dort beobachten?',
+      'Vergleiche den Inhalt der Schale mit den Materialien, die für deinen Versuch bereitliegen.',
+      'Prüfe den Bereich „Samen & Wasser“ und die Angabe unter der Schale: Ist deine Probe bereits eingesetzt?'
+    ], ['seeds']);
+    if (dish.medium === null) return issue('medium-missing', [
+      'Betrachte, worauf deine Samen liegen. Ist die Schale schon vollständig vorbereitet?',
+      'Vergleiche die bereitliegenden Unterlagen und überlege, welche du für diesen Ansatz verwenden möchtest.',
+      'Prüfe den Bereich „Unterlage“. Entscheide selbst, welches Material zu deiner Versuchsidee passt.'
+    ], ['medium']);
+    return null;
+  }
+  function controlIssue(control) {
+    var bad=[];
+    if (!control.water) bad.push('water');
+    if (!control.oxygen) bad.push('oxygen');
+    if (control.place === 'fridge') bad.push('place');
+    if (!bad.length) return null;
+    return issue('control-baseline-' + bad.join('-'), [
+      'Der Kontrollansatz soll zeigen, wie sich die Samen unter günstigen Ausgangsbedingungen entwickeln können. Passt dein Aufbau dazu?',
+      'Gehe die Versorgung und den Standort der Kontrollschale durch. Welche Bedingung könnte den Vergleich von Anfang an erschweren?',
+      'Schau besonders auf diese Bereiche: ' + fieldList(bad) + '. Überlege, wie du dort eine geeignete Ausgangssituation für deine Vergleiche schaffen kannst.'
+    ], bad);
+  }
+  function checkDish(dish, dishes) {
+    var incomplete=preparation(dish);
+    if (incomplete) return incomplete;
+    if (dish.id === 'control') return controlIssue(dish);
+    var controls=Array.isArray(dishes)?dishes.filter(function (d) {return record(d)&&d.id==='control';}):[];
+    var control=controls[0];
+    if (controls.length!==1 || !control.ready || preparation(control) || controlIssue(control)) {
+      return issue('control-needed', [
+        'Für einen fairen Vergleich brauchst du einen fertig vorbereiteten Kontrollansatz.',
+        'Sieh dir zuerst die Kontrollschale an und prüfe, ob sie als gemeinsame Ausgangsbasis geeignet ist.',
+        'Wechsle zur Kontrolle und prüfe dort den Aufbau. Danach kannst du die Bedingungen beider Schalen vergleichen.'
+      ], [], true);
+    }
+    var target=factors[dish.id];
+    var changed=fields.filter(function (key) {return dish[key]!==control[key];});
+    if (changed.length===1 && changed[0]===target) return null;
+    if (!changed.length) return issue('no-difference-' + target, [
+      'Vergleiche diesen Ansatz mit der Kontrolle: Woran würdest du erkennen, welchen Faktor du hier untersuchst?',
+      'Gehe beide Schalen Bedingung für Bedingung durch. Findest du einen Unterschied?',
+      'Nimm den Bereich „' + names[target] + '“ genauer unter die Lupe. Vergleiche ihn mit der Kontrolle und überlege, welche Frage dein Ansatz beantworten soll.'
+    ], [target]);
+    var extras=changed.filter(function (key) {return key!==target;});
+    if (changed.length===1) return issue('wrong-factor-' + target + '-' + changed[0], [
+      'Dein Ansatz unterscheidet sich von der Kontrolle. Passt dieser Unterschied zu dem Faktor, den du untersuchen möchtest?',
+      'Lies den Namen deiner Schale und suche danach die einzige Bedingung, die du gegenüber der Kontrolle verändert hast.',
+      'Vergleiche „' + names[changed[0]] + '“ und „' + names[target] + '“ mit der Kontrolle. Welcher dieser Bereiche gehört zu deiner Versuchsfrage?'
+    ], changed.concat([target]));
+    return issue('multiple-differences-' + target + '-' + changed.join('-'), [
+      'Hier unterscheiden sich mehrere Bedingungen von der Kontrolle. Könntest du später erkennen, welche davon für einen Unterschied verantwortlich war?',
+      'Vergleiche Unterlage, Wasserversorgung, Luft, Licht und Temperatur nacheinander. Zähle dabei die Unterschiede zur Kontrollschale.',
+      'Prüfe besonders ' + fieldList(extras) + '. Gehören diese Unterschiede zu dem Faktor auf dem Schalenschild oder erschweren sie deinen Vergleich?'
+    ], extras);
+  }
+  function reviewReady(dishes) {
+    if (!Array.isArray(dishes)) return [];
+    return dishes.filter(function (d) {return record(d)&&d.ready===true;}).map(function (d) {
+      return {id:d.id, issue:checkDish(d,dishes)};
+    }).filter(function (entry) {return entry.issue!==null;});
+  }
+  function checkAction(dish, action) {
+    if (!record(dish)) return null;
+    var result;
+    if ((action==='seeds' || action==='water') && dish.medium!=='soil' && dish.medium!=='cotton') {
+      result=issue('order-' + action + '-before-medium', [
+        'Dieser Arbeitsschritt ist noch nicht möglich. Schau zuerst in die Schale: Ist sie dafür vorbereitet?',
+        'Überlege, wo das Material in der Schale landen würde und was es dort halten könnte.',
+        'Prüfe die Unterlage und ihre Aufgabe. Plane danach deinen nächsten Handgriff.'
+      ], ['medium']);
+    } else if ((action==='soil' || action==='cotton') && dish.seeds) {
+      result=issue('order-medium-over-seeds', [
+        'Diese Schicht kannst du jetzt nicht hinzufügen. Schau auf die Reihenfolge: Wo würde das neue Material landen?',
+        'In der Schale liegen bereits Samen. Überlege, was die zusätzliche Schicht mit ihrer Lage machen würde.',
+        'Prüfe den Aufbau. Mit „Schale leeren“ kannst du die Vorbereitung neu beginnen und deine Handgriffe selbst ordnen.'
+      ], ['medium','seeds']);
+    }
+    if (!result) return null;
+    result.title='Reihenfolge prüfen';
+    return result;
+  }
+  return Object.freeze({checkDish:checkDish, reviewReady:reviewReady, checkAction:checkAction});
+}));
+
+</script>
+  <script>
+/* CressDish.render(dish, options) -> an SVG string, without dependencies.
+ * Biological stages are supplied by the caller; this renderer does not calculate
+ * germination or disclose a correct count. Each seed retains one stable position.
+ */
+(function (global) {
+  'use strict';
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const TAU = Math.PI * 2;
+  const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+  const f = n => Number(n.toFixed(2));
+  const esc = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function random(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a += 0x6D2B79F5;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  const positions = Array.from({ length: 25 }, (_, index) => {
+    const theta = index * 2.399963229728653 - 1.3;
+    const radius = Math.sqrt((index + 0.62) / 25) * 145;
+    return {
+      x: f(300 + Math.cos(theta) * radius),
+      y: f(235 + Math.sin(theta) * radius),
+      rotation: f(Math.sin(index * 2.43) * 30),
+      seedRotation: f(20 + ((index * 83) % 150)),
+    };
+  });
+
+  function substrate(dish, p, thumbnail) {
+    const rng = random(271828);
+    const wet = !!dish.water;
+    if (dish.medium === 'soil') {
+      let grains = '';
+      const colors = wet ? ['#392b22', '#59412f', '#745539', '#30261f', '#8c6a49'] : ['#594433', '#8d6c4c', '#a48560', '#6c533b', '#bea17a'];
+      const total = thumbnail ? 85 : 230;
+      for (let i = 0; i < total; i++) {
+        const angle = rng() * TAU;
+        const radius = Math.sqrt(rng()) * 177;
+        const x = 300 + Math.cos(angle) * radius;
+        const y = 235 + Math.sin(angle) * radius;
+        const rx = 0.8 + rng() * 3.8;
+        grains += `<ellipse cx="${f(x)}" cy="${f(y)}" rx="${f(rx)}" ry="${f(rx * (0.45 + rng() * 0.45))}" fill="${colors[i % colors.length]}" opacity="${f(0.45 + rng() * 0.45)}" transform="rotate(${f(rng() * 180)} ${f(x)} ${f(y)})"/>`;
+      }
+      return `<circle cx="300" cy="235" r="179" fill="url(#${p}-soil)"/><g clip-path="url(#${p}-inside)">${grains}</g>`;
+    }
+    if (dish.medium === 'cotton') {
+      let fibres = '';
+      const total = thumbnail ? 35 : 115;
+      for (let i = 0; i < total; i++) {
+        const angle = rng() * TAU;
+        const radius = Math.sqrt(rng()) * 177;
+        const x = 300 + Math.cos(angle) * radius;
+        const y = 235 + Math.sin(angle) * radius;
+        const span = 9 + rng() * 29;
+        fibres += `<path d="M${f(x - span / 2)} ${f(y)} q${f(span / 3)} ${f(-3 - rng() * 5)} ${f(span / 2)} ${f(rng() * 2)} t${f(span / 2)} ${f(rng() * 2)}" fill="none" stroke="${i % 3 ? '#fffef9' : '#ccd1c8'}" stroke-width="${i % 4 ? '.8' : '1.7'}" opacity="${f(0.2 + rng() * 0.5)}" transform="rotate(${f(rng() * 180)} ${f(x)} ${f(y)})"/>`;
+      }
+      let tufts = '';
+      for (let i = 0; i < 15; i++) {
+        const a = i * 2.399963;
+        const r = Math.sqrt((i + 0.5) / 15) * 145;
+        tufts += `<ellipse cx="${f(300 + Math.cos(a) * r)}" cy="${f(235 + Math.sin(a) * r)}" rx="43" ry="31" fill="${wet ? '#e3e8dd' : '#fffdf7'}" opacity=".37"/>`;
+      }
+      return `<circle cx="300" cy="235" r="179" fill="url(#${p}-cotton)"/><g clip-path="url(#${p}-inside)">${tufts}${fibres}</g>`;
+    }
+    return `<circle cx="300" cy="235" r="179" fill="url(#${p}-glass-bottom)"/><ellipse cx="300" cy="281" rx="128" ry="65" fill="#fff" opacity=".09"/>`;
+  }
+
+  function seed(index, result, dish, options, p) {
+    const pos = positions[index];
+    const day = Number(dish.day) || 0;
+    const stage = day > 0 && result ? result.stage : 'seed';
+    const vigor = clamp(result && Number.isFinite(result.vigor) ? result.vigor : 0.7, 0, 1);
+    const etiolated = !!(result && result.etiolated);
+    const markOrder = (dish.marked || []).indexOf(index);
+    const marked = markOrder >= 0;
+    const covered = dish.dark && !options.coverOpen;
+    const interactive = options.interactive && !covered;
+    const act = interactive ? ` tabindex="0" role="button" aria-label="Samenplatz ${index + 1}, ${marked ? 'markiert' : 'nicht markiert'}" aria-pressed="${marked}"` : '';
+    const rotation = pos.rotation;
+    const size = stage === 'swollen' ? 1.2 : 1;
+    const scale = clamp(0.6 + vigor * 0.4, 0.6, 1);
+    const seedShell = `<g transform="rotate(${pos.seedRotation}) scale(${size})"><ellipse cx=".8" cy="1.4" rx="4.5" ry="6.8" fill="#201c14" opacity=".2"/><path d="M-3.5 -4.8 C-1.1 -8.8 4.2 -7.7 4.8 -2.7 C5.6 2.7 2.2 7.8 -1.4 6.8 C-5.1 6 -5.7 -.4 -3.5 -4.8Z" fill="url(#${p}-seed)" stroke="#78502e" stroke-width=".55"/><path d="M-2.5 -4.3 C-3.8 -.1 -2.7 3.6 -.5 4.7" fill="none" stroke="#dfb783" stroke-width=".9" opacity=".7"/><path d="M.7 -5.5 Q2 .6 .8 4.9" fill="none" stroke="#8b582c" stroke-width=".6" opacity=".7"/></g>`;
+    let plant = '';
+    if (stage === 'root') {
+      const length = 6 + vigor * 10;
+      plant = `<path d="M.4 3 C-1.4 8 4.5 ${f(length * .7)} 2.4 ${f(length + 5)}" fill="none" stroke="#8d866d" stroke-width="3.2" opacity=".25" transform="translate(1 1)"/><path d="M.4 3 C-1.4 8 4.5 ${f(length * .7)} 2.4 ${f(length + 5)}" fill="none" stroke="#fcf7dc" stroke-width="2.6" stroke-linecap="round"/><path d="M2.7 ${f(length)} l3.5 3 M2.6 ${f(length + 3)} l-2.8 2" fill="none" stroke="#f9f4df" stroke-width=".7" stroke-linecap="round"/>`;
+    } else if (stage === 'sprout') {
+      const root = `<path d="M.6 4 C-3 11 7 14 2 23 M2 14 L-2 19 M3 18 L7 22" fill="none" stroke="#fffbea" stroke-width="1.65" stroke-linecap="round"/><path d="M2 23 L1.4 27" fill="none" stroke="#e8e5c4" stroke-width=".6"/>`;
+      if (etiolated) {
+        plant = `<g transform="rotate(${rotation}) scale(${scale})">${root}<path d="M0 1 C-11 -8 9 -21 1 -33 C-2 -39 -6 -40 -7 -35" fill="none" stroke="#5d5543" stroke-width="3.6" opacity=".16" transform="translate(1.3 1.5)"/><path d="M0 1 C-11 -8 9 -21 1 -33 C-2 -39 -6 -40 -7 -35" fill="none" stroke="url(#${p}-pale-stem)" stroke-width="3" stroke-linecap="round"/><path d="M-6.8 -34 C-13 -42 -17 -37 -12 -32 Q-8 -28 -6.8 -34Z" fill="#e7d680" stroke="#b5a55f" stroke-width=".6"/><path d="M-6.8 -34 C-8 -43 -2 -43 -2 -36 Q-2 -30 -6.8 -34Z" fill="#f3e59c" stroke="#b5a55f" stroke-width=".6"/></g>`;
+      } else {
+        plant = `<g transform="rotate(${rotation}) scale(${scale})">${root}<ellipse cx=".8" cy="-22" rx="17" ry="8" fill="#1d3013" opacity=".15" transform="translate(1 3)"/><path d="M0 3 Q-4 -10 0 -22" fill="none" stroke="#819c43" stroke-width="3.2" stroke-linecap="round"/><path d="M-1 1 Q-3 -11 .5 -22" fill="none" stroke="#d3e397" stroke-width="1"/><path d="M0 -22 C-3 -25 -4 -30 -8 -32 C-12 -34 -15 -30 -11 -27 Q-8 -24 -11 -25 C-14 -28 -17 -28 -18 -25 C-19 -21 -16 -19 -13 -21 Q-9 -24 -11 -21 C-14 -18 -15 -16 -11 -15 C-6 -14 -5 -18 0 -22Z" fill="url(#${p}-leaf-left)" stroke="#477c37" stroke-width=".65"/><path d="M0 -22 C3 -26 5 -31 9 -32 C13 -33 15 -29 11 -27 Q8 -24 11 -25 C15 -28 18 -27 18 -24 C18 -20 15 -19 12 -21 Q9 -24 11 -21 C14 -19 14 -16 11 -15 C6 -15 4 -18 0 -22Z" fill="url(#${p}-leaf-right)" stroke="#3f7334" stroke-width=".65"/><path d="M-1 -22 Q-8 -22 -13 -25 M1 -22 Q8 -23 13 -26" fill="none" stroke="#b2ce7c" stroke-width=".8" opacity=".85"/><path d="M-2 -22 Q0 -26 2 -22" fill="#b7ce6a"/></g>`;
+      }
+    }
+    const mucilage = dish.water ? `<ellipse cx="0" cy="0" rx="${stage === 'swollen' ? 9.5 : 8}" ry="${stage === 'swollen' ? 12 : 10}" fill="#f2e8c1" fill-opacity=".16" stroke="#fff9d8" stroke-opacity=".23" stroke-width=".65" transform="rotate(${pos.seedRotation})"/>` : '';
+    const marker = marked ? `<circle class="manual-mark-ring" cx="0" cy="-10" r="26" fill="#fff0a3" fill-opacity=".06" stroke="#bd861c" stroke-width="1.8" stroke-dasharray="3 3"/><g class="manual-mark-number"><circle cx="20" cy="13" r="9.5" fill="#ffe8a2" stroke="#9e7022" stroke-width=".8"/><text x="20" y="16.4" text-anchor="middle" fill="#50340e" font-family="system-ui,sans-serif" font-weight="700" font-size="9.5">${markOrder + 1}</text></g>` : '';
+    return `<g class="seed-target${marked ? ' is-marked' : ''}" data-seed="${index}" data-stage="${esc(stage)}" transform="translate(${pos.x} ${pos.y})"${act}>${interactive ? '<circle class="seed-hit-area" cx="0" cy="-6" r="25" fill="transparent"/>' : ''}${marker}${mucilage}${plant}${seedShell}</g>`;
+  }
+
+  function environment(dish, p, thumbnail) {
+    const label = thumbnail ? '' : `<text x="300" y="460" text-anchor="middle" font-size="12" font-weight="600" letter-spacing=".5" fill="${dish.place === 'fridge' ? '#588496' : '#907c65'}" font-family="system-ui,sans-serif">${dish.place === 'fridge' ? '5 °C' : dish.place === 'warm' ? '25 °C' : '20 °C'}</text>`;
+    if (dish.place === 'warm') {
+      return `<rect x="160" y="404" width="280" height="33" rx="15" fill="url(#${p}-plate)" stroke="#b3aaa0" stroke-width="1"/><path d="M181 414H419" stroke="#fff" stroke-opacity=".65"/><circle cx="404" cy="424" r="3.5" fill="#d68b4e"/><circle cx="183" cy="425" r="4.5" fill="#686b65"/><g fill="none" stroke="#d29d69" stroke-width="1.3" opacity=".4"><path d="M118 353q-9 -10 0 -19t0 -19"/><path d="M482 353q9 -10 0 -19t0 -19"/></g>${label}`;
+    }
+    if (dish.place === 'fridge') {
+      return `<rect x="88" y="30" width="424" height="407" rx="35" fill="#e4eff0" fill-opacity=".48" stroke="#b8d3d8" stroke-width="1.3"/><path d="M112 417H488" stroke="#b7cdd0" stroke-width="4" stroke-linecap="round"/><path d="M103 67V385 M497 67V385" stroke="#fff" stroke-width="3" opacity=".6"/>${thumbnail ? '' : '<path d="M476 56v20m-8 -15 16 10m-16 0 16 -10" fill="none" stroke="#81aebd" stroke-width="1.8" stroke-linecap="round"/>'}${label}`;
+    }
+    return label;
+  }
+
+  function render(dish, opts) {
+    const options = Object.assign({ prefix: 'dish', thumbnail: false, interactive: false, coverOpen: false, countMode: false }, opts || {});
+    const p = (`${options.prefix || dish.id || 'dish'}`).replace(/[^a-zA-Z0-9_-]/g, '_') || 'dish';
+    const wet = !!dish.water;
+    const covered = dish.dark && !options.coverOpen;
+    const seeds = dish.seeds ? positions.map((_, index) => seed(index, (dish.results || [])[index], dish, options, p)).join('') : '';
+    const moisture = wet ? `<g clip-path="url(#${p}-inside)" pointer-events="none"><path d="M143 320Q177 352 220 355" fill="none" stroke="#fafaf1" stroke-opacity=".18" stroke-width="2" stroke-linecap="round"/><path d="M404 126q22 12 34 39" fill="none" stroke="#eef7ef" stroke-opacity=".2" stroke-width="2"/><circle cx="153" cy="259" r="3" fill="#edf4e2" fill-opacity=".17"/><circle cx="426" cy="304" r="2.4" fill="#edf4e2" fill-opacity=".21"/></g>` : '';
+    const chamber = dish.oxygen === false ? `<g class="oxygen-chamber" pointer-events="none"><circle cx="300" cy="235" r="202" fill="none" stroke="#8ba6a6" stroke-opacity=".68" stroke-width="4"/><circle cx="300" cy="235" r="206" fill="none" stroke="#e8f2ee" stroke-width="1.5"/><rect x="498" y="223" width="19" height="24" rx="5" fill="#bdc9c5" stroke="#6e8b85" stroke-width="1"/><rect x="508" y="228" width="15" height="14" rx="4" fill="#e0e7df" stroke="#749089"/><circle cx="517" cy="235" r="3.5" fill="#739284"/><path d="M167 96Q300 0 436 96" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3"/>${options.thumbnail ? '' : '<text x="300" y="17" text-anchor="middle" fill="#557974" font-family="system-ui,sans-serif" font-size="10" letter-spacing="1.3">MODELLKAMMER</text>'}</g>` : '';
+    const cover = covered ? `<g class="dark-cover"><circle cx="300" cy="235" r="194" fill="url(#${p}-cover)" stroke="#313d3a" stroke-width="2"/><circle cx="300" cy="233" r="184" fill="none" stroke="#76827a" stroke-opacity=".2"/><path d="M161 126Q240 49 349 64" fill="none" stroke="#a4b0a6" stroke-opacity=".17" stroke-width="3" stroke-linecap="round"/><path d="M220 305Q300 325 380 305" fill="none" stroke="#111c18" stroke-opacity=".5" stroke-width="1"/>${options.thumbnail ? '' : '<path d="M306 179a16 16 0 1 0 18 22 18 18 0 0 1 -18 -22Z" fill="#b9c5ad" opacity=".8"/><text x="300" y="249" text-anchor="middle" fill="#e5eadf" font-family="system-ui,sans-serif" font-size="14" letter-spacing="1.2">Abgedunkelt</text>'}</g>` : '';
+
+    return `<svg class="petri-svg${covered ? ' is-covered' : ''}${options.countMode ? ' is-counting' : ''}" xmlns="${NS}" viewBox="0 0 600 480" ${options.thumbnail ? 'aria-hidden="true" focusable="false"' : 'role="group" aria-label="Petrischale mit Kressesamen"'}><defs>
+      <radialGradient id="${p}-glass-bottom"><stop stop-color="#f2f5e9" stop-opacity=".48"/><stop offset=".83" stop-color="#e3ebda" stop-opacity=".35"/><stop offset="1" stop-color="#bfd0bd" stop-opacity=".43"/></radialGradient>
+      <linearGradient id="${p}-rim" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#ffffff" stop-opacity=".9"/><stop offset=".3" stop-color="#b8cbc3" stop-opacity=".7"/><stop offset=".67" stop-color="#f7fff9" stop-opacity=".9"/><stop offset="1" stop-color="#91aaa1" stop-opacity=".8"/></linearGradient>
+      <radialGradient id="${p}-soil" cx=".38" cy=".3"><stop stop-color="${wet ? '#665039' : '#967552'}"/><stop offset=".72" stop-color="${wet ? '#4d3d2d' : '#806044'}"/><stop offset="1" stop-color="${wet ? '#382d22' : '#624a36'}"/></radialGradient>
+      <radialGradient id="${p}-cotton" cx=".38" cy=".25"><stop stop-color="${wet ? '#f0f1e6' : '#fffdf7'}"/><stop offset=".72" stop-color="${wet ? '#dfe5d8' : '#f1f2e7'}"/><stop offset="1" stop-color="${wet ? '#c3d0c0' : '#d4ddd0'}"/></radialGradient>
+      <linearGradient id="${p}-seed" x1="0" y1="0" x2="1" y2=".5"><stop stop-color="#b57b42"/><stop offset=".43" stop-color="#c28c50"/><stop offset="1" stop-color="#8e5c31"/></linearGradient>
+      <linearGradient id="${p}-leaf-left" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#94b961"/><stop offset=".45" stop-color="#6e9f45"/><stop offset="1" stop-color="#497e34"/></linearGradient>
+      <linearGradient id="${p}-leaf-right" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9cbe6b"/><stop offset=".47" stop-color="#75a34b"/><stop offset="1" stop-color="#4d813b"/></linearGradient>
+      <linearGradient id="${p}-pale-stem"><stop stop-color="#e1d5a0"/><stop offset=".45" stop-color="#fbf4d3"/><stop offset="1" stop-color="#e7dda9"/></linearGradient>
+      <linearGradient id="${p}-cover" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4a5750"/><stop offset=".5" stop-color="#303c35"/><stop offset="1" stop-color="#19271f"/></linearGradient>
+      <linearGradient id="${p}-plate" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e0ded3"/><stop offset=".6" stop-color="#c6c5ba"/><stop offset="1" stop-color="#acafa5"/></linearGradient>
+      <filter id="${p}-shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+      <clipPath id="${p}-inside"><circle cx="300" cy="235" r="179"/></clipPath>
+    </defs>
+    ${environment(dish, p, options.thumbnail)}
+    <ellipse cx="302" cy="399" rx="173" ry="29" fill="#284b37" opacity=".13" filter="url(#${p}-shadow)"/>
+    <circle cx="300" cy="238" r="193" fill="#d7e2d6" fill-opacity=".45" stroke="#91aaa0" stroke-opacity=".45" stroke-width="2"/>
+    <circle cx="300" cy="235" r="188" fill="url(#${p}-glass-bottom)" stroke="url(#${p}-rim)" stroke-width="9"/>
+    <g class="dish-substrate">${substrate(dish, p, options.thumbnail)}${moisture}</g>
+    <g class="dish-seeds"${covered ? ' aria-hidden="true"' : ''}>${seeds}</g>
+    <circle cx="300" cy="235" r="180.5" fill="none" stroke="#ecf6e9" stroke-opacity=".58" stroke-width="1.3" pointer-events="none"/>
+    <path d="M143 145A183 183 0 0 1 359 62" fill="none" stroke="#fff" stroke-opacity=".76" stroke-width="3.8" stroke-linecap="round" pointer-events="none"/>
+    <path d="M446 347A184 184 0 0 1 268 418" fill="none" stroke="#fff" stroke-opacity=".51" stroke-width="3.3" stroke-linecap="round" pointer-events="none"/>
+    <path d="M117 229A184 184 0 0 1 126 176" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.6" stroke-linecap="round" pointer-events="none"/>
+    ${cover}${chamber}
+    </svg>`;
+  }
+
+  global.CressDish = Object.freeze({ render, positions: positions.map(p => Object.freeze({ ...p })) });
+})(typeof window === 'undefined' ? globalThis : window);
+
+</script>
+  <script>
+/* Browser-local experiment controller. No network calls or automatic scoring. */
+(function () {
+  'use strict';
+  const M = window.CressModel;
+  const C = window.CressCheck;
+  const R = window.CressDish;
+  const $ = id => document.getElementById(id);
+  const STORAGE = 'kresse-keimlabor-v1';
+  const DAY_MS = 3400;
+  const WATER_MS = 1250;
+  const placeNames = {room: 'Versuchstisch · 20 °C', fridge: 'Kühlschrank · 5 °C', warm: 'Wärmeplatte · 25 °C'};
+  const state = {dishes:M.initialDishes(),selected:0,phase:'setup',elapsed:0,paused:false};
+  const hints = new Map();
+  let busy=false, countMode=false, coverOpen=false, frame=null, lastTime=null, lastDay=-1, lastWater=null, statusTimer=null;
+
+  try {
+    const stored=JSON.parse(localStorage.getItem(STORAGE));
+    if(stored && stored.version===1 && Array.isArray(stored.dishes)) {
+      state.dishes=M.sanitizeDishes(stored.dishes);
+      state.selected=Number.isInteger(stored.selected)?Math.max(0,Math.min(5,stored.selected)):0;
+      state.elapsed=Number.isFinite(stored.elapsed)?Math.max(0,Math.min(DAY_MS*7,stored.elapsed)):0;
+      if(M.readyToRun(state.dishes) && stored.phase==='done') {state.phase='done';state.elapsed=DAY_MS*7;}
+      else if(M.readyToRun(state.dishes) && (stored.phase==='running'||(stored.phase==='setup'&&C.reviewReady(state.dishes).length===0))) {state.phase='running';state.paused=true;}
+      if(state.phase==='setup') {state.dishes.forEach(d=>{d.day=0;d.results=null;d.marked=[];});recheckReady();}
+      else updateResults(state.phase==='done'?7:Math.min(7,Math.floor(state.elapsed/DAY_MS)+1));
+    }
+  } catch (_) { /* Storage may be unavailable in file previews or restricted browsers. */ }
+
+  function save() {
+    try {localStorage.setItem(STORAGE,JSON.stringify({version:1,...state}));} catch (_) {}
+  }
+  function selected() {return state.dishes[state.selected];}
+  function editable() {return state.phase==='setup' && !selected().ready && !busy;}
+  function updateResults(day) {state.dishes.forEach(d=>{d.day=day;d.results=M.resultFor(d,day);});}
+  function summarize(d) {return `${d.medium==='soil'?'Erde':d.medium==='cotton'?'Watte':'Ohne Unterlage'} · ${d.water?'feucht':'trocken'} · ${d.oxygen?'Luft':'ohne Sauerstoff'} · ${d.dark?'dunkel':'Licht'} · ${d.place==='fridge'?'5':d.place==='warm'?'25':'20'} °C`;}
+  function renderTabs() {
+    $('dish-tabs').innerHTML=state.dishes.map((d,i)=>`<button type="button" class="dish-tab" data-select="${i}" aria-pressed="${i===state.selected}" ${state.phase==='running'?'disabled':''} aria-label="${d.name}, ${state.phase==='done'?'Tag 7':d.ready?'fertig vorbereitet':'vorbereiten'}"><span class="tab-preview">${R.render(d,{prefix:`tab-${i}`,thumbnail:true,coverOpen:false})}</span><span class="tab-text"><strong>${d.name}</strong><small>${state.phase==='done'?'Tag 7':d.ready?'Fertig':d.seeds?'25 Samen':'Vorbereiten'}</small></span>${d.ready?'<span class="tab-check" aria-hidden="true">✓</span>':''}</button>`).join('');
+    const n=state.dishes.filter(d=>d.ready).length;
+    $('ready-count').textContent=`${n} von 6 Ansätzen fertig`;
+    $('ready-dots').innerHTML=state.dishes.map(d=>`<i class="${d.ready?'done':''}"></i>`).join('');
+    $('readiness').hidden=state.phase!=='setup';
+    $('phase-tag').innerHTML=`<span class="status-dot"></span>${state.phase==='setup'?'Vorbereitung':state.phase==='running'?'Zeitraffer':'Tag 7 · Auszählen'}`;
+  }
+  function renderStage() {
+    const d=selected();
+    $('dish-title').textContent=d.name;
+    $('dish-number').textContent=String(state.selected+1).padStart(2,'0');
+    $('day-badge').textContent=`Tag ${d.day}`;
+    $('dish-canvas').innerHTML=R.render(d,{prefix:'main',interactive:state.phase==='done'&&countMode,countMode,coverOpen});
+    $('seed-caption').textContent=d.seeds?'25 Kressesamen eingesetzt':'Noch keine Samen eingelegt';
+    $('place-caption').textContent=placeNames[d.place];
+    $('view-controls').hidden=state.phase!=='done';
+    $('cover-button').hidden=!d.dark;
+    $('cover-button').textContent=coverOpen?'Abdeckung schließen':'Abdeckung anheben';
+    $('count-button').disabled=d.dark&&!coverOpen;
+    $('count-button').setAttribute('aria-pressed',String(countMode));
+    $('count-button').textContent=countMode?'Zählhilfe ausschalten':'Zählhilfe einschalten';
+    $('count-bar').hidden=!countMode||state.phase!=='done'||(d.dark&&!coverOpen);
+    $('manual-count').textContent=String(d.marked.length);
+  }
+  function renderSettings() {
+    const d=selected(), isDone=state.phase==='done';
+    $('setup-panel').classList.toggle('locked',d.ready&&!isDone);
+    $('setup-panel').classList.toggle('busy',busy);
+    $('setup-controls').hidden=isDone;
+    $('result-settings').hidden=!isDone;
+    $('panel-eyebrow').textContent=isDone?'BEDINGUNGEN WÄHREND DER WOCHE':'MATERIAL & BEDINGUNGEN';
+    $('setup-title').textContent=isDone?'Dein Versuchsansatz':'Ansatz zusammenstellen';
+    document.querySelectorAll('[data-action]').forEach(b=>{
+      const a=b.dataset.action;
+      const active=(a==='soil'&&d.medium==='soil')||(a==='cotton'&&d.medium==='cotton')||(a==='water'&&d.water)||(a==='seeds'&&d.seeds)||(a==='dark'&&d.dark)||(a==='oxygen'&&!d.oxygen);
+      b.classList.toggle('selected',active);
+      b.setAttribute('aria-pressed',String(active));
+      b.disabled=!editable()||((a==='water'&&d.water)||(a==='seeds'&&d.seeds));
+    });
+    document.querySelectorAll('[data-place]').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.place===d.place));b.disabled=!editable();});
+    $('dark-label').textContent=d.dark?'Abdeckung aufheben':'Abdunkeln';
+    $('dark-sub').textContent=d.dark?'Schale ist abgedunkelt':'Schale steht im Licht';
+    $('oxygen-sub').textContent=d.oxygen?'Luft ist vorhanden':'Ohne Sauerstoff · Modell';
+    $('water-state').textContent=d.water?'Angefeuchtet · tägliche Versorgung':'Wasser: nicht zugegeben';
+    $('remove-water').hidden=!d.water;
+    $('remove-water').disabled=!editable();
+    $('empty-dish').hidden=isDone;
+    $('empty-dish').disabled=!editable()||(!d.medium&&!d.seeds&&!d.water);
+    $('ready-button').hidden=isDone;
+    $('ready-button').disabled=busy||state.phase!=='setup';
+    $('ready-button').textContent=d.ready?'Ansatz weiter bearbeiten':hints.has(d.id)?'Ansatz erneut prüfen':'Ansatz fertig';
+    $('ready-help').textContent=isDone?'Wähle eine andere Schale oder beginne eine neue Versuchsreihe.':d.ready?'Dieser Ansatz wartet auf die übrigen Schalen.':'Beim Fertigstellen wird dein Versuchsaufbau geprüft.';
+    if(isDone) {
+      const rows=[['Unterlage',d.medium==='soil'?'Erde':'Watte'],['Wasser',d.water?'Anfangs angefeuchtet,<br>täglich nachgegossen':'Nicht zugegeben'],['Luft',d.oxygen?'Luft vorhanden':'Sauerstofffreie Kammer'],['Licht',d.dark?'Abgedunkelt':'Beleuchtet'],['Standort',placeNames[d.place]]];
+      $('result-settings').innerHTML=rows.map(([k,v])=>`<div class="result-row"><span>${k}</span><strong>${v}</strong></div>`).join('')+'<p class="result-hint">Mit der Zählhilfe kannst du einzelne Samenplätze markieren. Du entscheidest selbst, welche du zählst.</p>';
+    }
+  }
+  function render() {
+    renderTabs();
+    $('workbench').hidden=state.phase==='running';
+    $('timelapse').hidden=state.phase!=='running';
+    renderStage();renderSettings();renderHint();
+    if(state.phase==='running') renderTime(true);
+  }
+  function status(message) {
+    clearTimeout(statusTimer);$('action-status').textContent=message;
+    statusTimer=setTimeout(()=>{$('action-status').textContent='';},3500);
+  }
+  function clearHint() {hints.delete(selected().id);renderHint();}
+  function rememberHint(dish,issue) {
+    const previous=hints.get(dish.id);
+    const same=previous&&previous.issue.code===issue.code&&JSON.stringify(previous.issue.relatedFields)===JSON.stringify(issue.relatedFields);
+    hints.set(dish.id,{issue,level:same?previous.level:0});
+  }
+  function renderHint() {
+    const d=selected(),hint=hints.get(d.id);
+    $('setup-hint').hidden=state.phase!=='setup'||d.ready||!hint;
+    if(!hint)return;
+    $('hint-title').textContent=hint.issue.title;
+    $('hint-text').textContent=hint.issue.tips[hint.level];
+    $('next-hint').hidden=hint.level>=hint.issue.tips.length-1;
+    $('hint-compare').hidden=d.id==='control'||hint.issue.code.startsWith('order-');
+    $('hint-compare').textContent=hint.issue.goControl?'Zur Kontrolle':'Mit Kontrolle vergleichen';
+  }
+  function focusHint() {$('setup-hint').focus({preventScroll:true});$('setup-hint').scrollIntoView({behavior:'auto',block:'nearest'});}
+  function recheckReady() {
+    const problems=C.reviewReady(state.dishes);
+    problems.forEach(({id,issue})=>{const d=state.dishes.find(d=>d.id===id);if(d){d.ready=false;rememberHint(d,issue);}});
+    return problems;
+  }
+  function compareSetup() {
+    const control=state.dishes.find(d=>d.id==='control'),d=selected();
+    const rows=[['Unterlage',x=>x.medium==='soil'?'Erde':x.medium==='cotton'?'Watte':'Noch keine'],['Samen',x=>x.seeds?'25 eingesetzt':'Noch keine'],['Wasser',x=>x.water?'Zugegeben':'Nicht zugegeben'],['Luft',x=>x.oxygen?'Vorhanden':'Sauerstofffreie Kammer'],['Licht',x=>x.dark?'Abgedunkelt':'Beleuchtet'],['Standort',x=>placeNames[x.place]]];
+    $('compare-setup-name').textContent=d.name;
+    $('settings-compare-body').innerHTML=rows.map(([name,value])=>`<tr><th scope="row">${name}</th><td>${value(control)}</td><td>${value(d)}</td></tr>`).join('');
+    $('setup-compare-dialog').showModal();
+  }
+  function actor(action) {
+    const tool=action==='water'?'<svg viewBox="0 0 120 120"><g transform="rotate(35 60 60)"><rect x="46" y="10" width="25" height="40" rx="9" fill="#5a8e9f"/><path d="M49 47h19v35l-7 17h-6l-6-17Z" fill="#d5e9ef" stroke="#6696a6" stroke-width="2"/><path d="M54 60h9v24l-4 9-5-9Z" fill="#85bed3"/></g></svg>':action==='seeds'?'<svg viewBox="0 0 120 120"><g transform="rotate(23 60 60)"><path d="M28 12h61v74H28Z" fill="#e9d5a7" stroke="#b8a174"/><path d="M28 12h61v13H28Z" fill="#38634a"/><path d="M49 62q-15-25-4-26 17 4 13 22 4-25 17-22 3 17-17 27v12" fill="#618751" stroke="#38634a" stroke-width="2"/></g></svg>':'<svg viewBox="0 0 120 120"><g transform="rotate(35 60 60)"><path d="M56 10h10v55H56Z" fill="#9c825b"/><ellipse cx="61" cy="76" rx="20" ry="24" fill="#a3b2a9" stroke="#6e857a"/><ellipse cx="61" cy="73" rx="15" ry="17" fill="'+(action==='soil'?'#6c4e32':'#fbfbf5')+'"/></g></svg>';
+    const cls=['soil','cotton','seeds'].includes(action)?action==='seeds'?'seed':action:'';
+    return `<div class="action-tool">${tool}</div><i class="action-drop ${cls}"></i><i class="action-drop ${cls}"></i><i class="action-drop ${cls}"></i>`;
+  }
+  async function materialAction(action) {
+    if(!editable())return;
+    const d=selected();
+    const issue=C.checkAction(d,action);
+    if(issue){rememberHint(d,issue);renderSettings();renderHint();focusHint();return;}
+    clearHint();
+    if(action==='dark') {d.dark=!d.dark;save();render();status(d.dark?'Abdeckung aufgesetzt.':'Abdeckung abgenommen.');return;}
+    if(action==='oxygen') {d.oxygen=!d.oxygen;save();render();status(d.oxygen?'Schale zurück in Luft.':'Sauerstofffreie Modellkammer eingerichtet.');return;}
+    if((action==='water'&&d.water)||(action==='seeds'&&d.seeds))return;
+    busy=true;renderSettings();$('action-animation').innerHTML=actor(action);
+    await new Promise(resolve=>setTimeout(resolve,650));
+    if(action==='soil'||action==='cotton')d.medium=action;
+    if(action==='water')d.water=true;
+    if(action==='seeds')d.seeds=true;
+    save();renderStage();renderTabs();
+    await new Promise(resolve=>setTimeout(resolve,350));
+    $('action-animation').innerHTML='';busy=false;renderSettings();
+    status({soil:'Erde eingefüllt.',cotton:'Watte eingelegt.',water:'Unterlage angefeuchtet. Sie wird während der Woche feucht gehalten.',seeds:'25 Kressesamen eingestreut.'}[action]);
+  }
+  function selectDish(index) {
+    if(busy||state.phase==='running')return;
+    clearTimeout(statusTimer);$('action-status').textContent='';
+    state.selected=index;countMode=false;coverOpen=false;save();render();
+  }
+  function startWeek() {
+    if(!M.readyToRun(state.dishes))return;
+    const problems=recheckReady();
+    if(problems.length){state.selected=state.dishes.findIndex(d=>d.id===problems[0].id);save();render();focusHint();return;}
+    state.phase='running';state.elapsed=0;state.paused=false;lastDay=-1;lastWater=null;lastTime=null;
+    updateResults(1);save();render();
+    $('timelapse').scrollIntoView({behavior:'smooth',block:'start'});
+    schedule();
+  }
+  function schedule() {if(frame===null)frame=requestAnimationFrame(tick);}
+  function tick(t) {
+    frame=null;
+    if(state.phase!=='running')return;
+    if(lastTime===null)lastTime=t;
+    const delta=Math.min(1000,t-lastTime);lastTime=t;
+    if(!state.paused&&!document.hidden)state.elapsed+=delta;
+    if(state.elapsed>=DAY_MS*7) {finishWeek();return;}
+    renderTime(false);schedule();
+  }
+  function renderTime(force) {
+    const day=Math.min(7,Math.floor(state.elapsed/DAY_MS)+1);
+    const watering=state.elapsed%DAY_MS<WATER_MS;
+    $('timelapse').classList.toggle('paused',state.paused);
+    $('pause-button').textContent=state.paused?'Zeitraffer fortsetzen':'Zeitraffer pausieren';
+    if(!force&&day===lastDay&&watering===lastWater)return;
+    updateResults(day);lastDay=day;lastWater=watering;
+    $('time-title').textContent=`Tag ${day} von 7`;
+    $('timeline').innerHTML=Array.from({length:7},(_,i)=>`<div class="timeline-step ${i+1===day?'current':i+1<day?'past':''}">Tag ${i+1}</div>`).join('');
+    $('watering-title').textContent=watering?'Tägliche Versorgung: Es wird nachgegossen.':'Die Ansätze bleiben unter ihren gewählten Bedingungen.';
+    $('time-dishes').innerHTML=state.dishes.map((d,i)=>`<article class="time-dish ${watering&&d.water?'watering':''}"><div class="time-dish-head"><span>${d.name}</span><span class="water-pill">${d.water?watering?'Wasserzugabe':'Feucht gehalten':'Kein Wasser'}</span></div>${R.render(d,{prefix:`time-${i}`,thumbnail:false,coverOpen:false})}<div class="auto-water" aria-hidden="true"><i></i><i></i><i></i></div><div class="time-dish-caption">${summarize(d)}${!d.oxygen&&d.water?'<br>Geschlossener Zugang · sauerstofffreies Wasser':''}</div></article>`).join('');
+    save();
+  }
+  function finishWeek() {
+    state.elapsed=DAY_MS*7;state.phase='done';state.paused=false;state.selected=0;
+    updateResults(7);save();render();
+    status('Sieben Tage sind vergangen. Die Ansätze können jetzt einzeln angesehen werden.');
+    $('workbench').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function markSeed(target) {
+    const d=selected();
+    if(state.phase!=='done'||!countMode||(d.dark&&!coverOpen)||!target)return;
+    const n=Number(target.dataset.seed);if(!Number.isInteger(n)||n<0||n>24)return;
+    const at=d.marked.indexOf(n);if(at<0)d.marked.push(n);else d.marked.splice(at,1);
+    save();renderStage();
+    const next=$('dish-canvas').querySelector(`[data-seed="${n}"]`);if(next)next.focus({preventScroll:true});
+  }
+  function showCompare() {
+    $('compare-grid').innerHTML=state.dishes.map((d,i)=>`<article class="compare-card"><h3>${d.name}</h3>${R.render(d,{prefix:`compare-${i}`,coverOpen:true})}<p>${summarize(d)}</p><button type="button" class="outline-button" data-inspect="${i}">Schale einzeln ansehen</button></article>`).join('');
+    $('compare-dialog').showModal();
+  }
+  document.addEventListener('click',e=>{
+    const choose=e.target.closest('[data-select]');if(choose)selectDish(Number(choose.dataset.select));
+    const action=e.target.closest('[data-action]');if(action&&!action.disabled)materialAction(action.dataset.action);
+    const place=e.target.closest('[data-place]');if(place&&editable()){clearHint();selected().place=place.dataset.place;save();render();status(`Schale umgestellt: ${placeNames[selected().place]}.`);}
+    const close=e.target.closest('[data-close]');if(close)$(close.dataset.close).close();
+    const inspect=e.target.closest('[data-inspect]');if(inspect){$('compare-dialog').close();selectDish(Number(inspect.dataset.inspect));if(selected().dark){coverOpen=true;renderStage();}}
+    const seed=e.target.closest('#dish-canvas [data-seed]');if(seed)markSeed(seed);
+  });
+  $('dish-canvas').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-seed]')){e.preventDefault();markSeed(e.target);}});
+  $('remove-water').addEventListener('click',()=>{if(editable()){clearHint();selected().water=false;save();render();status('Wasser entfernt; die Unterlage ist im Modell wieder trocken.');}});
+  $('empty-dish').addEventListener('click',()=>{if(editable()){clearHint();state.dishes[state.selected]=M.initialDishes()[state.selected];save();render();}});
+  $('ready-button').addEventListener('click',()=>{
+    if(busy||state.phase!=='setup')return;
+    const d=selected();
+    if(d.ready){d.ready=false;clearHint();save();render();return;}
+    const issue=C.checkDish(d,state.dishes);
+    if(issue){rememberHint(d,issue);renderSettings();renderHint();focusHint();return;}
+    clearHint();d.ready=true;
+    const problems=d.id==='control'?recheckReady():[];
+    save();
+    if(M.readyToRun(state.dishes)) {startWeek();return;}
+    if(d.ready){const next=state.dishes.findIndex(x=>!x.ready);if(next>=0)state.selected=next;clearTimeout(statusTimer);$('action-status').textContent='';}
+    render();
+    if(problems.some(p=>p.id===selected().id))focusHint();
+  });
+  $('next-hint').addEventListener('click',()=>{const hint=hints.get(selected().id);if(hint){hint.level=Math.min(hint.level+1,hint.issue.tips.length-1);renderHint();if($('next-hint').hidden)focusHint();}});
+  $('hint-compare').addEventListener('click',()=>{const hint=hints.get(selected().id);if(hint?.issue.goControl)selectDish(0);else compareSetup();});
+  $('pause-button').addEventListener('click',()=>{state.paused=!state.paused;lastTime=null;save();renderTime(true);});
+  $('cover-button').addEventListener('click',()=>{coverOpen=!coverOpen;if(!coverOpen)countMode=false;renderStage();});
+  $('count-button').addEventListener('click',()=>{countMode=!countMode;renderStage();});
+  $('clear-marks').addEventListener('click',()=>{selected().marked=[];save();renderStage();});
+  $('compare-button').addEventListener('click',showCompare);
+  $('info-button').addEventListener('click',()=>$('info-dialog').showModal());
+  $('reset-button').addEventListener('click',()=>{if(!busy)$('reset-dialog').showModal();});
+  $('confirm-reset').addEventListener('click',()=>{
+    if(frame!==null)cancelAnimationFrame(frame);frame=null;lastTime=null;lastDay=-1;lastWater=null;
+    state.dishes=M.initialDishes();state.selected=0;state.phase='setup';state.elapsed=0;state.paused=false;
+    countMode=false;coverOpen=false;busy=false;hints.clear();clearTimeout(statusTimer);$('action-status').textContent='';
+    $('reset-dialog').close();save();render();
+  });
+  document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}}));
+  document.addEventListener('visibilitychange',()=>{lastTime=null;if(document.hidden)save();});
+  window.addEventListener('pagehide',save);
+  render();if(state.phase==='running')schedule();
+})();
+
+</script>
+</body>
+</html>
